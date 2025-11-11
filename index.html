@@ -349,7 +349,7 @@
     <script type="module">
         // --- 1. IMPORTER FIREBASE ---
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, setDoc, getDoc, doc, setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         // --- 2. VENT TIL HELE SIDEN ER LASTET ---
@@ -357,10 +357,17 @@
             
             // --- 3. DEFINER GLOBALE VARIABLER OG DATABASER ---
 
-            // Hent konfigurasjon fra globale variabler (levert av Canvas)
-            const firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
-            const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-            const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+            // --- MANUELL FIREBASE KONFIGURASJON ---
+            // Nøklene er nå lagt inn manuelt
+            const firebaseConfig = {
+                apiKey: "AIzaSyCDcowm--WHC7saXt-YWtg2a2pXC93KSLI",
+                authDomain: "echelon-6.firebaseapp.com",
+                projectId: "echelon-6",
+                storageBucket: "echelon-6.firebasestorage.app",
+                messagingSenderId: "1037789395235",
+                appId: "1:1037789395235:web:b1b25339342d7e4514f496",
+                measurementId: "G-0RQLGZEV5V"
+            };
 
             // Globale Firebase-variabler
             let db, auth, userId, isAuthReady = false;
@@ -498,7 +505,7 @@
                     <p>Etter den vellykkede overføringen fra fergen er situasjonen endret. Våre analyser viser at GNM-modulen har vært aktiv i nettverkssporene vi overvåker.</p>
                     <p>For å sikre at minst ett lag kan rykke inn dersom situasjonen eskalerer, skal dere gjennomføre akutt pilotopplæring i et kontrollert miljø.</p>
                     
-                    <p><strong>Lokasjon:</strong> <a href="https://www.google.com/maps/search/?api=1&query=57%C2%B005'13.0%22N+9%C2%B°52'18.1%22E" target="_blank" class="location-link"><strong>57°05'13.0"N 9°52'18.1"E</strong></a><br>
+                    <p><strong>Lokasjon:</strong> <a href="https://www.google.com/maps/search/?api=1&query=57%C2%B°05'13.0%22N+9%C2%B°52'18.1%22E" target="_blank" class="location-link"><strong>57°05'13.0"N 9°52'18.1"E</strong></a><br>
                         <strong>Tid:</strong> 10:00 i morgen</p>
                     
                     <p>Dere vil gjennomføre et fullt <strong>pilottreningsprogram</strong> basert på F-16-plattformen. Forbered dere på høyde, hastighet og presisjon.</p>
@@ -726,7 +733,8 @@
                     return;
                 }
 
-                const userDocRef = doc(db, "artifacts", appId, "users", userId, "progress", "main");
+                // NY, ENKLERE DATABASEBANE
+                const userDocRef = doc(db, "echelon-data", userId, "progress", "main");
                 try {
                     if (lastCode !== '95764045') {
                         await setDoc(userDocRef, { lastCode: lastCode, codename: codename }, { merge: true });
@@ -748,7 +756,8 @@
                     return;
                 }
 
-                const userDocRef = doc(db, "artifacts", appId, "users", userId, "progress", "main");
+                // NY, ENKLERE DATABASEBANE
+                const userDocRef = doc(db, "echelon-data", userId, "progress", "main");
                 try {
                     const docSnap = await getDoc(userDocRef);
                     const initialMessageHTML = `<h4>CLASSIFIED ACCESS POINT</h4><p>Systemet krever celle-autentisering for tilgang.</p>`;
@@ -852,8 +861,9 @@
              * Initialiserer Firebase
              */
             async function initFirebase() {
-                if (!firebaseConfig || !firebaseConfig.apiKey) {
-                    console.error("Firebase config mangler!");
+                // Sjekker om API-nøkkelen faktisk er til stede
+                if (!firebaseConfig || !firebaseConfig.apiKey || firebaseConfig.apiKey.includes("YOUR...KEY")) {
+                    console.error("Firebase config mangler eller er ikke fylt ut!");
                     messageDisplay.innerHTML = '<p class="warning">SYSTEMFEIL: Kunne ikke koble til Command Server. API-nøkkel mangler.</p>';
                     return;
                 }
@@ -867,22 +877,40 @@
 
                     onAuthStateChanged(auth, async (user) => {
                         if (user) {
+                            // Bruker er allerede logget inn (anonymt)
                             userId = user.uid;
                             console.log("Bruker er logget inn:", userId);
                             isAuthReady = true;
-                            checkLocalLogin();
+                            checkLocalLogin(); // Sjekk for kodenavn
                         } else {
+                            // Ingen bruker, logg inn anonymt
                             try {
-                                if (initialAuthToken) {
-                                    console.log("Logger inn med Custom Token...");
-                                    await signInWithCustomToken(auth, initialAuthToken);
-                                } else {
-                                    console.log("Logger inn Anonymt...");
-                                    await signInAnonymously(auth);
-                                }
+                                console.log("Logger inn Anonymt...");
+                                const userCredential = await signInAnonymously(auth);
+                                // 'onAuthStateChanged' vil nå kjøre på nytt med den nye brukeren
+                                console.log("Anonym innlogging vellykket.");
                             } catch (e) {
-                                console.error("Innloggingsfeil:", e);
-                                messageDisplay.innerHTML = `<p class="warning">AUTENTISERING FEIBLET. Sjekk konsoll.</p>`;
+                                console.error("Anonym innloggingsfeil:", e);
+                                // --- START: FORBEDRET FEILHÅNDTERING ---
+                                if (e.code === 'auth/configuration-not-found') {
+                                    messageDisplay.innerHTML = `
+                                        <h4 class="warning">SYSTEMFEIL (auth/configuration-not-found)</h4>
+                                        <p>Portalen er koblet til Firebase-prosjektet ditt, men <strong>Anonym Pålogging</strong> er ikke aktivert.</p>
+                                        <p><strong>Løsning:</strong></p>
+                                        <ol>
+                                            <li>Gå til ditt "ECHELON 6" Firebase-prosjekt.</li>
+                                            <li>Klikk på <strong>Authentication</strong> i menyen.</li>
+                                            <li>Klikk "Kom i gang" (Get started).</li>
+                                            <li>Velg <strong>"Anonym" (Anonymous)</strong>.</li>
+                                            <li>Trykk "Aktiver" (Enable) og "Lagre".</li>
+                                        </ol>
+                                        <p>Last inn denne siden på nytt etter at du har gjort det.</p>
+                                    `;
+                                } else {
+                                    // Annen, uventet feil
+                                    messageDisplay.innerHTML = `<p class="warning">AUTENTISERING FEIBLET: ${e.message}</p>`;
+                                }
+                                // --- SLUTT: FORBEDRET FEILHÅNDTERING ---
                             }
                         }
                     });
@@ -1149,7 +1177,7 @@
                     <h5 style="margin-top: 30px;">System-tilbakestilling</h5>
                     <p>For å nullstille spillet for alle agenter (f.eks. for en ny runde), må du:</p>
                     <ol>
-                        <li><strong>Steg 1 (Database):</strong> Logg inn på Firebase-konsollen for denne appen og slett 'users'-samlingen (collection) manuelt.</li>
+                        <li><strong>Steg 1 (Database):</strong> Logg inn på Firebase-konsollen for denne appen og slett 'echelon-data'-samlingen (collection) manuelt.</li>
                         <li><strong>Steg 2 (Lokalt):</strong> Slett dataen i din egen nettleser ved å trykke på knappen under.</li>
                     </ol>
                     <button class="download-button" style="background-color: #990000;" onclick="resetLocalData()">
@@ -1315,8 +1343,8 @@
         @keyframes shake {
             0% { transform: translateX(0); }
             25% { transform: translateX(-5px); }
-            50% { transform: translateX(5px); }
-            75% { transform: translateX(-5px); }
+            50% { translateX(5px); }
+            75% { translateX(-5px); }
             100% { translateX(0); }
         }
     </style>
