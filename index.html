@@ -17,7 +17,7 @@
             padding: 0;
             height: 100%;
             font-family: 'Consolas', 'Courier New', monospace; /* Agent/Terminal-font */
-            background-color: #0a0a0a; /* Svart bakgrunn */
+            background-color: #0a0a0a; /* Svart bakunn */
             color: #d4d4d4; /* Lys grå tekst */
             font-size: 15px;
             line-height: 1.6;
@@ -83,6 +83,10 @@
         }
 
         /* Punktlister */
+        #message-display ol {
+             margin-left: 20px;
+            padding-left: 10px;
+        }
         #message-display ul {
             list-style-type: '• ';
             margin-left: 20px;
@@ -115,8 +119,8 @@
             color: #ffd9a6;
         }
         
-        /* Knapper (for nedlasting og GPS-verifisering) */
-        .download-button, #verify-location-btn {
+        /* Nedlastingsknapp / GPS-knapp */
+        .download-button {
             display: block;
             background-color: #ff9900;
             color: #111;
@@ -129,15 +133,14 @@
             letter-spacing: 1px;
             border-radius: 4px;
             cursor: pointer;
-            border: none; /* For <button> elementet */
-            font-family: 'Consolas', 'Courier New', monospace; /* Sikrer lik font */
-            font-size: 1rem; /* Sikrer lik fontstørrelse */
+            border: none; /* Sørger for at button-elementer ser like ut */
+            font-family: 'Consolas', 'Courier New', monospace; /* Arver font */
+            font-size: 0.9rem; /* Justert størrelse */
         }
-        .download-button:hover, #verify-location-btn:hover {
+        .download-button:hover {
             background-color: #ffc266;
         }
-        
-        #verify-location-btn:disabled {
+        .download-button:disabled {
             background-color: #555;
             color: #999;
             cursor: not-allowed;
@@ -165,7 +168,7 @@
             background-color: #1a1a1a;
             border-top: 2px solid #ff9900;
             padding: 15px;
-            display: flex;
+            display: none; /* --- NYTT: Skjult som standard --- */
             position: sticky;
             bottom: 0;
             width: 100%;
@@ -198,42 +201,104 @@
             font-weight: bold;
             text-transform: uppercase;
             cursor: pointer;
-            border-radius: 0 4px 4px 0;
+            border-radius: 0 4px 4px 0; /* OPPDATERT */
             font-size: 1rem;
         }
 
-        /* --- NY STYLING FOR MASTER PORTAL --- */
-        .master-list {
-            display: flex;
-            flex-direction: column;
-            gap: 10px; /* Mellomrom mellom lenkene */
-        }
-        .master-link {
-            display: block;
-            padding: 15px;
-            background: #1f1f1f;
-            border: 1px solid #444;
+        /* --- NY STYLING FOR ARKIV-KNAPP --- */
+        #menu-btn {
+            background-color: #444;
+            border: none;
             color: #d4d4d4;
-            text-decoration: none;
-            border-radius: 4px;
-            transition: all 0.2s ease;
-        }
-        .master-link:hover {
-            border-color: #ff9900;
-            background: #2a2a2a;
-        }
-        .master-link strong {
-            color: #ff9900;
-            display: block;
-            font-size: 1.1rem;
-            margin-bottom: 5px;
+            padding: 14px 18px;
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-weight: bold;
             text-transform: uppercase;
+            cursor: pointer;
+            font-size: 1rem;
+            /* Fjerner border-radius for å passe i midten */
+            border-radius: 0; 
+            /* Legger til tynne skiller */
+            border-left: 1px solid #0a0a0a;
+            border-right: 1px solid #0a0a0a;
+            transition: background-color 0.2s;
         }
-        .master-link span {
-            color: #b5b5b5;
-            font-size: 0.9rem;
+        #menu-btn:hover {
+            background-color: #666;
         }
         /* --- SLUTT PÅ NY STYLING --- */
+
+        /* --- NY STYLING FOR KODENAVN-INNLOGGING --- */
+        #login-form-container {
+            margin-top: 20px;
+        }
+        #codename-input {
+            display: block;
+            width: 100%;
+            background: #222;
+            border: 1px solid #444;
+            color: #d4d4d4;
+            padding: 14px;
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 1rem;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+        #codename-input:focus {
+            outline: none;
+            border-color: #ff9900;
+            background-color: #333;
+        }
+        #codename-submit-btn {
+            display: block;
+            width: 100%;
+            background-color: #ff9900;
+            border: none;
+            color: #111;
+            padding: 14px 18px;
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        #login-feedback {
+            padding: 10px 0;
+            text-align: center;
+        }
+        /* --- SLUTT PÅ NY STYLING --- */
+
+
+        /* --- NY STYLING FOR MASTER PORTAL --- */
+        .master-list {
+            border-top: 1px solid #444;
+            margin-top: 20px;
+        }
+        .master-link {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 10px;
+            border-bottom: 1px solid #333;
+            text-decoration: none;
+            color: #d4d4d4;
+            transition: background-color 0.2s;
+        }
+        .master-link:hover {
+            background-color: #1f1f1f;
+            color: #ffc266;
+        }
+        .master-link strong {
+            font-size: 1.1rem;
+            color: #ffc266;
+        }
+        .master-link span {
+            font-size: 0.9rem;
+            color: #888;
+        }
+        /* --- SLUTT PÅ MASTER PORTAL STYLING --- */
+
 
         /* Område for feilmeldinger */
         #feedback {
@@ -254,546 +319,776 @@
 
         <!-- 2. MELDINGSBOKS (Her vises alt innhold) -->
         <main id="message-display">
-            <!-- Dette er den første meldingen alle ser -->
-            <h4>CLASSIFIED ACCESS POINT</h4>
-            <p>Systemet krever celle-autentisering for tilgang.</p>
+            <!-- Innholdet settes nå dynamisk av JavaScript -->
+            <!-- Viser en "laster"-melding mens Firebase initialiserer -->
+            <div class="loader">
+                ETABLERER TILKOBLING TIL ECHELON 5...<br>
+                VENTER PÅ SIKKERT SIGNAL...
+            </div>
         </main>
 
         <!-- 3. TILBAKEMELDING (For "Adgang Nektet") -->
         <div id="feedback"></div>
 
         <!-- 4. INNTASTINGSFELT (Klistret til bunnen) -->
-        <form id="input-form" onsubmit="submitCode(); return false;">
+        <form id="input-form">
             <input type="text" id="code-input" placeholder="Skriv autorisasjonskode..." autocomplete="off">
+            <!-- NY ARKIV-KNAPP -->
+            <button type="button" id="menu-btn">Arkiv</button>
             <button type="submit" id="submit-btn">DEKRYPTER</button>
         </form>
 
     </div>
 
-    <script>
-        // --- DATABASE MED KODEORD OG MELDINGER ---
-        // Alle kodeord lagres som nøkler, og meldingene (HTML) som verdier.
-        const briefings = {
+    <!-- 
+      ======================================================
+      --- ALL APPLIKASJONSLOGIKK SAMLET HER ---
+      Dette er en mer robust måte å forhindre "race conditions"
+      ======================================================
+    -->
+    <script type="module">
+        // --- 1. IMPORTER FIREBASE ---
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, setDoc, getDoc, doc, setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // --- 2. VENT TIL HELE SIDEN ER LASTET ---
+        document.addEventListener('DOMContentLoaded', () => {
             
-            // --- FASE 1: OSLO ---
-            'team oslo': `
-                <h4>CLASSIFIED MESSAGE — CELL O</h4>
-                <h5>Clearance Level: ECHELON 4</h5>
-                <p>Agent <strong>RAVEN</strong> og Agent <strong>FALCON</strong>, dere er nå aktivert som Airborne Division. Etterretningen har registrert aktivitet i sør.</p>
-                <p><strong>Din rolle:</strong> Observasjon og identifikasjon.</p>
-                
-                <h5>Reiseordre:</h5>
-                <ul>
-                    <li>Transportmiddel: <strong>Tog</strong></li>
-                    <li>Avreisedato: <strong>27. november</strong></li>
-                    <li>Avgang: <strong>Oslo S kl. 09:25</strong></li>
-                    <li>Destinasjon: <strong>Fortrolig</strong></li>
-                </ul>
-                <p>Ved ankomst skal dere ta dere til følgende observasjonspunkt:<br>
-                <a href="https://www.google.com/maps/search/?api=1&query=58%C2%B008'40.6%22N+7%C2%B059'20.2%22E" target="_blank" class="location-link"><strong>58°08'40.6"N 7°59'20.2"E</strong></a></p>
-                
-                <h5>Oppdrag:</h5>
-                <p>Overvåk området fra avstand. Et kjøretøy med registreringsnummer <strong>SD73382</strong> skal ankomme. Føreren har informasjon som er relevant for oppdragets videre fase.</p>
-                <p><strong>Ikke gjør kontakt</strong> før situasjonen er vurdert som trygg. Når observasjonen er fullført, vent på nytt signal.</p>
-                <p>Kodeord-del tildelt: <strong>AURORA</strong><br>(Behold dette – brukes senere.)</p>
-                <p>— Command Out.</p>
-                <a href="#" class="download-button" onclick="downloadPakkliste()">Last ned Pakkliste (Echelon 3)</a>
-            `,
+            // --- 3. DEFINER GLOBALE VARIABLER OG DATABASER ---
 
-            // --- FASE 1: STAVANGER ---
-            'team stavanger': `
-                <h4>CLASSIFIED MESSAGE — CELL S</h4>
-                <h5>Clearance Level: ECHELON 4</h5>
-                <p>Agenter <strong>VIPER</strong>, <strong>COBRA</strong> og <strong>SHADOW</strong> — dere er nå aktivert som Ground Intelligence Unit. Etterretningen har registrert aktivitet i sør.</p>
-                <p><strong>Din rolle:</strong> Infiltrasjon og feltobservasjon.</p>
+            // Hent konfigurasjon fra globale variabler (levert av Canvas)
+            const firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
+            const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+            const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
 
-                <h5>Reiseordre:</h5>
-                <ul>
-                    <li>Transportmiddel: <strong>Bil</strong></li>
-                    <li>Avreisedato: <strong>27. november</strong></li>
-                    <li>Avgang: <strong>Stavanger kl. 11:30</strong></li>
-                    <li>Destinasjon: <strong>Fortrolig</strong></li>
-                </ul>
-                <p>Ved ankomst skal dere posisjonere dere ved følgende koordinater:<br>
-                <a href="https://www.google.com/maps/search/?api=1&query=58%C2%B008'40.6%22N+7%C2%B°59'20.2%22E" target="_blank" class="location-link"><strong>58°08'40.6"N 7°59'20.2"E</strong></a></p>
+            // Globale Firebase-variabler
+            let db, auth, userId, isAuthReady = false;
 
-                <h5>Oppdrag:</h5>
-                <p>Etabler observasjonspunkt på parkeringsplassen. Dere vil bli kontaktet av en person som vet at dere kommer. Be om å få kodeordet.</p>
-                <p>Vær årvåkne — området kan være under overvåking.</p>
-                <p>Kodeord-del tildelt: <strong>BOREALIS</strong><br>(Behold dette – brukes senere.)</p>
-                <p>— Command Out.</p>
-                <a href="#" class="download-button" onclick="downloadPakkliste()">Last ned Pakkliste (Echelon 3)</a>
-            `,
+            // Liste over gyldige kodenavn
+            const validCodenames = ['raven', 'falcon', 'viper', 'cobra', 'shadow'];
 
-            // --- FASE 2: SAMMENSLÅING ---
-            'aurora borealis': `
-                <h4>DIREKTIV K — VERIFISERT</h4>
-                <p>Sammenslåing av celler godkjent. Nytt direktiv:</p>
-                <p>Dere skal ta ferjen som går til Hirtshals <strong>16:30</strong>.</p>
-                <p><a href="https://storage.googleapis.com/files_webpage/Privat/Colourline%20bilett.pdf" target="_blank" class="location-link"><strong>Referanse: Ferjebilletter</strong></a></p>
-                <p>Når dere er ombord på båten får dere videre instruksjoner av Agent <strong>SHADOW</strong>.</p>
-                <p>— Command Out.</p>
-            `,
+            // Hent kjerne-HTML-elementer
+            const messageDisplay = document.getElementById('message-display');
+            const codeInput = document.getElementById('code-input');
+            const feedbackDisplay = document.getElementById('feedback');
+            const inputForm = document.getElementById('input-form');
+            const menuBtn = document.getElementById('menu-btn');
+            const submitBtn = document.getElementById('submit-btn');
 
-            // --- FASE 2: FERGE (KODE 1) ---
-            'jylland': `
-                <h4>CLASSIFIED TRANSMISSION — SHIPBOARD DIRECTIVE</h4>
-                <p>Godkjent tilgang.</p>
-                <p>Under overfarten har systemet fanget opp et fragmentert signal med seks elementer. Hvert element representerer både en bokstav og et tall, men bare en av delene er korrekt.</p>
-                <p>Krypteringsmetoden følger <strong>NORSE–6-protokollen</strong> – en kombinasjon av fonetisk og numerisk substitusjon.</p>
-
-                <h5>Intercepted sequence:</h5>
-                <p><strong>11-K, 15-O, 14-N, 22-V, 15-O, 25-Y</strong></p>
-
-                <h5>For å finne riktig bokstavkode må dere:</h5>
-                <ol>
-                    <li><strong>Avdekke mønsteret:</strong><br>
-                    Tallene refererer til alfabetets posisjoner (A = 1 … Z = 26). Men <strong>noen</strong> av tallene er falske; de skjuler seg bak primtall. Finn hvilke tall i sekvensen som er primtall, og bytt ut tilhørende bokstaver med bokstaven som kommer <strong>før</strong> i alfabetet.</li>
-                    
-                    <li><strong>Bruk NATO-fonetisk filtrering:</strong><br>
-                    Skriv hele den nye sekvensen i NATO-fonetisk form. Ta den <strong>tredje bokstaven</strong> i hvert fonetiske ord og skriv dem sammen.</li>
-                    
-                    <li><strong>Resultatet danner Transit Code Alpha (bokstavkode).</strong></li>
-                </ol>
-                <p>Skriv inn koden i portalen når dere er enige.</p>
-                <p>— Command Out.</p>
-            `,
-
-            // --- FASE 2: FERGE (KODE 2) ---
-            // OPPDATERT MED GPS-KNAPP
-            'lcvccn': `
-                <h4>TRANSIT CODE ALPHA — VERIFIED</h4>
-                <p>Kryptert kommunikasjon gjenopprettet. Neste waypoint er aktivert.</p>
-                
-                <h5>Safehouse koordinater:</h5>
-                <p><a href="https://www.google.com/maps/search/?api=1&query=57%C2%B003'48.6%22N+9%C2%B054'47.6%22E" target="_blank" class="location-link"><strong>57°03'48.6"N 9°54'47.6"E</strong></a></p>
-                <p><strong>Lokasjon:</strong> Nørresundby</p>
-                <p>Gå direkte til disse koordinatene. Hold lav profil. Når lokasjonen er sikret, må du verifisere din posisjon for å motta neste direktiv.</p>
-                
-                <!-- NY KNAPP FOR GPS-SJEKK -->
-                <button id="verify-location-btn" class="download-button" onclick="verifySafehouseLocation()">
-                    VERIFISER POSISJON
-                </button>
-                
-                <!-- Område for GPS-tilbakemelding -->
-                <div id="location-feedback" style="margin-top: 15px; color: #ff9900; font-weight: bold;"></div>
-            `,
-            
-            // --- FASE 3: SAFEHOUSE ---
-            'safehouse check-in': `
-                <h4>CLASSIFIED DIRECTIVE — FLIGHT OPS</h4>
-                <h5>Clearance Level: ECHELON 5</h5>
-                <p>Godt jobbet, agenter. Lokasjon sikret.</p>
-                <p>Etter den vellykkede overføringen fra fergen er situasjonen endret. Våre analyser viser at GNM-modulen har vært aktiv i nettverkssporene vi overvåker.</p>
-                <p>For å sikre at minst ett lag kan rykke inn dersom situasjonen eskalerer, skal dere gjennomføre akutt pilotopplæring i et kontrollert miljø.</p>
-                
-                <p><strong>Lokasjon:</strong> <a href="https://www.google.com/maps/search/?api=1&query=57%C2%B005'13.0%22N+9%C2%B052'18.1%22E" target="_blank" class="location-link"><strong>57°05'13.0"N 9°52'18.1"E</strong></a><br>
-                    <strong>Tid:</strong> 10:00 i morgen</p>
-                
-                <p>Dere vil gjennomføre et fullt <strong>pilottreningsprogram</strong> basert på F-16-plattformen. Forbered dere på høyde, hastighet og presisjon.</p>
-                <p>Etter fullført økt vil vertskapet gi dere neste autorisasjonskode.</p>
-                <p>— Command Out.</p>
-            `,
-
-            // --- FASE 4: ETTER FLIGHT OPS ---
-            'fuelcheck': `
-                <h4>CLASSIFIED MESSAGE — POST FLIGHT OPS DIRECTIVE</h4>
-                <h5>Clearance Level: ECHELON 5</h5>
-                <p>Flight-sekvens fullført. Data bekrefter operativ beredskap.</p>
-                <p>Dere skal nå trekke til et sikkert sivilt kontaktpunkt for debrief. Deres neste instruksjon er låst til denne posisjonen.</p>
-                
-                <h5>Lokasjon (Dekknavn):</h5>
-                <p><a href="https://www.google.com/maps/search/?api=1&query=Slotsgade+33,+9000+Aalborg,+Denmark" target="_blank" class="location-link"><strong>ISIDOR HENIUS</strong></a><br>
-                <span style="color: #888;">Slotsgade 33, 9000 Aalborg, Denmark</span></p>
-                
-                <p><strong>Oppdrag:</strong> Møt på stedet. Når du er innenfor 150 meter, verifiser din posisjon for å motta neste direktiv.</p>
-
-                <!-- NY KNAPP FOR ISIDOR GPS-SJEKK -->
-                <button id="verify-isidor-btn" class="download-button" onclick="verifyIsidorLocation()">
-                    VERIFISER POSISJON (ISIDOR)
-                </button>
-                
-                <!-- Område for GPS-tilbakemelding -->
-                <div id="location-feedback-isidor" style="margin-top: 15px; color: #ff9900; font-weight: bold;"></div>
-            `,
-
-            // --- FASE 4: ETTER ISIDOR HENIUS ---
-            'table 19': `
-                <h4>CLASSIFIED MESSAGE — EVENING DIRECTIVE</h4>
-                <h5>Clearance Level: Echelon 5</h5>
-                <p>Dataoverføring fra Contact Point Bravo er mottatt. Operasjonen går inn i fase 6.</p>
-                <p>Dere har gjort en solid innsats i felt, og kommando gir grønt lys for midlertid rekreasjon og sosial samling før videre operasjon.</p>
-                
-                <h5>Neste oppmøtested:</h5>
-                <p>Et sivilisert deknavn brukt til lavprofil-møter mellom feltagenter:</p>
-                <p><strong>Dekknavn:</strong> THE BLACK TABLE<br>
-                <strong>Lokasjon:</strong> <a href="https://www.google.com/maps/search/?api=1&query=Restaurant+Flammen+Aalborg" target="_blank" class="location-link">Restaurant Flammen</a><br>
-                <strong>Tid:</strong> 19:00</p>
-                <p>— Command Out.</p>
-            `,
-            
-            // --- FASE 5: PÅ RESTAURANT FLAMMEN ---
-            'specter one': `
-                <h4>CLASSIFIED MESSAGE — FIELD DIRECTIVE</h4>
-                <h5>Clearance Level: Echelon 5</h5>
-                <p>Bekreftelse mottatt fra Command.</p>
-                <p>Satellittdata fra Jutland Sector viser aktivitet ved et tidligere treningsanlegg nordvest for Aalborg. Området går under dekknavnet:</p>
-                <p><strong>AMMO GROUND</strong></p>
-                <p>Dere skal forflytte dere fra nåværende base og være fullt operative ved morgengry.</p>
-                
-                <p><strong>Oppmøtested:</strong> <a href="https://www.google.com/maps/search/?api=1&query=Magasinvej+7,+9870+Sindal,+Denmark" target="_blank" class="location-link">Magasinvej 7, 9870 Sindal, Denmark</a><br>
-                <strong>Tid:</strong> 09:00 i morgen</p>
-                
-                <h5>Instruks:</h5>
-                <ul>
-                    <li>Pakk alle personlige eiendeler og klargjør utstyr for ny forflytning.</li>
-                    <li>Etter fullført oppdrag vil dere <strong>ikke returnere</strong> til nåværende base.</li>
-                    <li>Vær forberedt på overnatting annet sted etter feltoperasjonen.</li>
-                </ul>
-                
-                <h5>Bekledning:</h5>
-                <ul>
-                    <li>Varmt og lagvis tøy (ull, fleece, vindtett jakke)</li>
-                    <li>Gode sko eller vanntette støvler</li>
-                    <li>Hansker og hodeplagg (lue/buff)</li>
-                    <li>Ingen sterke farger — hold lav profil</li>
-                </ul>
-                <p>— Command Out.</p>
-            `,
-
-            // --- FASE 6: ETTER AMMO GROUND ---
-            'nordstar': `
-                <h4>CLASSIFIED MESSAGE — EXTRACTION ORDER</h4>
-                <h5>Clearance Level: ECHELON 5</h5>
-                <p>Bekreftelse mottatt fra feltstyrken.</p>
-                <p>Rapportene fra AMMO GROUND bekrefter at GNM-modulen er deaktivert. Operasjonen vurderes som suksessfull.</p>
-                <p class="warning">Men deres posisjon er nå kompromittert.</p>
-                
-                <h5>Direktiv:</h5>
-                <p>Gå i dekning umiddelbart. Dere skal forflytte dere til trygg sone for evakuering. Neste direktiv er låst til posisjonen.</p>
-                <p><strong>Lokasjon:</strong> <a href="https://www.google.com/maps/search/?api=1&query=Skydebanevej+17,+9800+Hjørring" target="_blank" class="location-link">Skydebanevej 17, 9800 Hjørring</a><br>
-                <strong>Dekknavn:</strong> Base Echo</p>
-                <p>Hold lav profil. Ved ankomst: sikre lokasjonen og verifiser din posisjon for å motta neste ordre.</p>
-                
-                <!-- NY KNAPP FOR BASE ECHO GPS-SJEKK -->
-                <button id="verify-baseecho-btn" class="download-button" onclick="verifyBaseEchoLocation()">
-                    VERIFISER POSISJON (BASE ECHO)
-                </button>
-                
-                <!-- Område for GPS-tilbakemelding -->
-                <div id="location-feedback-baseecho" style="margin-top: 15px; color: #ff9900; font-weight: bold;"></div>
-            `,
-
-            // --- FASE 7: PÅ BASE ECHO (HJØRRING) ---
-            'echofall': `
-                <h4>CLASSIFIED MESSAGE — DEBRIEF DIRECTIVE</h4>
-                <h5>Clearance Level: ECHELON 5</h5>
-                <p>Bekreftelse mottatt fra Base Echo.</p>
-                <p>Operasjonen nærmer seg konklusjon. Nye data fra kommandonivå viser at siste del av GNM-protokollen er fanget opp og isolert.</p>
-                <p>Alle enheter skal nå innkalles til endelig debrief og evaluering.</p>
-                
-                <p><strong>Dekknavn:</strong> Operation Bones<br>
-                <strong>Tid:</strong> 20:00<br>
-                <strong>Lokasjon:</strong> <a href="https://www.google.com/maps/search/?api=1&query=Bones+Restaurant,+Hjørring" target="_blank" class="location-link">Bones Restaurant, Hjørring</a></p>
-                
-                <p><strong>Oppdrag:</strong> Møt presist. Hold lav profil. Dette er siste steg før operasjonen avsluttes.</p>
-                <p>— Command Out.</p>
-            `,
-
-            // --- FASE 8: AVSLUTNING (PÅ BONES) ---
-            'shadowfall': `
-                <h4>CLASSIFIED MESSAGE — OPERATION TERMINATION ORDER</h4>
-                <h5>Clearance Level: ECHELON 5</h5>
-                <p>Bekreftelse mottatt fra feltleder SHADOW. Alle enheter rapportert som sikre.</p>
-                <p><strong>Operasjon NORTHERN STRIKE er herved erklært fullført.</strong></p>
-                <p>GNM-protokollen er isolert, kryptert og fjernet fra aktivt nettverk. Dataene sikret ved AMMO GROUND og overført via Base Echo har stanset reaktivering.</p>
-                <p>Kommandosenteret beordrer umiddelbar tilbaketrekning og oppløsning av operative enheter.</p>
-                
-                <h5>Direktiv:</h5>
-                <ul>
-                    <li>Alle enheter trekker ut av operasjonsområdet i morgen.</li>
-                    <li>Avreise skjer via maritim transport.</li>
-                    <li><strong>Båtavgang:</strong> 12:15 (Møt ved terminal senest 11:45)</li>
-                    <li><a href="https://storage.googleapis.com/files_webpage/Privat/Colourline%20bilett.pdf" target="_blank" class="location-link"><strong>Referanse: Ferjebilletter</strong></a></li>
-                </ul>
-                
-                <h5>Transportplan:</h5>
-                <ul>
-                    <li><strong>Team Oslo:</strong> Forflytter seg videre med buss fra Kristiansand kl. 16:30.</li>
-                    <li><strong>Team Stavanger:</strong> Returnerer kjøretøyet til hjemmebase via landrute.</li>
-                </ul>
-                <p>Hold lav profil under transport. Unngå identifiserbare symboler.</p>
-                <p>Denne operasjonen vil ikke bli offentlig anerkjent. Deres innsats har vært avgjørende.</p>
-                <p><strong>Mission Complete.</strong></p>
-                <p>— SHADOW / Command Out.</p>
-            `
-        };
-
-        // --- NY DATABASE FOR MASTER PORTAL (Admin-visning) ---
-        // Definerer rekkefølge, titler og admin-instrukser
-        const masterViewData = [
-            {
-                code: 'team oslo',
-                title: 'Fase 1: Oslo (RAVEN/FALCON)',
-                adminInstructions: 'Startmelding for Oslo-teamet. De får reiseordre (Tog 09:25) og beskjed om å observere en bil (SD73382) ved koordinatene i Kristiansand.'
-            },
-            {
-                code: 'team stavanger',
-                title: 'Fase 1: Stavanger (VIPER/COBRA/SHADOW)',
-                adminInstructions: 'Startmelding for Stavanger-teamet. De får reiseordre (Bil 11:30) og beskjed om å møte en kontaktperson på samme lokasjon i Kristiansand.'
-            },
-            {
-                code: 'aurora borealis',
-                title: 'Fase 2: Sammenslåing (Kristiansand)',
-                adminInstructions: 'Denne koden er en kombinasjon av kodene fra de to første lagene (AURORA + BOREALIS). Når de skriver inn denne, får de beskjed om å rekke fergen kl 16:30 og mottar billett-lenken.'
-            },
-            {
-                code: 'jylland',
-                title: 'Fase 2: Ferge (Oppgave 1)',
-                adminInstructions: 'Denne koden gis av SHADOW på fergen. Den presenterer NORSE-6-protokollen (primtall + NATO-fonetisk) som de må løse. Løsningen er "LCVCCN".'
-            },
-            {
-                code: 'lcvccn',
-                title: 'Fase 2: Ferge (Oppgave 2 - GPS)',
-                adminInstructions: 'Når de skriver inn "lcvccn", får de koordinatene til Safehouse (Nørresundby). De må fysisk reise dit og trykke på "VERIFISER POSISJON" for å låse opp neste del.'
-            },
-            {
-                code: 'safehouse check-in',
-                title: 'Fase 3: Safehouse (Ankomst)',
-                adminInstructions: 'Denne meldingen låses opp automatisk av GPS-sjekken (eller manuelt ved å skrive koden). Den gir dem oppdraget om F-16-trening (Flight Ops) neste dag kl 10:00.'
-            },
-            {
-                code: 'fuelcheck',
-                title: 'Fase 4: Etter Flight Ops (GPS)',
-                adminInstructions: 'Denne koden mottar de etter Flight Ops. Den sender dem til "ISIDOR HENIUS" (Slotsgade 33). Dette er nå en GPS-låst oppgave. De må fysisk reise dit og trykke på "VERIFISER POSISJON" for å låse opp neste del.'
-            },
-            {
-                code: 'table 19',
-                title: 'Fase 4: På Isidor Henius (Resultat)',
-                adminInstructions: 'Dette er meldingen som låses opp av GPS-sjekken ved "fuelcheck". Den sender dem til "THE BLACK TABLE" (Restaurant Flammen) kl 19:00. Koden "table 19" er ikke lenger nødvendig for progresjon.'
-            },
-            {
-                code: 'specter one',
-                title: 'Fase 5: På Flammen (Klargjøring)',
-                adminInstructions: 'Denne koden mottas på Restaurant Flammen. Den gir dem det store oppdraget for neste dag: AMMO GROUND (Magasinvej 7, Sindal) kl 09:00, med pakke- og klesinstrukser.'
-            },
-            {
-                code: 'nordstar',
-                title: 'Fase 6: Etter Ammo Ground (GPS)',
-                adminInstructions: 'Denne koden mottas etter fullført oppdrag på Ammo Ground. Den informerer om at de er kompromittert og må evakuere til "Base Echo" (Skydebanevej 17, Hjørring). Dette er nå en GPS-låst oppgave.'
-            },
-            {
-                code: 'echofall',
-                title: 'Fase 7: På Base Echo (Resultat)',
-                adminInstructions: 'Denne meldingen låses opp av GPS-sjekken ved "nordstar" (Base Echo). Den kaller inn til endelig debrief på "Operation Bones" (Bones Restaurant, Hjørring) kl 20:00.'
-            },
-            {
-                code: 'shadowfall',
-                title: 'Fase 8: Avslutning (På Bones)',
-                adminInstructions: 'Siste kode, gis på Bones. Erklærer "Mission Complete" og gir dem reiseplanen hjem (Ferge 12:15) og billett-lenken.'
-            }
-        ];
-        // --- SLUTT PÅ NY DATABASE ---
-
-
-        // --- KJERNEFUNKSJONALITET ---
-        
-        // Henter elementene vi trenger
-        const messageDisplay = document.getElementById('message-display');
-        const codeInput = document.getElementById('code-input');
-        const feedbackDisplay = document.getElementById('feedback');
-        
-        // Lagre den første meldingen
-        const initialMessage = messageDisplay.innerHTML;
-
-        /**
-         * Kjøres når brukeren trykker "DEKRYPTER"
-         */
-        function submitCode() {
-            // Hent og normaliser koden (små bokstaver, ingen mellomrom)
-            let code = codeInput.value.toLowerCase().trim();
-            
-            // Spesialtilfelle for "safehouse check-in"
-            if (code === "safehouse check-in" || code === "safehouse checkin") {
-                code = 'safehouse check-in';
-            }
-            
-            // Tøm feilmeldinger
-            feedbackDisplay.innerHTML = '';
-
-            // --- NY MASTER PORTAL-SJEKK ---
-            if (code === '95764045') {
-                showMasterPortal();
-                codeInput.value = ''; // Tøm input
-                return; // Avslutt funksjonen her
-            }
-            // --- SLUTT PÅ MASTER PORTAL-SJEKK ---
-
-            // Prøv å finne koden i vår "database"
-            const messageHtml = briefings[code];
-
-            if (messageHtml) {
-                // KODE FUNNET!
-                
-                // 1. Vis en "laste"-melding for effekt
-                messageDisplay.innerHTML = `
-                    <div class="loader">
-                        DEKRYPTERER SIGNAL...<br>
-                        VERIFISERER AUTORISASJON...<br>
-                        ETABLERER SIKKER KOBLING...
-                    </div>`;
-                
-                // 2. Vent 1.5 sekunder, og vis så den ekte meldingen
-                setTimeout(() => {
-                    messageDisplay.innerHTML = messageHtml;
-                    window.scrollTo(0, 0); // Scroll til toppen
-                    codeInput.value = ''; // Tøm inputfeltet
-                }, 1500);
-
-            } else {
-                // KODE IKKE FUNNET
-                
-                // Gi en feilmelding
-                feedbackDisplay.innerHTML = '<p class="warning">ADGANG NEKTET. KODE IKKE GJENKJENT.</p>';
-                
-                // Rist på input-feltet for effekt (valgfritt)
-                const form = document.getElementById('input-form');
-                form.style.animation = 'shake 0.3s';
-                setTimeout(() => { form.style.animation = ''; }, 300);
-            }
-        }
-        
-        /**
-         * Genererer og laster ned pakklisten som en .txt-fil
-         */
-        function downloadPakkliste() {
-            const pakklisteText = `PERSONLIG UTSTYR — STANDARD LOADOUT
-CLASSIFIED DOCUMENT — EQUIPMENT MANIFEST
-
-Clearance Level: ECHELON 3
-Distribution: Authorized Field Units Only
-
----------------------------------
-⚙️ FELTUTSTYR
-For oppdrag under skiftende vær og lang forflytning:
----------------------------------
-• Ekstra ullsokker (ett par i vanntett pose)
-• Tynt sitteunderlag eller sammenrullbar pute (pause i felt)
-• Ørepropper (for søvn eller støy)
-• Powerbank
-• Ullundertøy
-• Fjellsko
-• Turbukse (helst uten flashy farger)
-• Jakke (helst uten flashy farger)
-• Tynne hansker
-• Lue
-
----------------------------------
-🧳 SIVILT / LOGISTIKK
-For komfort og beredskap mellom operasjonene:
----------------------------------
-• Ekstra undertøy og sokker
-• Komfortabel bukse for innendørs bruk
-• T-skjorte
-• Genser
-• Reisedokumenter, ID og kopi på mobilen
-• Liten notatbok og penn (for oppdragsnotater)
-
----------------------------------
-👔 FORMELLT OPPDAGSANTREKK — “CAUSAL BUSINESS”
----------------------------------
-• Finbukser
-• Skjorte
-• Jakke
-
----------------------------------
-🧴 DIVERSE / PERSONLIG
----------------------------------
-• Mobillader
-• Solbriller (lav sol i Danmark på vinteren)
-• Lommebok
-• Toalettsaker
-
----------------------------------
-Instruks:
-Pakk lett i ryggsekk. Du må regne med å bære tingene dine under forflytning.
-Unngå sterke farger og synlige logoer.
-Hold lav profil.
-— Command Logistics Division / Operation Northern Strike
-`;
-            
-            // Lag en 'blob' (en fil i minnet)
-            const blob = new Blob([pakklisteText], { type: 'text/plain;charset=utf-8' });
-            
-            // Lag en falsk nedlastingslenke
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
-            link.download = 'pakkliste.txt';
-            
-            // Klikk på lenken
-            document.body.appendChild(link);
-            link.click();
-            
-            // Rydd opp
-            document.body.removeChild(link);
-            URL.revokeObjectURL(link.href);
-        }
-
-        // --- GPS VERIFISERINGSFUNKSJONER (NY KODE) ---
-
-        // Definerer koordinatene for "Safehouse" fra 'lcvccn'-meldingen
-        // 57°03'48.6"N 9°54'47.6"E
-        const SAFEHOUSE_LAT = 57.0635;
-        const SAFEHOUSE_LON = 9.913222;
-        const MAX_DISTANCE_METERS = 150; // Agenten må være innenfor 150 meter
-
-        /**
-         * Kjøres når agenten trykker "VERIFISER POSISJON"
-         */
-        function verifySafehouseLocation() {
-            const feedback = document.getElementById('location-feedback');
-            const btn = document.getElementById('verify-location-btn');
-            
-            if (!navigator.geolocation) {
-                feedback.innerHTML = '<p class="warning">FEIL: GEOLOKASJON STØTTES IKKE AV DENNE ENHETEN.</p>';
+            // Sjekk om elementene finnes
+            if (!messageDisplay || !codeInput || !feedbackDisplay || !inputForm || !menuBtn || !submitBtn) {
+                console.error("KRITISK FEIL: Kunne ikke finne kjerne-HTML-elementer.");
+                document.body.innerHTML = "<h1 style='color: red; text-align: center; margin-top: 50px;'>KRITISK SYSTEMFEIL.<br>KUNNE IKKE LASTE PORTAL.</h1>";
                 return;
             }
 
-            feedback.innerHTML = 'Søker etter GPS-signal... Godkjenn forespørsel i nettleser...';
-            btn.disabled = true;
-            btn.innerHTML = 'LOKALISERER...';
+            // --- 4. DEFINER MELDINGS-DATABASER ---
 
-            const options = {
-                enableHighAccuracy: true, // Ber om best mulig posisjon
-                timeout: 10000,           // 10 sekunder timeout
-                maximumAge: 0             // Tvinger frem en ny posisjonssjekk
+            const briefings = {
+                
+                // --- FASE 1: OSLO ---
+                'team oslo': `
+                    <h4>CLASSIFIED MESSAGE — CELL O</h4>
+                    <h5>Clearance Level: ECHELON 4</h5>
+                    <p>Agent <strong>RAVEN</strong> og Agent <strong>FALCON</strong>, dere er nå aktivert som Airborne Division. Etterretningen har registrert aktivitet i sør.</p>
+                    <p><strong>Din rolle:</strong> Observasjon og identifikasjon.</p>
+                    
+                    <h5>Reiseordre:</h5>
+                    <ul>
+                        <li>Transportmiddel: <strong>Tog</strong></li>
+                        <li>Avreisedato: <strong>27. november</strong></li>
+                        <li>Avgang: <strong>Oslo S kl. 09:25</strong></li>
+                        <li>Destinasjon: <strong>Fortrolig</strong></li>
+                    </ul>
+                    <p>Ved ankomst skal dere ta dere til følgende observasjonspunkt:<br>
+                    <a href="https://www.google.com/maps/search/?api=1&query=58%C2%B008'40.6%22N+7%C2%B°59'20.2%22E" target="_blank" class="location-link"><strong>58°08'40.6"N 7°59'20.2"E</strong></a></p>
+                    
+                    <h5>Oppdrag:</h5>
+                    <p>Overvåk området fra avstand. Et kjøretøy med registreringsnummer <strong>SD73382</strong> skal ankomme. Føreren har informasjon som er relevant for oppdragets videre fase.</p>
+                    <p><strong>Ikke gjør kontakt</strong> før situasjonen er vurdert som trygg. Når observasjonen er fullført, vent på nytt signal.</p>
+                    <p>Kodeord-del tildelt: <strong>AURORA</strong><br>(Behold dette – brukes senere.)</p>
+                    <p>— Command Out.</p>
+                    <a href="#" class="download-button" onclick="downloadPakkliste()">Last ned Pakkliste (Echelon 3)</a>
+                `,
+
+                // --- FASE 1: STAVANGER ---
+                'team stavanger': `
+                    <h4>CLASSIFIED MESSAGE — CELL S</h4>
+                    <h5>Clearance Level: ECHELON 4</h5>
+                    <p>Agenter <strong>VIPER</strong>, <strong>COBRA</strong> og <strong>SHADOW</strong> — dere er nå aktivert som Ground Intelligence Unit. Etterretningen har registrert aktivitet i sør.</p>
+                    <p><strong>Din rolle:</strong> Infiltrasjon og feltobservasjon.</p>
+
+                    <h5>Reiseordre:</h5>
+                    <ul>
+                        <li>Transportmiddel: <strong>Bil</strong></li>
+                        <li>Avreisedato: <strong>27. november</strong></li>
+                        <li>Avgang: <strong>Stavanger kl. 11:30</strong></li>
+                        <li>Destinasjon: <strong>Fortrolig</strong></li>
+                    </ul>
+                    <p>Ved ankomst skal dere posisjonere dere ved følgende koordinater:<br>
+                    <a href="https://www.google.com/maps/search/?api=1&query=58%C2%B°08'40.6%22N+7%C2%B°59'20.2%22E" target="_blank" class="location-link"><strong>58°08'40.6"N 7°59'20.2"E</strong></a></p>
+
+                    <h5>Oppdrag:</h5>
+                    <p>Etabler observasjonspunkt på parkeringsplassen. Dere vil bli kontaktet av en person som vet at dere kommer. Be om å få kodeordet.</p>
+                    <p>Vær årvåkne — området kan være under overvåking.</p>
+                    <p>Kodeord-del tildelt: <strong>BOREALIS</strong><br>(Behold dette – brukes senere.)</p>
+                    <p>— Command Out.</p>
+                    <a href="#" class="download-button" onclick="downloadPakkliste()">Last ned Pakkliste (Echelon 3)</a>
+                `,
+
+                // --- FASE 2: SAMMENSLÅING ---
+                'aurora borealis': `
+                    <h4>DIREKTIV K — VERIFISERT</h4>
+                    <p>Sammenslåing av celler godkjent. Nytt direktiv:</p>
+                    <p>Dere skal ta ferjen som går til Hirtshals <strong>16:30</strong>.</p>
+                    <p><a href="https://storage.googleapis.com/files_webpage/Privat/Colourline%20bilett.pdf" target="_blank" class="location-link"><strong>Referanse: Ferjebilletter</strong></a></p>
+                    <p>Når dere er ombord på båten får dere videre instruksjoner av Agent <strong>SHADOW</strong>.</p>
+                    <p>— Command Out.</p>
+                `,
+
+                // --- FASE 2: FERGE (KODE 1) ---
+                'jylland': `
+                    <h4>CLASSIFIED TRANSMISSION — SHIPBOARD DIRECTIVE</h4>
+                    <p>Godkjent tilgang.</p>
+                    <p>Under overfarten har systemet fanget opp et fragmentert signal med seks elementer. Hvert element representerer både en bokstav og et tall, men bare en av delene er korrekt.</p>
+                    <p>Krypteringsmetoden følger <strong>NORSE–6-protokollen</strong> – en kombinasjon av fonetisk og numerisk substitusjon.</p>
+
+                    <h5>Intercepted sequence:</h5>
+                    <p><strong>11-K, 15-O, 14-N, 22-V, 15-O, 25-Y</strong></p>
+
+                    <h5>For å finne riktig bokstavkode må dere:</h5>
+                    <ol>
+                        <li><strong>Avdekke mønsteret:</strong><br>
+                        Tallene refererer til alfabetets posisjoner (A = 1 … Z = 26). Men <strong>noen</strong> av tallene er falske; de skjuler seg bak primtall. Finn hvilke tall i sekvensen som er primtall, og bytt ut tilhørende bokstaver med bokstaven som kommer <strong>før</strong> i alfabetet.</li>
+                        
+                        <li><strong>Bruk NATO-fonetisk filtrering:</strong><br>
+                        Skriv hele den nye sekvensen i NATO-fonetisk form. Ta den <strong>tredje bokstaven</strong> i hvert fonetiske ord og skriv dem sammen.</li>
+                        
+                        <li><strong>Resultatet danner Transit Code Alpha (bokstavkode).</strong></li>
+                    </ol>
+                    <p>Skriv inn koden i portalen når dere er enige.</p>
+                    <p>— Command Out.</p>
+                `,
+
+                // --- FASE 2: FERGE (KODE 2) --- (Nå med GPS-sjekk)
+                'lcvccn': `
+                    <h4>TRANSIT CODE ALPHA — VERIFIED</h4>
+                    <p>Kryptert kommunikasjon gjenopprettet. Neste waypoint er aktivert.</p>
+                    
+                    <h5>Safehouse koordinater:</h5>
+                    <p><a href="https://www.google.com/maps/search/?api=1&query=57%C2%B°03'48.6%22N+9%C2%B°54'47.6%22E" target="_blank" class="location-link"><strong>57°03'48.6"N 9°54'47.6"E</strong></a></p>
+                    <p><strong>Lokasjon:</strong> Nørresundby</p>
+                    <p>Gå direkte til disse koordinatene. Hold lav profil. Når lokasjonen er sikret, må du verifisere din posisjon for å motta neste direktiv.</p>
+                    
+                    <!-- NY KNAPP FOR GPS-SJEKK -->
+                    <button id="verify-location-btn" class="download-button" onclick="verifySafehouseLocation()">
+                        VERIFISER POSISJON
+                    </button>
+                    
+                    <!-- Område for GPS-tilbakemelding -->
+                    <div id="location-feedback" style="margin-top: 15px; color: #ff9900; font-weight: bold;"></div>
+                `,
+                
+                // --- FASE 3: SAFEHOUSE ---
+                'safehouse check-in': `
+                    <h4>CLASSIFIED DIRECTIVE — FLIGHT OPS</h4>
+                    <h5>Clearance Level: ECHELON 5</h5>
+                    <p>Godt jobbet, agenter. Lokasjon sikret.</p>
+                    <p>Etter den vellykkede overføringen fra fergen er situasjonen endret. Våre analyser viser at GNM-modulen har vært aktiv i nettverkssporene vi overvåker.</p>
+                    <p>For å sikre at minst ett lag kan rykke inn dersom situasjonen eskalerer, skal dere gjennomføre akutt pilotopplæring i et kontrollert miljø.</p>
+                    
+                    <p><strong>Lokasjon:</strong> <a href="https://www.google.com/maps/search/?api=1&query=57%C2%B005'13.0%22N+9%C2%B°52'18.1%22E" target="_blank" class="location-link"><strong>57°05'13.0"N 9°52'18.1"E</strong></a><br>
+                        <strong>Tid:</strong> 10:00 i morgen</p>
+                    
+                    <p>Dere vil gjennomføre et fullt <strong>pilottreningsprogram</strong> basert på F-16-plattformen. Forbered dere på høyde, hastighet og presisjon.</p>
+                    <p>Etter fullført økt vil vertskapet gi dere neste autorisasjonskode.</p>
+                    <p>— Command Out.</p>
+                `,
+
+                // --- FASE 4: ETTER FLIGHT OPS --- (Nå med GPS-sjekk)
+                'fuelcheck': `
+                    <h4>CLASSIFIED MESSAGE — POST FLIGHT OPS DIRECTIVE</h4>
+                    <h5>Clearance Level: ECHELON 5</h5>
+                    <p>Flight-sekvens fullført. Data bekrefter operativ beredskap hos alle enheter.</p>
+                    <p>Nye instruksjoner er sendt fra kommandonivå.</p>
+                    <p>Dere skal trekke tilbake til et sikkert sivilt kontaktpunkt for debrief og midlertidig avventing.</p>
+                    
+                    <h5>Lokasjon (Dekknavn):</h5>
+                    <p><a href="https://www.google.com/maps/search/?api=1&query=Slotsgade+33,+9000+Aalborg,+Denmark" target="_blank" class="location-link"><strong>ISIDOR HENIUS</strong></a><br>
+                    <span style="color: #888;">Slotsgade 33, 9000 Aalborg, Denmark</span></p>
+                    
+                    <p><strong>Oppdrag:</strong> Møt på stedet. Når dere er fremme, verifiser posisjon for å motta neste ordre.</p>
+                    
+                    <!-- NY KNAPP FOR GPS-SJEKK -->
+                    <button id="verify-isidor-btn" class="download-button" onclick="verifyIsidorHeniusLocation()">
+                        VERIFISER POSISJON (ISIDOR HENIUS)
+                    </button>
+                    
+                    <!-- Område for GPS-tilbakemelding -->
+                    <div id="location-feedback" style="margin-top: 15px; color: #ff9900; font-weight: bold;"></div>
+                `,
+
+                // --- FASE 4: ETTER ISIDOR HENIUS ---
+                'table 19': `
+                    <h4>CLASSIFIED MESSAGE — EVENING DIRECTIVE</h4>
+                    <h5>Clearance Level: Echelon 5</h5>
+                    <p>Dataoverføring fra Contact Point Bravo er mottatt. Operasjonen går inn i fase 6.</p>
+                    <p>Dere har gjort en solid innsats i felt, og kommando gir grønt lys for midlertid rekreasjon og sosial samling før videre operasjon.</p>
+                    
+                    <h5>Neste oppmøtested:</h5>
+                    <p>Et sivilisert deknavn brukt til lavprofil-møter mellom feltagenter:</p>
+                    <p><strong>Dekknavn:</strong> THE BLACK TABLE<br>
+                    <strong>Lokasjon:</strong> <a href="https://www.google.com/maps/search/?api=1&query=Restaurant+Flammen+Aalborg" target="_blank" class="location-link">Restaurant Flammen</a><br>
+                    <strong>Tid:</strong> 19:00</p>
+                    <p>— Command Out.</p>
+                `,
+                
+                // --- FASE 5: PÅ RESTAURANT FLAMMEN ---
+                'specter one': `
+                    <h4>CLASSIFIED MESSAGE — FIELD DIRECTIVE</h4>
+                    <h5>Clearance Level: Echelon 5</h5>
+                    <p>Bekreftelse mottatt fra Command.</p>
+                    <p>Satellittdata fra Jutland Sector viser aktivitet ved et tidligere treningsanlegg nordvest for Aalborg. Området går under dekknavnet:</p>
+                    <p><strong>AMMO GROUND</strong></p>
+                    <p>Dere skal forflytte dere fra nåværende base og være fullt operative ved morgengry.</p>
+                    
+                    <p><strong>Oppmøtested:</strong> <a href="https://www.google.com/maps/search/?api=1&query=Magasinvej+7,+9870+Sindal,+Denmark" target="_blank" class="location-link">Magasinvej 7, 9870 Sindal, Denmark</a><br>
+                    <strong>Tid:</strong> 09:00 i morgen</p>
+                    
+                    <h5>Instruks:</h5>
+                    <ul>
+                        <li>Pakk alle personlige eiendeler og klargjør utstyr for ny forflytning.</li>
+                        <li>Etter fullført oppdrag vil dere <strong>ikke returnere</strong> til nåværende base.</li>
+                        <li>Vær forberedt på overnatting annet sted etter feltoperasjonen.</li>
+                    </ul>
+                    
+                    <h5>Bekledning:</h5>
+                    <ul>
+                        <li>Varmt og lagvis tøy (ull, fleece, vindtett jakke)</li>
+                        <li>Gode sko eller vanntette støvler</li>
+                        <li>Hansker og hodeplagg (lue/buff)</li>
+                        <li>Ingen sterke farger — hold lav profil</li>
+                    </ul>
+                    <p>— Command Out.</p>
+                `,
+
+                // --- FASE 6: ETTER AMMO GROUND --- (Nå med GPS-sjekk)
+                'nordstar': `
+                    <h4>CLASSIFIED MESSAGE — EXTRACTION ORDER</h4>
+                    <h5>Clearance Level: ECHELON 5</h5>
+                    <p>Bekreftelse mottatt fra feltstyrken.</p>
+                    <p>Rapportene fra AMMO GROUND bekrefter at GNM-modulen er deaktivert. Interferensloggene viser at systemet forsøkte en reaktivering, men at signalet ble avbrutt.</p>
+                    <p>Operasjonen vurderes som suksessfull.</p>
+                    <p class="warning">Men deres posisjon er nå kompromittert — det antas at motparten vil forsøke å spore opp teamet.</p>
+                    
+                    <h5>Direktiv:</h5>
+                    <p>Gå i dekning umiddelbart. Dere skal forflytte dere til trygg sone for midlertidig evakuering.</p>
+                    <p><strong>Lokasjon:</strong> <a href="https://www.google.com/maps/search/?api=1&query=Skydebanevej+17,+9800+Hjørring" target="_blank" class="location-link">Skydebanevej 17, 9800 Hjørring</a><br>
+                    <strong>Dekknavn:</strong> Base Echo</p>
+                    <p>Hold lav profil under forflytning. Ved ankomst: sikre lokasjonen, lås alle dører, og verifiser posisjon for neste direktiv.</p>
+
+                    <!-- NY KNAPP FOR GPS-SJEKK -->
+                    <button id="verify-echo-btn" class="download-button" onclick="verifyBaseEchoLocation()">
+                        VERIFISER POSISJON (BASE ECHO)
+                    </button>
+                    
+                    <!-- Område for GPS-tilbakemelding -->
+                    <div id="location-feedback" style="margin-top: 15px; color: #ff9900; font-weight: bold;"></div>
+                `,
+
+                // --- FASE 7: PÅ BASE ECHO (HJØRRING) ---
+                'echofall': `
+                    <h4>CLASSIFIED MESSAGE — DEBRIEF DIRECTIVE</h4>
+                    <h5>Clearance Level: ECHELON 5</h5>
+                    <p>Bekreftelse mottatt fra Base Echo.</p>
+                    <p>Operasjonen nærmer seg konklusjon. Nye data fra kommandonivå viser at siste del av GNM-protokollen er fanget opp og isolert.</p>
+                    <p>Alle enheter skal nå innkalles til endelig debrief og evaluering.</p>
+                    
+                    <p><strong>Dekknavn:</strong> Operation Bones<br>
+                    <strong>Tid:</strong> 20:00<br>
+                    <strong>Lokasjon:</strong> <a href="https://www.google.com/maps/search/?api=1&query=Bones+Restaurant,+Hjørring" target="_blank" class="location-link">Bones Restaurant, Hjørring</a></p>
+                    
+                    <p><strong>Oppdrag:</strong> Møt presist. Hold lav profil. Dette er siste steg før operasjonen avsluttes.</p>
+                    <p>— Command Out.</p>
+                `,
+
+                // --- FASE 8: AVSLUTNING (PÅ BONES) ---
+                'shadowfall': `
+                    <h4>CLASSIFIED MESSAGE — OPERATION TERMINATION ORDER</h4>
+                    <h5>Clearance Level: ECHELON 5</h5>
+                    <p>Bekreftelse mottatt fra feltleder SHADOW. Alle enheter rapportert som sikre.</p>
+                    <p><strong>Operasjon NORTHERN STRIKE er herved erklært fullført.</strong></p>
+                    <p>GNM-protokollen er isolert, kryptert og fjernet fra aktivt nettverk. Dataene sikret ved AMMO GROUND og overført via Base Echo har stanset reaktivering.</p>
+                    <p>Kommandosenteret beordrer umiddelbar tilbaketrekning og oppløsning av operative enheter.</p>
+                    
+                    <h5>Direktiv:</h5>
+                    <ul>
+                        <li>Alle enheter trekker ut av operasjonsområdet i morgen.</li>
+                        <li>Avreise skjer via maritim transport.</li>
+                        <li><strong>Båtavgang:</strong> 12:15 (Møt ved terminal senest 11:45)</li>
+                        <li><a href="https://storage.googleapis.com/files_webpage/Privat/Colourline%20bilett.pdf" target="_blank" class="location-link"><strong>Referanse: Ferjebilletter</strong></a></li>
+                    </ul>
+                    
+                    <h5>Transportplan:</h5>
+                    <ul>
+                        <li><strong>Team Oslo:</strong> Forflytter seg videre med buss fra Kristiansand kl. 16:30.</li>
+                        <li><strong>Team Stavanger:</strong> Returnerer kjøretøyet til hjemmebase via landrute.</li>
+                    </ul>
+                    <p>Hold lav profil under transport. Unngå identifiserbare symboler.</p>
+                    <p>Denne operasjonen vil ikke bli offentlig anerkjent. Deres innsats har vært avgjørende.</p>
+                    <p><strong>Mission Complete.</strong></p>
+                    <p>— SHADOW / Command Out.</p>
+                `
             };
 
-            // Start GPS-forespørselen
-            navigator.geolocation.getCurrentPosition(locationSuccess, locationError, options);
-        }
+            // --- NY MASTER-PORTAL DATABASE ---
+            // Egen liste for admin-visningen for å styre rekkefølge og innhold
+            const masterViewData = [
+                {
+                    code: 'team oslo',
+                    title: 'Fase 1 (Oslo)',
+                    adminNote: 'Innledende briefing for Team Oslo. Inneholder reiseordre, første observasjonspunkt og pakkliste.'
+                },
+                {
+                    code: 'team stavanger',
+                    title: 'Fase 1 (Stavanger)',
+                    adminNote: 'Innledende briefing for Team Stavanger. Inneholder reiseordre, første observasjonspunkt og pakkliste.'
+                },
+                {
+                    code: 'aurora borealis',
+                    title: 'Fase 2 (Sammenslåing)',
+                    adminNote: 'Agentene må slå sammen kodeordene sine ("aurora" + "borealis") for å få denne. Sender dem til fergen.'
+                },
+                {
+                    code: 'jylland',
+                    title: 'Fase 2 (Ferge, Gåte 1)',
+                    adminNote: 'Første gåte ombord på fergen. Agent SHADOW gir denne koden. Svaret er "lcvccn".'
+                },
+                {
+                    code: 'lcvccn',
+                    title: 'Fase 2 (Ferge, Gåte 2)',
+                    adminNote: 'Svaret på "jylland". Sender dem til Safehouse og aktiverer GPS-sjekk for Nørresundby.'
+                },
+                {
+                    code: 'safehouse check-in',
+                    title: 'Fase 3 (Safehouse)',
+                    adminNote: 'Denne låses opp av GPS-sjekken ved safehouse ("lcvccn"). Sender agentene til Flight Ops.'
+                },
+                {
+                    code: 'fuelcheck',
+                    title: 'Fase 4 (Flight Ops)',
+                    adminNote: 'Denne koden får de etter Flight Ops. Sender dem til "ISIDOR HENIUS" og aktiverer GPS-sjekk der.'
+                },
+                {
+                    code: 'table 19',
+                    title: 'Fase 4 (Isidor Henius)',
+                    adminNote: 'Denne låses opp av GPS-sjekken ved Isidor Henius ("fuelcheck"). Sender dem til Restaurant Flammen.'
+                },
+                {
+                    code: 'specter one',
+                    title: 'Fase 5 (Restaurant)',
+                    adminNote: 'Agent SHADOW gir denne koden på restauranten. Sender dem til AMMO GROUND.'
+                },
+                {
+                    code: 'nordstar',
+                    title: 'Fase 6 (Ammo Ground)',
+                    adminNote: 'Denne koden får de etter skytingen. Sender dem til "Base Echo" (Hjørring) og aktiverer GPS-sjekk der.'
+                },
+                {
+                    code: 'echofall',
+                    title: 'Fase 7 (Base Echo)',
+                    adminNote: 'Denne låses opp av GPS-sjekken ved Base Echo ("nordstar"). Sender dem til Bones for debrief.'
+                },
+                {
+                    code: 'shadowfall',
+                    title: 'Fase 8 (Avslutning)',
+                    adminNote: 'Agent SHADOW gir denne koden på Bones. Dette er det siste oppdraget og inneholder avslutning og reiseinfo hjem.'
+                }
+            ];
+            // --- SLUTT PÅ MASTER-PORTAL DATABASE ---
 
-        /**
-         * Kjøres HVIS vi får en gyldig posisjon
-         */
-        function locationSuccess(pos) {
-            const feedback = document.getElementById('location-feedback');
-            const btn = document.getElementById('verify-location-btn');
+            // --- 5. DEFINER ALLE FUNKSJONER ---
+
+            // --- Firebase-funksjoner ---
+
+            /**
+             * Lagrer fremdriften til Firebase
+             */
+            async function saveProgress(lastCode) {
+                if (!isAuthReady || !userId) {
+                    console.log("Kan ikke lagre fremdrift: Autentisering ikke klar.");
+                    return;
+                }
+                const codename = localStorage.getItem('agentCodename');
+                if (!codename) {
+                    console.warn("Kan ikke lagre fremdrift: Kodenavn mangler.");
+                    return;
+                }
+
+                const userDocRef = doc(db, "artifacts", appId, "users", userId, "progress", "main");
+                try {
+                    if (lastCode !== '95764045') {
+                        await setDoc(userDocRef, { lastCode: lastCode, codename: codename }, { merge: true });
+                        localStorage.setItem('currentUserLastCode', lastCode);
+                        console.log(`Fremdrift lagret for ${codename}:`, lastCode);
+                    }
+                } catch (e) {
+                    console.error("Feil ved lagring av fremdrift:", e);
+                }
+            }
+
+            /**
+             * Laster fremdriften fra Firebase
+             */
+            async function loadProgress() {
+                if (!isAuthReady || !userId) {
+                    console.log("Kan ikke laste fremdrift: Autentisering ikke klar.");
+                    setTimeout(loadProgress, 500); 
+                    return;
+                }
+
+                const userDocRef = doc(db, "artifacts", appId, "users", userId, "progress", "main");
+                try {
+                    const docSnap = await getDoc(userDocRef);
+                    const initialMessageHTML = `<h4>CLASSIFIED ACCESS POINT</h4><p>Systemet krever celle-autentisering for tilgang.</p>`;
+
+                    if (docSnap.exists()) {
+                        const data = docSnap.data();
+                        const lastCode = data.lastCode;
+                        localStorage.setItem('currentUserLastCode', lastCode); 
+                        console.log("Fremdrift funnet:", lastCode);
+                        
+                        const messageHtml = briefings[lastCode];
+                        if (messageHtml) {
+                            messageDisplay.innerHTML = messageHtml;
+                        } else {
+                            messageDisplay.innerHTML = initialMessageHTML;
+                        }
+                    } else {
+                        localStorage.removeItem('currentUserLastCode'); 
+                        console.log("Ingen lagret fremdrift funnet.");
+                        messageDisplay.innerHTML = initialMessageHTML;
+                    }
+                } catch (e) {
+                    console.error("Feil ved lasting av fremdrift:", e);
+                    messageDisplay.innerHTML = `<p class="warning">FEIL: Kunne ikke laste fremdrift. Sjekk konsoll.</p>`;
+                }
+            }
+            // Gjøre loadProgress global slik at arkiv-knappen kan kalle den
+            window.loadProgress = loadProgress;
+
+            /**
+             * Viser hovedportalen (input-feltet)
+             */
+            function showMainPortal() {
+                inputForm.style.display = 'flex';
+                loadProgress();
+            }
+
+            /**
+             * Viser Kodenavn-innloggingen
+             */
+            function showLoginPortal() {
+                inputForm.style.display = 'none';
+                messageDisplay.innerHTML = `
+                    <h4>AGENT-AUTENTISERING</h4>
+                    <p>Bekreft din identitet for å koble til ECHELON 5-nettverket. Kun gyldige kodenavn er autorisert.</p>
+                    
+                    <div id="login-form-container">
+                        <input type="text" id="codename-input" placeholder="Skriv ditt kodenavn..." autocomplete="off">
+                        <button id="codename-submit-btn" onclick="handleCodenameLogin()">AUTENTISER</button>
+                        <div id="login-feedback"></div>
+                    </div>
+                `;
+            }
+
+            /**
+             * Håndterer Kodenavn-innlogging (gjøres global)
+             */
+            window.handleCodenameLogin = function() {
+                const input = document.getElementById('codename-input');
+                const feedback = document.getElementById('login-feedback');
+                const codename = input.value.toLowerCase().trim();
+
+                if (validCodenames.includes(codename)) {
+                    localStorage.setItem('agentCodename', codename);
+                    console.log("Kodenavn lagret:", codename);
+                    
+                    messageDisplay.innerHTML = `
+                        <div class="loader">
+                            KODENAVN <strong>${codename.toUpperCase()}</strong> VERIFISERT...<br>
+                            ETABLERER SIKKER KOBLING...<br>
+                            LASTER PORTAL...
+                        </div>`;
+                    setTimeout(showMainPortal, 1500);
+                } else {
+                    feedback.innerHTML = `<p class="warning">ADGANG NEKTET. KODENAVN IKKE GJENKJENT.</p>`;
+                    input.style.animation = 'shake 0.3s';
+                    setTimeout(() => { input.style.animation = ''; }, 300);
+                }
+            }
+
+            /**
+             * Sjekker om brukeren allerede er logget inn lokalt
+             */
+            function checkLocalLogin() {
+                const codename = localStorage.getItem('agentCodename');
+                if (codename && validCodenames.includes(codename)) {
+                    console.log("Kodenavn funnet i lokal lagring:", codename);
+                    messageDisplay.innerHTML = `
+                        <div class="loader">
+                            GJENKJENNER AGENT <strong>${codename.toUpperCase()}</strong>...<br>
+                            LASTER FREMDRIFT...
+                        </div>`;
+                    setTimeout(showMainPortal, 1000);
+                } else {
+                    console.log("Ingen gyldig kodenavn funnet lokalt. Viser innlogging.");
+                    showLoginPortal();
+                }
+            }
+
+            /**
+             * Initialiserer Firebase
+             */
+            async function initFirebase() {
+                if (!firebaseConfig || !firebaseConfig.apiKey) {
+                    console.error("Firebase config mangler!");
+                    messageDisplay.innerHTML = '<p class="warning">SYSTEMFEIL: Kunne ikke koble til Command Server. API-nøkkel mangler.</p>';
+                    return;
+                }
+
+                try {
+                    setLogLevel('Debug');
+                    const app = initializeApp(firebaseConfig);
+                    db = getFirestore(app);
+                    auth = getAuth(app);
+                    console.log("Firebase initialisert.");
+
+                    onAuthStateChanged(auth, async (user) => {
+                        if (user) {
+                            userId = user.uid;
+                            console.log("Bruker er logget inn:", userId);
+                            isAuthReady = true;
+                            checkLocalLogin();
+                        } else {
+                            try {
+                                if (initialAuthToken) {
+                                    console.log("Logger inn med Custom Token...");
+                                    await signInWithCustomToken(auth, initialAuthToken);
+                                } else {
+                                    console.log("Logger inn Anonymt...");
+                                    await signInAnonymously(auth);
+                                }
+                            } catch (e) {
+                                console.error("Innloggingsfeil:", e);
+                                messageDisplay.innerHTML = `<p class="warning">AUTENTISERING FEIBLET. Sjekk konsoll.</p>`;
+                            }
+                        }
+                    });
+
+                } catch (e) {
+                    console.error("Feil ved initialisering av Firebase:", e);
+                    messageDisplay.innerHTML = '<p class="warning">SYSTEMFEIL: Kunne ikke koble til Command Server. Sjekk konsoll.</p>';
+                }
+            }
+
+            // --- App-funksjoner (logikk) ---
+
+            /**
+             * Kjøres når brukeren trykker "DEKRYPTER"
+             */
+            function submitCode() {
+                let code = codeInput.value.toLowerCase().trim();
+                
+                if (code === "safehouse check-in" || code === "safehouse checkin") {
+                    code = 'safehouse check-in';
+                }
+                
+                feedbackDisplay.innerHTML = '';
+
+                if (code === '95764045') {
+                    console.log("Master Portal tilgang forespurt.");
+                    showMasterPortal();
+                    codeInput.value = '';
+                    return; 
+                }
+
+                const messageHtml = briefings[code];
+
+                if (messageHtml) {
+                    messageDisplay.innerHTML = `
+                        <div class="loader">
+                            DEKRYPTERER SIGNAL...<br>
+                            VERIFISERER AUTORISASJON...<br>
+                            ETABLERER SIKKER KOBLING...
+                        </div>`;
+                    
+                    setTimeout(() => {
+                        messageDisplay.innerHTML = messageHtml;
+                        window.scrollTo(0, 0); 
+                        codeInput.value = ''; 
+                        saveProgress(code);
+                    }, 1500);
+
+                } else {
+                    feedbackDisplay.innerHTML = '<p class="warning">ADGANG NEKTET. KODE IKKE GJENKJENT.</p>';
+                    inputForm.style.animation = 'shake 0.3s';
+                    setTimeout(() => { inputForm.style.animation = ''; }, 300);
+                }
+            }
             
-            const userLat = pos.coords.latitude;
-            const userLon = pos.coords.longitude;
+            /**
+             * Genererer og laster ned pakklisten som en .txt-fil
+             */
+            window.downloadPakkliste = function() {
+                const pakklisteText = `PERSONLIG UTSTYR — STANDARD LOADOUT
+    CLASSIFIED DOCUMENT — EQUIPMENT MANIFEST
 
-            // Beregn avstanden fra agenten til målet
-            const distance = calculateDistance(SAFEHOUSE_LAT, SAFEHOUSE_LON, userLat, userLon);
+    Clearance Level: ECHELON 3
+    Distribution: Authorized Field Units Only
 
-            if (distance <= MAX_DISTANCE_METERS) {
-                // SUKSESS! Agenten er på rett sted.
-                feedback.innerHTML = `POSISJON VERIFISERT (Avstand: ${Math.round(distance)}m). Laster neste direktiv...`;
+    ---------------------------------
+    ⚙️ FELTUTSTYR
+    For oppdrag under skiftende vær og lang forflytning:
+    ---------------------------------
+    • Ekstra ullsokker (ett par i vanett pose)
+    • Tynt sitteunderlag eller sammenrullbar pute (pause i felt)
+    • Ørepropper (for søvn eller støy)
+    • Powerbank
+    • Ullundertøy
+    • Fjellsko
+    • Turbukse (helst uten flashy farger)
+    • Jakke (helst uten flashy farger)
+    • Tynne hansker
+    • Lue
+
+    ---------------------------------
+    🧳 SIVILT / LOGISTIKK
+    For komfort og beredskap mellom operasjonene:
+    ---------------------------------
+    • Ekstra undertøy og sokker
+    • Komfortabel bukse for innendørs bruk
+    • T-skjorte
+    • Genser
+    • Reisedokumenter, ID og kopi på mobilen
+    • Liten notatbok og penn (for oppdragsnotater)
+
+    ---------------------------------
+    👔 FORMELLT OPPDAGSANTREKK — “CAUSAL BUSINESS”
+    ---------------------------------
+    • Finbukser
+    • Skjorte
+    • Jakke
+
+    ---------------------------------
+    🧴 DIVERSE / PERSONLIG
+    ---------------------------------
+    • Mobillader
+    • Solbriller (lav sol i Danmark på vinteren)
+    • Lommebok
+    • Toalettsaker
+
+    ---------------------------------
+    Instruks:
+    Pakk lett i ryggsekk. Du må regne med å bære tingene dine under forflytning.
+    Unngå sterke farger og synlige logoer.
+    Hold lav profil.
+    — Command Logistics Division / Operation Northern Strike
+    `;
                 
-                // Hent meldingen som hører til 'safehouse check-in'
-                const messageHtml = briefings['safehouse check-in'];
+                const blob = new Blob([pakklisteText], { type: 'text/plain;charset=utf-8' });
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(blob);
+                link.download = 'pakkliste.txt';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                URL.revokeObjectURL(link.href);
+            }
+
+            // --- GPS VERIFISERINGSFUNKSJONER ---
+
+            const SAFEHOUSE_LAT = 57.0635;
+            const SAFEHOUSE_LON = 9.913222;
+            const ISIDOR_LAT = 57.05061;
+            const ISIDOR_LON = 9.91976;
+            const ECHO_LAT = 57.45788;
+            const ECHO_LON = 9.95764;
+            const MAX_DISTANCE_METERS = 150; 
+
+            function calculateDistance(lat1, lon1, lat2, lon2) {
+                const R = 6371e3; 
+                const φ1 = lat1 * Math.PI / 180; 
+                const φ2 = lat2 * Math.PI / 180;
+                const Δφ = (lat2 - lat1) * Math.PI / 180;
+                const Δλ = (lon2 - lon1) * Math.PI / 180;
+
+                const a = Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
+                            Math.cos(φ1) * Math.cos(φ2) *
+                            Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
+                const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+                return R * c; 
+            }
+
+            function handleLocationVerification(targetLat, targetLon, btnId, feedbackId, successCallback) {
+                const feedback = document.getElementById(feedbackId);
+                const btn = document.getElementById(btnId);
                 
-                // Vis "laster" og deretter den nye meldingen (samme logikk som i submitCode)
+                if (!feedback || !btn) {
+                    console.error("GPS-sjekk feilet: Finner ikke knapp eller feedback-element.");
+                    return;
+                }
+                
+                if (!navigator.geolocation) {
+                    feedback.innerHTML = '<p class="warning">FEIL: GEOLOKASJON STØTTES IKKE AV DENNE ENHETEN.</p>';
+                    return;
+                }
+
+                feedback.innerHTML = 'Søker etter GPS-signal... Godkjenn forespørsel i nettleser...';
+                btn.disabled = true;
+                btn.innerHTML = 'LOKALISERER...';
+
+                const options = { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 };
+
+                navigator.geolocation.getCurrentPosition(
+                    (pos) => locationSuccess(pos, targetLat, targetLon, btn, feedback, successCallback),
+                    (err) => locationError(err, btn, feedback),
+                    options
+                );
+            }
+
+            function locationSuccess(pos, targetLat, targetLon, btn, feedback, successCallback) {
+                const userLat = pos.coords.latitude;
+                const userLon = pos.coords.longitude;
+                const distance = calculateDistance(targetLat, targetLon, userLat, userLon);
+
+                if (distance <= MAX_DISTANCE_METERS) {
+                    feedback.innerHTML = `POSISJON VERIFISERT (Avstand: ${Math.round(distance)}m). Laster neste direktiv...`;
+                    successCallback();
+                } else {
+                    feedback.innerHTML = `<p class="warning">VERIFISERING NEKTET. POSISJON LOKALISERT, MEN DU ER IKKE VED MÅLET. (Avstand: ${Math.round(distance)}m). PRØV IGJEN NÅR DU ER NÆRMERE.</p>`;
+                    btn.disabled = false;
+                    btn.innerHTML = 'VERIFISER POSISJON PÅ NYTT';
+                }
+            }
+
+            function locationError(err, btn, feedback) {
+                let errorMsg = '';
+                switch(err.code) {
+                    case err.PERMISSION_DENIED: errorMsg = "ADGANG NEKTET. Systemet krever GPS-tilgang for å verifisere posisjon."; break;
+                    case err.POSITION_UNAVAILABLE: errorMsg = "SIGNAL TAPT. Posisjonsdata er ikke tilgjengelig. Prøv å gå utendørs."; break;
+                    case err.TIMEOUT: errorMsg = "TIDSAVBRUDD. Kunne ikke hente posisjon. Sjekk GPS-signal og prøv igjen."; break;
+                    default: errorMsg = "UKJENT GPS-FEIL. Kunne ikke verifisere posisjon."; break;
+                }
+                feedback.innerHTML = `<p class="warning">${errorMsg}</p>`;
+                btn.disabled = false;
+                btn.innerHTML = 'VERIFISER POSISJON';
+            }
+
+            function showUnlockedMessage(nextCode) {
+                const messageHtml = briefings[nextCode];
+                
                 messageDisplay.innerHTML = `
                     <div class="loader">
                         POSISJON GODKJENT...<br>
@@ -804,322 +1099,225 @@ Hold lav profil.
                     messageDisplay.innerHTML = messageHtml;
                     window.scrollTo(0, 0);
                 }, 1500);
-
-            } else {
-                // FEIL: Agenten er for langt unna
-                feedback.innerHTML = `<p class="warning">VERIFISERING NEKTET. POSISJON LOKALISERT, MEN DU ER IKKE VED MÅLET. (Avstand: ${Math.round(distance)}m). PRØV IGJEN NÅR DU ER NÆRMERE.</p>`;
-                btn.disabled = false;
-                btn.innerHTML = 'VERIFISER POSISJON PÅ NYTT';
-            }
-        }
-
-        /**
-         * Kjøres HVIS det oppstår en feil (f.eks. agenten nekter GPS-tilgang)
-         */
-        function locationError(err) {
-            const feedback = document.getElementById('location-feedback');
-            const btn = document.getElementById('verify-location-btn');
-            
-            let errorMsg = '';
-            switch(err.code) {
-                case err.PERMISSION_DENIED:
-                    errorMsg = "ADGANG NEKTET. Systemet krever GPS-tilgang for å verifisere posisjon.";
-                    break;
-                case err.POSITION_UNAVAILABLE:
-                    errorMsg = "SIGNAL TAPT. Posisjonsdata er ikke tilgjengelig. Prøv å gå utendørs.";
-                    break;
-                case err.TIMEOUT:
-                    errorMsg = "TIDSAVBRUDD. Kunne ikke hente posisjon. Sjekk GPS-signal og prøv igjen.";
-                    break;
-                default:
-                    errorMsg = "UKJENT GPS-FEIL. Kunne ikke verifisere posisjon.";
-                    break;
-            }
-            feedback.innerHTML = `<p class="warning">${errorMsg}</p>`;
-            btn.disabled = false;
-            btn.innerHTML = 'VERIFISER POSISJON';
-        }
-
-        /**
-         * Hjelpefunksjon for å beregne avstand mellom to GPS-punkter (Haversine-formelen)
-         * Returnerer avstanden i meter.
-         */
-        function calculateDistance(lat1, lon1, lat2, lon2) {
-            const R = 6371e3; // Jordens radius i meter
-            const φ1 = lat1 * Math.PI / 180; // φ, λ i radianer
-            const φ2 = lat2 * Math.PI / 180;
-            const Δφ = (lat2 - lat1) * Math.PI / 180;
-            const Δλ = (lon2 - lon1) * Math.PI / 180;
-
-            const a = Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
-                      Math.cos(φ1) * Math.cos(φ2) *
-                      Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
-            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-
-            const d = R * c; // avstand i meter
-            return d;
-        }
-
-
-        // --- NY GPS-FUNKSJON FOR ISIDOR HENIUS ---
-
-        // Definerer koordinatene for "Isidor Henius"
-        // Slotsgade 33, 9000 Aalborg, Denmark
-        // 57.0514° N, 9.9213° E
-        const ISIDOR_LAT = 57.0514;
-        const ISIDOR_LON = 9.9213;
-        // MAX_DISTANCE_METERS (150) gjenbrukes
-
-        /**
-         * Kjøres når agenten trykker "VERIFISER POSISJON (ISIDOR)"
-         */
-        function verifyIsidorLocation() {
-            const feedback = document.getElementById('location-feedback-isidor'); 
-            const btn = document.getElementById('verify-isidor-btn');
-            
-            if (!navigator.geolocation) {
-                feedback.innerHTML = '<p class="warning">FEIL: GEOLOKASJON STØTTES IKKE.</p>';
-                return;
             }
 
-            feedback.innerHTML = 'Søker etter GPS-signal (ISIDOR)...';
-            btn.disabled = true;
-            btn.innerHTML = 'LOKALISERER...';
-
-            const options = {
-                enableHighAccuracy: true,
-                timeout: 10000,
-                maximumAge: 0
-            };
-
-            navigator.geolocation.getCurrentPosition(isidorLocationSuccess, isidorLocationError, options);
-        }
-
-        /**
-         * Kjøres HVIS vi får en gyldig posisjon (Isidor)
-         */
-        function isidorLocationSuccess(pos) {
-            const feedback = document.getElementById('location-feedback-isidor');
-            const btn = document.getElementById('verify-isidor-btn');
-            
-            const userLat = pos.coords.latitude;
-            const userLon = pos.coords.longitude;
-
-            const distance = calculateDistance(ISIDOR_LAT, ISIDOR_LON, userLat, userLon);
-
-            if (distance <= MAX_DISTANCE_METERS) {
-                // SUKSESS!
-                feedback.innerHTML = `POSISJON VERIFISERT (Avstand: ${Math.round(distance)}m). Laster neste direktiv...`;
-                
-                // Hent 'table 19' meldingen
-                const messageHtml = briefings['table 19']; 
-                
-                messageDisplay.innerHTML = `<div class="loader">POSISJON GODKJENT...<br>DEKRYPTERER...</div>`;
-                
-                setTimeout(() => {
-                    messageDisplay.innerHTML = messageHtml;
-                    window.scrollTo(0, 0);
-                }, 1500);
-
-            } else {
-                // FEIL: For langt unna
-                feedback.innerHTML = `<p class="warning">VERIFISERING NEKTET. POSISJON LOKALISERT. (Avstand: ${Math.round(distance)}m). PRØV IGJEN NÅR DU ER NÆRMERE.</p>`;
-                btn.disabled = false;
-                btn.innerHTML = 'VERIFISER POSISJON (ISIDOR)';
-            }
-        }
-
-        /**
-         * Kjøres HVIS det oppstår en feil (Isidor)
-         */
-        function isidorLocationError(err) {
-            const feedback = document.getElementById('location-feedback-isidor');
-            const btn = document.getElementById('verify-isidor-btn');
-            
-            let errorMsg = 'UKJENT GPS-FEIL.';
-            if (err.code === err.PERMISSION_DENIED) {
-                errorMsg = "ADGANG NEKTET. Systemet krever GPS-tilgang.";
-            } else if (err.code === err.POSITION_UNAVAILABLE) {
-                errorMsg = "SIGNAL TAPT. Posisjonsdata er ikke tilgjengelig.";
-            } else if (err.code === err.TIMEOUT) {
-                errorMsg = "TIDSAVBRUDD. Kunne ikke hente posisjon.";
-            }
-            
-            feedback.innerHTML = `<p class="warning">${errorMsg}</p>`;
-            btn.disabled = false;
-            btn.innerHTML = 'VERIFISER POSISJON (ISIDOR)';
-        }
-
-
-        // --- NY GPS-FUNKSJON FOR BASE ECHO ---
-
-        // Definerer koordinatene for "Base Echo"
-        // Skydebanevej 17, 9800 Hjørring
-        // 57.5855° N, 9.9575° E
-        const BASE_ECHO_LAT = 57.5855;
-        const BASE_ECHO_LON = 9.9575;
-        // MAX_DISTANCE_METERS (150) gjenbrukes
-
-        /**
-         * Kjøres når agenten trykker "VERIFISER POSISJON (BASE ECHO)"
-         */
-        function verifyBaseEchoLocation() {
-            const feedback = document.getElementById('location-feedback-baseecho'); 
-            const btn = document.getElementById('verify-baseecho-btn');
-            
-            if (!navigator.geolocation) {
-                feedback.innerHTML = '<p class="warning">FEIL: GEOLOKASJON STØTTES IKKE.</p>';
-                return;
+            window.verifySafehouseLocation = function() {
+                handleLocationVerification(SAFEHOUSE_LAT, SAFEHOUSE_LON, 'verify-location-btn', 'location-feedback', () => {
+                    const nextCode = 'safehouse check-in';
+                    saveProgress(nextCode); 
+                    showUnlockedMessage(nextCode);
+                });
             }
 
-            feedback.innerHTML = 'Søker etter GPS-signal (BASE ECHO)...';
-            btn.disabled = true;
-            btn.innerHTML = 'LOKALISERER...';
-
-            const options = {
-                enableHighAccuracy: true,
-                timeout: 10000,
-                maximumAge: 0
-            };
-
-            navigator.geolocation.getCurrentPosition(baseEchoLocationSuccess, baseEchoLocationError, options);
-        }
-
-        /**
-         * Kjøres HVIS vi får en gyldig posisjon (Base Echo)
-         */
-        function baseEchoLocationSuccess(pos) {
-            const feedback = document.getElementById('location-feedback-baseecho');
-            const btn = document.getElementById('verify-baseecho-btn');
-            
-            const userLat = pos.coords.latitude;
-            const userLon = pos.coords.longitude;
-
-            const distance = calculateDistance(BASE_ECHO_LAT, BASE_ECHO_LON, userLat, userLon);
-
-            if (distance <= MAX_DISTANCE_METERS) {
-                // SUKSESS!
-                feedback.innerHTML = `POSISJON VERIFISERT (Avstand: ${Math.round(distance)}m). Laster neste direktiv...`;
-                
-                // Hent 'echofall' meldingen
-                const messageHtml = briefings['echofall']; 
-                
-                messageDisplay.innerHTML = `<div class="loader">POSISJON GODKJENT...<br>DEKRYPTERER...</div>`;
-                
-                setTimeout(() => {
-                    messageDisplay.innerHTML = messageHtml;
-                    window.scrollTo(0, 0);
-                }, 1500);
-
-            } else {
-                // FEIL: For langt unna
-                feedback.innerHTML = `<p class="warning">VERIFISERING NEKTET. POSISJON LOKALISERT. (Avstand: ${Math.round(distance)}m). PRØV IGJEN NÅR DU ER NÆRMERE.</p>`;
-                btn.disabled = false;
-                btn.innerHTML = 'VERIFISER POSISJION (BASE ECHO)';
+            window.verifyIsidorHeniusLocation = function() {
+                handleLocationVerification(ISIDOR_LAT, ISIDOR_LON, 'verify-isidor-btn', 'location-feedback', () => {
+                    const nextCode = 'table 19';
+                    saveProgress(nextCode); 
+                    showUnlockedMessage(nextCode);
+                });
             }
-        }
 
-        /**
-         * Kjøres HVIS det oppstår en feil (Base Echo)
-         */
-        function baseEchoLocationError(err) {
-            const feedback = document.getElementById('location-feedback-baseecho');
-            const btn = document.getElementById('verify-baseecho-btn');
-            
-            let errorMsg = 'UKJENT GPS-FEIL.';
-            if (err.code === err.PERMISSION_DENIED) {
-                errorMsg = "ADGANG NEKTET. Systemet krever GPS-tilgang.";
-            } else if (err.code === err.POSITION_UNAVAILABLE) {
-                errorMsg = "SIGNAL TAPT. Posisjonsdata er ikke tilgjengelig.";
-            } else if (err.code === err.TIMEOUT) {
-                errorMsg = "TIDSAVBRUDD. Kunne ikke hente posisjon.";
+            window.verifyBaseEchoLocation = function() {
+                handleLocationVerification(ECHO_LAT, ECHO_LON, 'verify-echo-btn', 'location-feedback', () => {
+                    const nextCode = 'echofall';
+                    saveProgress(nextCode);
+                    showUnlockedMessage(nextCode);
+                });
             }
-            
-            feedback.innerHTML = `<p class="warning">${errorMsg}</p>`;
-            btn.disabled = false;
-            btn.innerHTML = 'VERIFISER POSISJON (BASE ECHO)';
-        }
 
+            // --- SLUTT PÅ GPS-FUNKSJONER ---
 
-        // --- NYE FUNKSJONER FOR MASTER PORTAL ---
+            // --- MASTER PORTAL-FUNKSJONER ---
 
-        /**
-         * Bygger og viser Master Portal-oversikten (listen)
-         */
-        function showMasterPortal() {
-            let html = `
-                <h4>MASTER PORTAL // SPILLOVERSIKT</h4>
-                <p>Velg en kode for å se admin-instruksjoner og deltagermelding.</p>
-                <div class="master-list">
-            `;
-
-            // Loop gjennom masterViewData (som har riktig rekkefølge)
-            masterViewData.forEach((item, index) => {
-                html += `
-                    <a href="#" class="master-link" onclick="showMasterDetailView('${item.code}'); return false;">
-                        <strong>${index + 1}. ${item.code}</strong>
-                        <span>${item.title}</span>
-                    </a>
+            function showMasterPortal() {
+                let html = `
+                    <h4>MASTER PORTAL</h4>
+                    <p>Oversikt over alle oppdrag i kronologisk rekkefølge.</p>
+                    <div class="master-list">
                 `;
-            });
 
-            html += `</div>`;
-            
-            messageDisplay.innerHTML = html;
-            window.scrollTo(0, 0); // Scroll til toppen
-        }
+                masterViewData.forEach((item, index) => {
+                    html += `
+                        <a href="#" class="master-link" onclick="showMasterDetailView('${item.code}'); return false;">
+                            <strong>${index + 1}. ${item.title}</strong>
+                            <span>(Kode: ${item.code})</span>
+                        </a>
+                    `;
+                });
 
-        /**
-         * Viser detaljsiden for en valgt kode fra Master Portal
-         * @param {string} code - Koden som skal vises, f.eks. 'team oslo'
-         */
-        function showMasterDetailView(code) {
-            // Finn admin-dataen fra master-listen
-            const adminData = masterViewData.find(item => item.code === code);
-            // Finn deltager-meldingen fra den vanlige databasen
-            const participantMessage = briefings[code];
+                html += `</div>
+                    <h5 style="margin-top: 30px;">System-tilbakestilling</h5>
+                    <p>For å nullstille spillet for alle agenter (f.eks. for en ny runde), må du:</p>
+                    <ol>
+                        <li><strong>Steg 1 (Database):</strong> Logg inn på Firebase-konsollen for denne appen og slett 'users'-samlingen (collection) manuelt.</li>
+                        <li><strong>Steg 2 (Lokalt):</strong> Slett dataen i din egen nettleser ved å trykke på knappen under.</li>
+                    </ol>
+                    <button class="download-button" style="background-color: #990000;" onclick="resetLocalData()">
+                        Nullstill Min Økt (Steg 2)
+                    </button>
+                `;
+                
+                messageDisplay.innerHTML = html;
+                window.scrollTo(0, 0);
+            }
+            window.showMasterPortal = showMasterPortal; // Global for tilbake-knapp
 
-            if (!adminData || !participantMessage) {
-                messageDisplay.innerHTML = `<p class="warning">FEIL: Kunne ikke finne data for koden: ${code}</p>`;
-                return;
+            window.showMasterDetailView = function(code) {
+                const adminData = masterViewData.find(item => item.code === code);
+                const participantMessage = briefings[code];
+
+                if (!adminData || !participantMessage) {
+                    messageDisplay.innerHTML = `<p class="warning">FEIL: Kunne ikke finne data for koden: ${code}</p>`;
+                    return;
+                }
+
+                let html = `
+                    <button class="download-button" style="margin-bottom: 25px; background-color: #444;" onclick="showMasterPortal()">
+                        &larr; Tilbake til Master-oversikt
+                    </button>
+                    
+                    <h4>MASTER VIEW: ${adminData.title}</h4>
+                    
+                    <h5>Admin-instruksjoner:</h5>
+                    <p><strong>Kode:</strong> ${adminData.code}</p>
+                    <p><em>${adminData.adminNote}</em></p>
+                    
+                    <h5 style="margin-top: 30px;">Melding til deltaker:</h5>
+                    <div style="border: 1px dashed #666; padding: 15px; background: #0c0c0c;">
+                        ${participantMessage}
+                    </div>
+                `;
+
+                messageDisplay.innerHTML = html;
+                window.scrollTo(0, 0); 
             }
 
-            let html = `
-                <!-- Tilbakeknapp -->
-                <button class="download-button" style="margin-bottom: 25px; background-color: #444;" onclick="showMasterPortal()">
-                    &larr; Tilbake til Master Portal
-                </button>
+            /**
+             * Nullstiller lokal data
+             */
+            window.resetLocalData = function() {
+                localStorage.removeItem('agentCodename');
+                localStorage.removeItem('currentUserLastCode');
                 
-                <h4>ADMIN-INSTRUKSJON</h4>
-                <h5>Kode: <strong>${adminData.code}</strong></h5>
-                <p style="background: #222; padding: 15px; border-radius: 4px; border: 1px solid #555; line-height: 1.7;">
-                    ${adminData.adminInstructions}
-                </p>
+                messageDisplay.innerHTML = `
+                    <div class="loader">
+                        LOKAL DATA SLETTET.<br>
+                        LASTER INNLOGGINGSSKJERM...
+                    </div>`;
                 
-                <hr style="border: none; border-top: 2px solid #ff9900; margin: 30px 0;">
-                
-                <h4>DELTAGERMELDING (FORHÅNDSVISNING)</h4>
-                <!-- Her settes den faktiske meldingen inn -->
-                <div style="border: 1px dashed #666; padding: 15px; background: #0c0c0c;">
-                    ${participantMessage}
-                </div>
-            `;
+                setTimeout(() => {
+                    // Vi kan ikke kalle showLoginPortal() direkte, da den er avhengig av
+                    // Firebase-flyten. En full omlasting er den sikreste måten.
+                    window.location.reload();
+                }, 2000);
+            }
 
-            messageDisplay.innerHTML = html;
-            window.scrollTo(0, 0); // Scroll til toppen
-        }
-        // --- SLUTT PÅ MASTER PORTAL-FUNKSJONER ---
+            // --- SLUTT PÅ MASTER PORTAL-FUNKSJONER ---
 
+            // --- FUNKSJONER FOR OPPDRAGSARKIV ---
+
+            function showCompletedMissionsMenu() {
+                const lastCode = localStorage.getItem('currentUserLastCode');
+                
+                if (!lastCode) {
+                    messageDisplay.innerHTML = `
+                        <h4>OPPDRAGSARKIV</h4>
+                        <p>Du har ikke fullført noen oppdrag ennå.</p>
+                        <button class="download-button" style="margin-bottom: 25px; background-color: #444;" onclick="window.loadProgress()">
+                            &larr; Tilbake til Siste Oppdrag
+                        </button>
+                    `;
+                    window.scrollTo(0, 0);
+                    return;
+                }
+
+                const lastCodeIndex = masterViewData.findIndex(item => item.code === lastCode);
+
+                if (lastCodeIndex === -1) {
+                    console.error("Feil: Kunne ikke finne lastCode i masterViewData", lastCode);
+                    messageDisplay.innerHTML = `<p class="warning">ARKIVFEIL: Kunne ikke laste data.</p>`;
+                    return;
+                }
+
+                const completedMissions = masterViewData.slice(0, lastCodeIndex + 1);
+
+                let html = `
+                    <h4>OPPDRAGSARKIV</h4>
+                    <p>Velg et fullført oppdrag for å lese loggen.</p>
+                    
+                    <button class="download-button" style="margin-bottom: 25px; background-color: #444;" onclick="window.loadProgress()">
+                        &larr; Tilbake til Siste Oppdrag
+                    </button>
+                    
+                    <div class="master-list">
+                `;
+
+                completedMissions.reverse().forEach((item, index) => { 
+                    html += `
+                        <a href="#" class="master-link" onclick="showArchiveDetailView('${item.code}'); return false;">
+                            <strong>${item.title}</strong>
+                            <span>(Kode: ${item.code})</span>
+                        </a>
+                    `;
+                });
+
+                html += `</div>`;
+                
+                messageDisplay.innerHTML = html;
+                window.scrollTo(0, 0); 
+            }
+            window.showCompletedMissionsMenu = showCompletedMissionsMenu; // Gjøre global
+
+            window.showArchiveDetailView = function(code) {
+                const participantMessage = briefings[code];
+
+                if (!participantMessage) {
+                    messageDisplay.innerHTML = `<p class="warning">FEIL: Kunne ikke finne data for koden: ${code}</p>`;
+                    return;
+                }
+
+                let html = `
+                    <button class="download-button" style="margin-bottom: 25px; background-color: #444;" onclick="showCompletedMissionsMenu()">
+                        &larr; Tilbake til Arkiv
+                    </button>
+                    
+                    <h4>OPPDRAGSLOGG (ARKIV)</h4>
+                    
+                    <div style="border: 1px dashed #666; padding: 15px; background: #0c0c0c; opacity: 0.8;">
+                        ${participantMessage}
+                    </div>
+                `;
+
+                messageDisplay.innerHTML = html;
+                window.scrollTo(0, 0); 
+            }
+            // --- SLUTT PÅ OPPDRAGSARKIV-FUNKSJONER ---
+
+            // --- 6. KOBLE TIL EVENT LISTENERS OG START APPEN ---
+
+            // Koble til knapper som ikke er inni 'messageDisplay'
+            inputForm.onsubmit = (e) => { 
+                e.preventDefault(); // Stopp skjemaet fra å lastes på nytt
+                submitCode(); 
+                return false; 
+            };
+            menuBtn.onclick = showCompletedMissionsMenu;
+
+            // Start Firebase-initialiseringen
+            // Dette vil sette i gang hele flyten
+            initFirebase();
+
+        }); // --- SLUTTEN PÅ DOMCONTENTLOADED ---
     </script>
     
     <!-- CSS for Riste-animasjon (valgfritt) -->
     <style>
         @keyframes shake {
             0% { transform: translateX(0); }
-            25% { translateX(-5px); }
-            50% { translateX(5px); }
-            75% { translateX(-5px); }
-            100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            50% { transform: translateX(5px); }
+            75% { transform: translateX(-5px); }
+            100% { translateX(0); }
         }
     </style>
 
