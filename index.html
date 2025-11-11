@@ -19,8 +19,12 @@
             font-family: 'Consolas', 'Courier New', monospace; /* Agent/Terminal-font */
             background-color: #0a0a0a; /* Svart bakunn */
             color: #d4d4d4; /* Lys grå tekst */
-            font-size: 15px;
+            font-size: 15px; /* Tilbake til 15px */
             line-height: 1.6;
+            /* Forhindrer iOS i å endre skriftstørrelse */
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+            text-size-adjust: 100%;
         }
 
         /* --- HOVEDLAYOUT --- */
@@ -136,6 +140,7 @@
             border: none; /* Sørger for at button-elementer ser like ut */
             font-family: 'Consolas', 'Courier New', monospace; /* Arver font */
             font-size: 0.9rem; /* Justert størrelse */
+            width: 100%; /* Sørger for at den fyller bredden */
         }
         .download-button:hover {
             background-color: #ffc266;
@@ -168,12 +173,16 @@
             background-color: #1a1a1a;
             border-top: 2px solid #ff9900;
             padding: 15px;
-            display: none; /* --- NYTT: Skjult som standard --- */
+            display: none; /* Skjult som standard */
             position: sticky;
             bottom: 0;
             width: 100%;
             max-width: 700px;
             margin: 0 auto;
+            /* --- ADAPTIV ENDRING --- */
+            display: flex;
+            flex-wrap: wrap; /* Lar elementene stables */
+            /* --- SLUTT ADAPTIV ENDRING --- */
         }
 
         #code-input {
@@ -185,6 +194,10 @@
             font-family: 'Consolas', 'Courier New', monospace;
             font-size: 1rem;
             border-radius: 4px 0 0 4px;
+            /* --- ADAPTIV ENDRING --- */
+            min-width: 150px; /* Sørger for at den ikke blir for liten */
+            flex-basis: 300px; /* Gir den en god startbredde */
+            /* --- SLUTT ADAPTIV ENDRING --- */
         }
         #code-input:focus {
             outline: none;
@@ -201,11 +214,15 @@
             font-weight: bold;
             text-transform: uppercase;
             cursor: pointer;
-            border-radius: 0 4px 4px 0; /* OPPDATERT */
+            border-radius: 0 4px 4px 0;
             font-size: 1rem;
+            /* --- ADAPTIV ENDRING --- */
+            flex-grow: 1; /* Lar den vokse */
+            flex-basis: 50px; /* Liten startbredde */
+            /* --- SLUTT ADAPTIV ENDRING --- */
         }
 
-        /* --- NY STYLING FOR ARKIV-KNAPP --- */
+        /* STYLING FOR ARKIV-KNAPP */
         #menu-btn {
             background-color: #444;
             border: none;
@@ -216,19 +233,20 @@
             text-transform: uppercase;
             cursor: pointer;
             font-size: 1rem;
-            /* Fjerner border-radius for å passe i midten */
             border-radius: 0; 
-            /* Legger til tynne skiller */
             border-left: 1px solid #0a0a0a;
             border-right: 1px solid #0a0a0a;
             transition: background-color 0.2s;
+            /* --- ADAPTIV ENDRING --- */
+            flex-grow: 1; /* Lar den vokse */
+            flex-basis: 50px; /* Liten startbredde */
+            /* --- SLUTT ADAPTIV ENDRING --- */
         }
         #menu-btn:hover {
             background-color: #666;
         }
-        /* --- SLUTT PÅ NY STYLING --- */
 
-        /* --- NY STYLING FOR KODENAVN-INNLOGGING --- */
+        /* --- STYLING FOR KODENAVN-INNLOGGING --- */
         #login-form-container {
             margin-top: 20px;
         }
@@ -267,10 +285,9 @@
             padding: 10px 0;
             text-align: center;
         }
-        /* --- SLUTT PÅ NY STYLING --- */
 
 
-        /* --- NY STYLING FOR MASTER PORTAL --- */
+        /* --- STYLING FOR MASTER PORTAL --- */
         .master-list {
             border-top: 1px solid #444;
             margin-top: 20px;
@@ -297,7 +314,6 @@
             font-size: 0.9rem;
             color: #888;
         }
-        /* --- SLUTT PÅ MASTER PORTAL STYLING --- */
 
 
         /* Område for feilmeldinger */
@@ -305,6 +321,34 @@
             padding: 0 15px;
             text-align: center;
         }
+
+        /* --- ADAPTIV MEDIA QUERY --- */
+        /* For skjermer smalere enn 420px */
+        @media (max-width: 420px) {
+            #input-form {
+                padding: 10px;
+            }
+
+            #code-input {
+                flex-basis: 100%; /* Input tar full bredde */
+                border-radius: 4px; /* Fulle avrundede hjørner */
+                margin-bottom: 10px; /* Mellomrom */
+            }
+            
+            #menu-btn {
+                flex-basis: 48%; /* Arkiv-knapp tar halve bredden */
+                flex-grow: 1;
+                border-radius: 4px 0 0 4px; /* Avrundede hjørner til venstre */
+                border-right: 1px solid #0a0a0a; /* Skille */
+            }
+
+            #submit-btn {
+                flex-basis: 48%; /* Dekrypter-knapp tar halve bredden */
+                flex-grow: 1;
+                border-radius: 0 4px 4px 0; /* Avrundede hjørner til høyre */
+            }
+        }
+        /* --- SLUTT PÅ ADAPTIV CSS --- */
 
     </style>
 </head>
@@ -333,7 +377,7 @@
         <!-- 4. INNTASTINGSFELT (Klistret til bunnen) -->
         <form id="input-form">
             <input type="text" id="code-input" placeholder="Skriv autorisasjonskode..." autocomplete="off">
-            <!-- NY ARKIV-KNAPP -->
+            <!-- ARKIV-KNAPP -->
             <button type="button" id="menu-btn">Arkiv</button>
             <button type="submit" id="submit-btn">DEKRYPTER</button>
         </form>
@@ -343,7 +387,6 @@
     <!-- 
       ======================================================
       --- ALL APPLIKASJONSLOGIKK SAMLET HER ---
-      Dette er en mer robust måte å forhindre "race conditions"
       ======================================================
     -->
     <script type="module">
@@ -353,6 +396,7 @@
         import { getFirestore, setDoc, getDoc, doc, setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         // --- 2. VENT TIL HELE SIDEN ER LASTET ---
+        // Dette er den mest robuste måten å forhindre "hvit skjerm"
         document.addEventListener('DOMContentLoaded', () => {
             
             // --- 3. DEFINER GLOBALE VARIABLER OG DATABASER ---
@@ -416,7 +460,7 @@
                     <p><strong>Ikke gjør kontakt</strong> før situasjonen er vurdert som trygg. Når observasjonen er fullført, vent på nytt signal.</p>
                     <p>Kodeord-del tildelt: <strong>AURORA</strong><br>(Behold dette – brukes senere.)</p>
                     <p>— Command Out.</p>
-                    <a href="#" class="download-button" onclick="downloadPakkliste()">Last ned Pakkliste (Echelon 3)</a>
+                    <button class="download-button" onclick="downloadPakkliste()">Last ned Pakkliste (Echelon 3)</button>
                 `,
 
                 // --- FASE 1: STAVANGER ---
@@ -441,7 +485,7 @@
                     <p>Vær årvåkne — området kan være under overvåking.</p>
                     <p>Kodeord-del tildelt: <strong>BOREALIS</strong><br>(Behold dette – brukes senere.)</p>
                     <p>— Command Out.</p>
-                    <a href="#" class="download-button" onclick="downloadPakkliste()">Last ned Pakkliste (Echelon 3)</a>
+                    <button class="download-button" onclick="downloadPakkliste()">Last ned Pakkliste (Echelon 3)</button>
                 `,
 
                 // --- FASE 2: SAMMENSLÅING ---
@@ -733,11 +777,12 @@
                     return;
                 }
 
-                // NY, ENKLERE DATABASEBANE
+                // Databasebane: /echelon-data/{userId}/progress/main
                 const userDocRef = doc(db, "echelon-data", userId, "progress", "main");
                 try {
                     if (lastCode !== '95764045') {
                         await setDoc(userDocRef, { lastCode: lastCode, codename: codename }, { merge: true });
+                        // Oppdater også den lokale cache-variabelen som arkivet bruker
                         localStorage.setItem('currentUserLastCode', lastCode);
                         console.log(`Fremdrift lagret for ${codename}:`, lastCode);
                     }
@@ -756,7 +801,7 @@
                     return;
                 }
 
-                // NY, ENKLERE DATABASEBANE
+                // Databasebane: /echelon-data/{userId}/progress/main
                 const userDocRef = doc(db, "echelon-data", userId, "progress", "main");
                 try {
                     const docSnap = await getDoc(userDocRef);
@@ -806,7 +851,7 @@
                     
                     <div id="login-form-container">
                         <input type="text" id="codename-input" placeholder="Skriv ditt kodenavn..." autocomplete="off">
-                        <button id="codename-submit-btn" onclick="handleCodenameLogin()">AUTENTISER</button>
+                        <button id="codename-submit-btn" class="download-button" onclick="handleCodenameLogin()">AUTENTISER</button>
                         <div id="login-feedback"></div>
                     </div>
                 `;
@@ -818,6 +863,8 @@
             window.handleCodenameLogin = function() {
                 const input = document.getElementById('codename-input');
                 const feedback = document.getElementById('login-feedback');
+                if (!input || !feedback) return; // Sikkerhetssjekk
+
                 const codename = input.value.toLowerCase().trim();
 
                 if (validCodenames.includes(codename)) {
@@ -862,14 +909,14 @@
              */
             async function initFirebase() {
                 // Sjekker om API-nøkkelen faktisk er til stede
-                if (!firebaseConfig || !firebaseConfig.apiKey || firebaseConfig.apiKey.includes("YOUR...KEY")) {
+                if (!firebaseConfig || !firebaseConfig.apiKey || firebaseConfig.apiKey.includes("AIzaSy...YOUR...KEY")) {
                     console.error("Firebase config mangler eller er ikke fylt ut!");
                     messageDisplay.innerHTML = '<p class="warning">SYSTEMFEIL: Kunne ikke koble til Command Server. API-nøkkel mangler.</p>';
                     return;
                 }
 
                 try {
-                    setLogLevel('Debug');
+                    // setLogLevel('Debug'); // Fjernet for å redusere konsollstøy
                     const app = initializeApp(firebaseConfig);
                     db = getFirestore(app);
                     auth = getAuth(app);
@@ -1129,6 +1176,7 @@
                 }, 1500);
             }
 
+            // Gjøre GPS-funksjonene globale slik at onclick-attributtene finner dem
             window.verifySafehouseLocation = function() {
                 handleLocationVerification(SAFEHOUSE_LAT, SAFEHOUSE_LON, 'verify-location-btn', 'location-feedback', () => {
                     const nextCode = 'safehouse check-in';
