@@ -202,6 +202,39 @@
             font-size: 1rem;
         }
 
+        /* --- NY STYLING FOR MASTER PORTAL --- */
+        .master-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px; /* Mellomrom mellom lenkene */
+        }
+        .master-link {
+            display: block;
+            padding: 15px;
+            background: #1f1f1f;
+            border: 1px solid #444;
+            color: #d4d4d4;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+        }
+        .master-link:hover {
+            border-color: #ff9900;
+            background: #2a2a2a;
+        }
+        .master-link strong {
+            color: #ff9900;
+            display: block;
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+        }
+        .master-link span {
+            color: #b5b5b5;
+            font-size: 0.9rem;
+        }
+        /* --- SLUTT PÅ NY STYLING --- */
+
         /* Område for feilmeldinger */
         #feedback {
             padding: 0 15px;
@@ -366,16 +399,22 @@
             'fuelcheck': `
                 <h4>CLASSIFIED MESSAGE — POST FLIGHT OPS DIRECTIVE</h4>
                 <h5>Clearance Level: ECHELON 5</h5>
-                <p>Flight-sekvens fullført. Data bekrefter operativ beredskap hos alle enheter.</p>
-                <p>Nye instruksjoner er sendt fra kommandonivå.</p>
-                <p>Dere skal trekke tilbake til et sikkert sivilt kontaktpunkt for debrief og midlertidig avventing.</p>
+                <p>Flight-sekvens fullført. Data bekrefter operativ beredskap.</p>
+                <p>Dere skal nå trekke til et sikkert sivilt kontaktpunkt for debrief. Deres neste instruksjon er låst til denne posisjonen.</p>
                 
                 <h5>Lokasjon (Dekknavn):</h5>
                 <p><a href="https://www.google.com/maps/search/?api=1&query=Slotsgade+33,+9000+Aalborg,+Denmark" target="_blank" class="location-link"><strong>ISIDOR HENIUS</strong></a><br>
                 <span style="color: #888;">Slotsgade 33, 9000 Aalborg, Denmark</span></p>
                 
-                <p><strong>Oppdrag:</strong> Møt på stedet, ta kontakt med vertskapet. Der vil dere motta mat, drikke og videre ordre når situasjonen tillater det.</p>
-                <p>— Command Out.</p>
+                <p><strong>Oppdrag:</strong> Møt på stedet. Når du er innenfor 150 meter, verifiser din posisjon for å motta neste direktiv.</p>
+
+                <!-- NY KNAPP FOR ISIDOR GPS-SJEKK -->
+                <button id="verify-isidor-btn" class="download-button" onclick="verifyIsidorLocation()">
+                    VERIFISER POSISJON (ISIDOR)
+                </button>
+                
+                <!-- Område for GPS-tilbakemelding -->
+                <div id="location-feedback-isidor" style="margin-top: 15px; color: #ff9900; font-weight: bold;"></div>
             `,
 
             // --- FASE 4: ETTER ISIDOR HENIUS ---
@@ -384,7 +423,6 @@
                 <h5>Clearance Level: Echelon 5</h5>
                 <p>Dataoverføring fra Contact Point Bravo er mottatt. Operasjonen går inn i fase 6.</p>
                 <p>Dere har gjort en solid innsats i felt, og kommando gir grønt lys for midlertid rekreasjon og sosial samling før videre operasjon.</p>
-                <p>Returner til basen for klargjøring.</p>
                 
                 <h5>Neste oppmøtested:</h5>
                 <p>Et sivilisert deknavn brukt til lavprofil-møter mellom feltagenter:</p>
@@ -428,16 +466,22 @@
                 <h4>CLASSIFIED MESSAGE — EXTRACTION ORDER</h4>
                 <h5>Clearance Level: ECHELON 5</h5>
                 <p>Bekreftelse mottatt fra feltstyrken.</p>
-                <p>Rapportene fra AMMO GROUND bekrefter at GNM-modulen er deaktivert. Interferensloggene viser at systemet forsøkte en reaktivering, men at signalet ble avbrutt.</p>
-                <p>Operasjonen vurderes som suksessfull.</p>
-                <p class="warning">Men deres posisjon er nå kompromittert — det antas at motparten vil forsøke å spore opp teamet.</p>
+                <p>Rapportene fra AMMO GROUND bekrefter at GNM-modulen er deaktivert. Operasjonen vurderes som suksessfull.</p>
+                <p class="warning">Men deres posisjon er nå kompromittert.</p>
                 
                 <h5>Direktiv:</h5>
-                <p>Gå i dekning umiddelbart. Dere skal forflytte dere til trygg sone for midlertidig evakuering.</p>
+                <p>Gå i dekning umiddelbart. Dere skal forflytte dere til trygg sone for evakuering. Neste direktiv er låst til posisjonen.</p>
                 <p><strong>Lokasjon:</strong> <a href="https://www.google.com/maps/search/?api=1&query=Skydebanevej+17,+9800+Hjørring" target="_blank" class="location-link">Skydebanevej 17, 9800 Hjørring</a><br>
                 <strong>Dekknavn:</strong> Base Echo</p>
-                <p>Hold lav profil under forflytning. Ved ankomst: sikre lokasjonen, lås alle dører, og avvent.</p>
-                <p>— Command Out.</p>
+                <p>Hold lav profil. Ved ankomst: sikre lokasjonen og verifiser din posisjon for å motta neste ordre.</p>
+                
+                <!-- NY KNAPP FOR BASE ECHO GPS-SJEKK -->
+                <button id="verify-baseecho-btn" class="download-button" onclick="verifyBaseEchoLocation()">
+                    VERIFISER POSISJON (BASE ECHO)
+                </button>
+                
+                <!-- Område for GPS-tilbakemelding -->
+                <div id="location-feedback-baseecho" style="margin-top: 15px; color: #ff9900; font-weight: bold;"></div>
             `,
 
             // --- FASE 7: PÅ BASE ECHO (HJØRRING) ---
@@ -482,31 +526,75 @@
                 <p>Denne operasjonen vil ikke bli offentlig anerkjent. Deres innsats har vært avgjørende.</p>
                 <p><strong>Mission Complete.</strong></p>
                 <p>— SHADOW / Command Out.</p>
-            `,
-
-            // --- NY TESTKOBLING (Varaberg) ---
-            'varaberg': `
-                <h4>GPS SYSTEM TEST // VARABERG</h4>
-                <p>Dette er en test for å sjekke om vi kan bruke GPS i webapp.</p>
-                <p><strong>Mål:</strong> Naviger til følgende koordinater:</p>
-                <p><a href="https://www.google.com/maps/search/?api=1&query=58%C2%B052'57.8%22N+5%C2%B040'16.4%22E" target="_blank" class="location-link"><strong>58°52'57.8"N 5°40'16.4"E</strong></a></p>
-                <p>Verifiser possisjon når du er på stedet.</p>
-                
-                <button id="verify-varaberg-btn" class="download-button" onclick="verifyVarabergLocation()">
-                    VERIFISER POSISJON (VARABERG)
-                </button>
-                
-                <div id="location-feedback-varaberg" style="margin-top: 15px; color: #ff9900; font-weight: bold;"></div>
-            `,
-            
-            'varaberg complete': `
-                <h4>GPS TEST // VARABERG</h4>
-                <h5>SYSTEM: POSISJON VERIFISERT</h5>
-                <p>GPS-lås bekreftet. Avstand til mål er innenfor toleransegrensen.</p>
-                <p>Denne testen er fullført. Systemet fungerer som forventet.</p>
-                <p>— Command Out.</p>
             `
         };
+
+        // --- NY DATABASE FOR MASTER PORTAL (Admin-visning) ---
+        // Definerer rekkefølge, titler og admin-instrukser
+        const masterViewData = [
+            {
+                code: 'team oslo',
+                title: 'Fase 1: Oslo (RAVEN/FALCON)',
+                adminInstructions: 'Startmelding for Oslo-teamet. De får reiseordre (Tog 09:25) og beskjed om å observere en bil (SD73382) ved koordinatene i Kristiansand.'
+            },
+            {
+                code: 'team stavanger',
+                title: 'Fase 1: Stavanger (VIPER/COBRA/SHADOW)',
+                adminInstructions: 'Startmelding for Stavanger-teamet. De får reiseordre (Bil 11:30) og beskjed om å møte en kontaktperson på samme lokasjon i Kristiansand.'
+            },
+            {
+                code: 'aurora borealis',
+                title: 'Fase 2: Sammenslåing (Kristiansand)',
+                adminInstructions: 'Denne koden er en kombinasjon av kodene fra de to første lagene (AURORA + BOREALIS). Når de skriver inn denne, får de beskjed om å rekke fergen kl 16:30 og mottar billett-lenken.'
+            },
+            {
+                code: 'jylland',
+                title: 'Fase 2: Ferge (Oppgave 1)',
+                adminInstructions: 'Denne koden gis av SHADOW på fergen. Den presenterer NORSE-6-protokollen (primtall + NATO-fonetisk) som de må løse. Løsningen er "LCVCCN".'
+            },
+            {
+                code: 'lcvccn',
+                title: 'Fase 2: Ferge (Oppgave 2 - GPS)',
+                adminInstructions: 'Når de skriver inn "lcvccn", får de koordinatene til Safehouse (Nørresundby). De må fysisk reise dit og trykke på "VERIFISER POSISJON" for å låse opp neste del.'
+            },
+            {
+                code: 'safehouse check-in',
+                title: 'Fase 3: Safehouse (Ankomst)',
+                adminInstructions: 'Denne meldingen låses opp automatisk av GPS-sjekken (eller manuelt ved å skrive koden). Den gir dem oppdraget om F-16-trening (Flight Ops) neste dag kl 10:00.'
+            },
+            {
+                code: 'fuelcheck',
+                title: 'Fase 4: Etter Flight Ops (GPS)',
+                adminInstructions: 'Denne koden mottar de etter Flight Ops. Den sender dem til "ISIDOR HENIUS" (Slotsgade 33). Dette er nå en GPS-låst oppgave. De må fysisk reise dit og trykke på "VERIFISER POSISJON" for å låse opp neste del.'
+            },
+            {
+                code: 'table 19',
+                title: 'Fase 4: På Isidor Henius (Resultat)',
+                adminInstructions: 'Dette er meldingen som låses opp av GPS-sjekken ved "fuelcheck". Den sender dem til "THE BLACK TABLE" (Restaurant Flammen) kl 19:00. Koden "table 19" er ikke lenger nødvendig for progresjon.'
+            },
+            {
+                code: 'specter one',
+                title: 'Fase 5: På Flammen (Klargjøring)',
+                adminInstructions: 'Denne koden mottas på Restaurant Flammen. Den gir dem det store oppdraget for neste dag: AMMO GROUND (Magasinvej 7, Sindal) kl 09:00, med pakke- og klesinstrukser.'
+            },
+            {
+                code: 'nordstar',
+                title: 'Fase 6: Etter Ammo Ground (GPS)',
+                adminInstructions: 'Denne koden mottas etter fullført oppdrag på Ammo Ground. Den informerer om at de er kompromittert og må evakuere til "Base Echo" (Skydebanevej 17, Hjørring). Dette er nå en GPS-låst oppgave.'
+            },
+            {
+                code: 'echofall',
+                title: 'Fase 7: På Base Echo (Resultat)',
+                adminInstructions: 'Denne meldingen låses opp av GPS-sjekken ved "nordstar" (Base Echo). Den kaller inn til endelig debrief på "Operation Bones" (Bones Restaurant, Hjørring) kl 20:00.'
+            },
+            {
+                code: 'shadowfall',
+                title: 'Fase 8: Avslutning (På Bones)',
+                adminInstructions: 'Siste kode, gis på Bones. Erklærer "Mission Complete" og gir dem reiseplanen hjem (Ferge 12:15) og billett-lenken.'
+            }
+        ];
+        // --- SLUTT PÅ NY DATABASE ---
+
 
         // --- KJERNEFUNKSJONALITET ---
         
@@ -532,6 +620,14 @@
             
             // Tøm feilmeldinger
             feedbackDisplay.innerHTML = '';
+
+            // --- NY MASTER PORTAL-SJEKK ---
+            if (code === '95764045') {
+                showMasterPortal();
+                codeInput.value = ''; // Tøm input
+                return; // Avslutt funksjonen her
+            }
+            // --- SLUTT PÅ MASTER PORTAL-SJEKK ---
 
             // Prøv å finne koden i vår "database"
             const messageHtml = briefings[code];
@@ -765,28 +861,28 @@ Hold lav profil.
         }
 
 
-        // --- NY GPS-FUNKSJON FOR VARABERG ---
+        // --- NY GPS-FUNKSJON FOR ISIDOR HENIUS ---
 
-        // Definerer koordinatene for "Varaberg"
-        // 58°52'57.8"N 5°40'16.4"E
-        const VARABERG_LAT = 58.882722;
-        const VARABERG_LON = 5.671222;
-        // MAX_DISTANCE_METERS er allerede definert (150) og gjenbrukes
+        // Definerer koordinatene for "Isidor Henius"
+        // Slotsgade 33, 9000 Aalborg, Denmark
+        // 57.0514° N, 9.9213° E
+        const ISIDOR_LAT = 57.0514;
+        const ISIDOR_LON = 9.9213;
+        // MAX_DISTANCE_METERS (150) gjenbrukes
 
         /**
-         * Kjøres når agenten trykker "VERIFISER POSISJON (VARABERG)"
+         * Kjøres når agenten trykker "VERIFISER POSISJON (ISIDOR)"
          */
-        function verifyVarabergLocation() {
-            // Må bruke unike ID-er for feedback og knapp
-            const feedback = document.getElementById('location-feedback-varaberg'); 
-            const btn = document.getElementById('verify-varaberg-btn');
+        function verifyIsidorLocation() {
+            const feedback = document.getElementById('location-feedback-isidor'); 
+            const btn = document.getElementById('verify-isidor-btn');
             
             if (!navigator.geolocation) {
                 feedback.innerHTML = '<p class="warning">FEIL: GEOLOKASJON STØTTES IKKE.</p>';
                 return;
             }
 
-            feedback.innerHTML = 'Søker etter GPS-signal (VARABERG)...';
+            feedback.innerHTML = 'Søker etter GPS-signal (ISIDOR)...';
             btn.disabled = true;
             btn.innerHTML = 'LOKALISERER...';
 
@@ -796,31 +892,29 @@ Hold lav profil.
                 maximumAge: 0
             };
 
-            // Må lage nye suksess- og feil-handlers for å unngå konflikt
-            navigator.geolocation.getCurrentPosition(varabergLocationSuccess, varabergLocationError, options);
+            navigator.geolocation.getCurrentPosition(isidorLocationSuccess, isidorLocationError, options);
         }
 
         /**
-         * Kjøres HVIS vi får en gyldig posisjon (Varaberg)
+         * Kjøres HVIS vi får en gyldig posisjon (Isidor)
          */
-        function varabergLocationSuccess(pos) {
-            const feedback = document.getElementById('location-feedback-varaberg');
-            const btn = document.getElementById('verify-varaberg-btn');
+        function isidorLocationSuccess(pos) {
+            const feedback = document.getElementById('location-feedback-isidor');
+            const btn = document.getElementById('verify-isidor-btn');
             
             const userLat = pos.coords.latitude;
             const userLon = pos.coords.longitude;
 
-            // Beregn avstanden
-            const distance = calculateDistance(VARABERG_LAT, VARABERG_LON, userLat, userLon);
+            const distance = calculateDistance(ISIDOR_LAT, ISIDOR_LON, userLat, userLon);
 
             if (distance <= MAX_DISTANCE_METERS) {
                 // SUKSESS!
-                feedback.innerHTML = `POSISJON VERIFISERT (Avstand: ${Math.round(distance)}m). Laster...`;
+                feedback.innerHTML = `POSISJON VERIFISERT (Avstand: ${Math.round(distance)}m). Laster neste direktiv...`;
                 
-                // Hent 'varaberg complete' meldingen
-                const messageHtml = briefings['varaberg complete']; 
+                // Hent 'table 19' meldingen
+                const messageHtml = briefings['table 19']; 
                 
-                messageDisplay.innerHTML = `<div class="loader">POSISJON GODKJENT...</div>`;
+                messageDisplay.innerHTML = `<div class="loader">POSISJON GODKJENT...<br>DEKRYPTERER...</div>`;
                 
                 setTimeout(() => {
                     messageDisplay.innerHTML = messageHtml;
@@ -829,18 +923,18 @@ Hold lav profil.
 
             } else {
                 // FEIL: For langt unna
-                feedback.innerHTML = `<p class="warning">VERIFISERING NEKTET. (Avstand: ${Math.round(distance)}m). PRØV IGJEN NÅR DU ER NÆRMERE.</p>`;
+                feedback.innerHTML = `<p class="warning">VERIFISERING NEKTET. POSISJON LOKALISERT. (Avstand: ${Math.round(distance)}m). PRØV IGJEN NÅR DU ER NÆRMERE.</p>`;
                 btn.disabled = false;
-                btn.innerHTML = 'VERIFISER POSISJON (VARABERG)';
+                btn.innerHTML = 'VERIFISER POSISJON (ISIDOR)';
             }
         }
 
         /**
-         * Kjøres HVIS det oppstår en feil (Varaberg)
+         * Kjøres HVIS det oppstår en feil (Isidor)
          */
-        function varabergLocationError(err) {
-            const feedback = document.getElementById('location-feedback-varaberg');
-            const btn = document.getElementById('verify-varaberg-btn');
+        function isidorLocationError(err) {
+            const feedback = document.getElementById('location-feedback-isidor');
+            const btn = document.getElementById('verify-isidor-btn');
             
             let errorMsg = 'UKJENT GPS-FEIL.';
             if (err.code === err.PERMISSION_DENIED) {
@@ -853,9 +947,181 @@ Hold lav profil.
             
             feedback.innerHTML = `<p class="warning">${errorMsg}</p>`;
             btn.disabled = false;
-            btn.innerHTML = 'VERIFISER POSISJON (VARABERG)';
+            btn.innerHTML = 'VERIFISER POSISJON (ISIDOR)';
         }
+
+
+        // --- NY GPS-FUNKSJON FOR BASE ECHO ---
+
+        // Definerer koordinatene for "Base Echo"
+        // Skydebanevej 17, 9800 Hjørring
+        // 57.5855° N, 9.9575° E
+        const BASE_ECHO_LAT = 57.5855;
+        const BASE_ECHO_LON = 9.9575;
+        // MAX_DISTANCE_METERS (150) gjenbrukes
+
+        /**
+         * Kjøres når agenten trykker "VERIFISER POSISJON (BASE ECHO)"
+         */
+        function verifyBaseEchoLocation() {
+            const feedback = document.getElementById('location-feedback-baseecho'); 
+            const btn = document.getElementById('verify-baseecho-btn');
+            
+            if (!navigator.geolocation) {
+                feedback.innerHTML = '<p class="warning">FEIL: GEOLOKASJON STØTTES IKKE.</p>';
+                return;
+            }
+
+            feedback.innerHTML = 'Søker etter GPS-signal (BASE ECHO)...';
+            btn.disabled = true;
+            btn.innerHTML = 'LOKALISERER...';
+
+            const options = {
+                enableHighAccuracy: true,
+                timeout: 10000,
+                maximumAge: 0
+            };
+
+            navigator.geolocation.getCurrentPosition(baseEchoLocationSuccess, baseEchoLocationError, options);
+        }
+
+        /**
+         * Kjøres HVIS vi får en gyldig posisjon (Base Echo)
+         */
+        function baseEchoLocationSuccess(pos) {
+            const feedback = document.getElementById('location-feedback-baseecho');
+            const btn = document.getElementById('verify-baseecho-btn');
+            
+            const userLat = pos.coords.latitude;
+            const userLon = pos.coords.longitude;
+
+            const distance = calculateDistance(BASE_ECHO_LAT, BASE_ECHO_LON, userLat, userLon);
+
+            if (distance <= MAX_DISTANCE_METERS) {
+                // SUKSESS!
+                feedback.innerHTML = `POSISJON VERIFISERT (Avstand: ${Math.round(distance)}m). Laster neste direktiv...`;
+                
+                // Hent 'echofall' meldingen
+                const messageHtml = briefings['echofall']; 
+                
+                messageDisplay.innerHTML = `<div class="loader">POSISJON GODKJENT...<br>DEKRYPTERER...</div>`;
+                
+                setTimeout(() => {
+                    messageDisplay.innerHTML = messageHtml;
+                    window.scrollTo(0, 0);
+                }, 1500);
+
+            } else {
+                // FEIL: For langt unna
+                feedback.innerHTML = `<p class="warning">VERIFISERING NEKTET. POSISJON LOKALISERT. (Avstand: ${Math.round(distance)}m). PRØV IGJEN NÅR DU ER NÆRMERE.</p>`;
+                btn.disabled = false;
+                btn.innerHTML = 'VERIFISER POSISJION (BASE ECHO)';
+            }
+        }
+
+        /**
+         * Kjøres HVIS det oppstår en feil (Base Echo)
+         */
+        function baseEchoLocationError(err) {
+            const feedback = document.getElementById('location-feedback-baseecho');
+            const btn = document.getElementById('verify-baseecho-btn');
+            
+            let errorMsg = 'UKJENT GPS-FEIL.';
+            if (err.code === err.PERMISSION_DENIED) {
+                errorMsg = "ADGANG NEKTET. Systemet krever GPS-tilgang.";
+            } else if (err.code === err.POSITION_UNAVAILABLE) {
+                errorMsg = "SIGNAL TAPT. Posisjonsdata er ikke tilgjengelig.";
+            } else if (err.code === err.TIMEOUT) {
+                errorMsg = "TIDSAVBRUDD. Kunne ikke hente posisjon.";
+            }
+            
+            feedback.innerHTML = `<p class="warning">${errorMsg}</p>`;
+            btn.disabled = false;
+            btn.innerHTML = 'VERIFISER POSISJON (BASE ECHO)';
+        }
+
+
+        // --- NYE FUNKSJONER FOR MASTER PORTAL ---
+
+        /**
+         * Bygger og viser Master Portal-oversikten (listen)
+         */
+        function showMasterPortal() {
+            let html = `
+                <h4>MASTER PORTAL // SPILLOVERSIKT</h4>
+                <p>Velg en kode for å se admin-instruksjoner og deltagermelding.</p>
+                <div class="master-list">
+            `;
+
+            // Loop gjennom masterViewData (som har riktig rekkefølge)
+            masterViewData.forEach((item, index) => {
+                html += `
+                    <a href="#" class="master-link" onclick="showMasterDetailView('${item.code}'); return false;">
+                        <strong>${index + 1}. ${item.code}</strong>
+                        <span>${item.title}</span>
+                    </a>
+                `;
+            });
+
+            html += `</div>`;
+            
+            messageDisplay.innerHTML = html;
+            window.scrollTo(0, 0); // Scroll til toppen
+        }
+
+        /**
+         * Viser detaljsiden for en valgt kode fra Master Portal
+         * @param {string} code - Koden som skal vises, f.eks. 'team oslo'
+         */
+        function showMasterDetailView(code) {
+            // Finn admin-dataen fra master-listen
+            const adminData = masterViewData.find(item => item.code === code);
+            // Finn deltager-meldingen fra den vanlige databasen
+            const participantMessage = briefings[code];
+
+            if (!adminData || !participantMessage) {
+                messageDisplay.innerHTML = `<p class="warning">FEIL: Kunne ikke finne data for koden: ${code}</p>`;
+                return;
+            }
+
+            let html = `
+                <!-- Tilbakeknapp -->
+                <button class="download-button" style="margin-bottom: 25px; background-color: #444;" onclick="showMasterPortal()">
+                    &larr; Tilbake til Master Portal
+                </button>
+                
+                <h4>ADMIN-INSTRUKSJON</h4>
+                <h5>Kode: <strong>${adminData.code}</strong></h5>
+                <p style="background: #222; padding: 15px; border-radius: 4px; border: 1px solid #555; line-height: 1.7;">
+                    ${adminData.adminInstructions}
+                </p>
+                
+                <hr style="border: none; border-top: 2px solid #ff9900; margin: 30px 0;">
+                
+                <h4>DELTAGERMELDING (FORHÅNDSVISNING)</h4>
+                <!-- Her settes den faktiske meldingen inn -->
+                <div style="border: 1px dashed #666; padding: 15px; background: #0c0c0c;">
+                    ${participantMessage}
+                </div>
+            `;
+
+            messageDisplay.innerHTML = html;
+            window.scrollTo(0, 0); // Scroll til toppen
+        }
+        // --- SLUTT PÅ MASTER PORTAL-FUNKSJONER ---
 
     </script>
     
     <!-- CSS for Riste-animasjon (valgfritt) -->
+    <style>
+        @keyframes shake {
+            0% { transform: translateX(0); }
+            25% { translateX(-5px); }
+            50% { translateX(5px); }
+            75% { translateX(-5px); }
+            100% { transform: translateX(0); }
+        }
+    </style>
+
+</body>
+</html>
