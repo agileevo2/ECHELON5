@@ -482,6 +482,29 @@
                 <p>Denne operasjonen vil ikke bli offentlig anerkjent. Deres innsats har vært avgjørende.</p>
                 <p><strong>Mission Complete.</strong></p>
                 <p>— SHADOW / Command Out.</p>
+            `,
+
+            // --- NY TESTKOBLING (Varaberg) ---
+            'varaberg': `
+                <h4>GPS SYSTEM TEST // VARABERG</h4>
+                <p>Dette er en test for å sjekke om vi kan bruke GPS i webapp.</p>
+                <p><strong>Mål:</strong> Naviger til følgende koordinater:</p>
+                <p><a href="https://www.google.com/maps/search/?api=1&query=58%C2%B052'57.8%22N+5%C2%B040'16.4%22E" target="_blank" class="location-link"><strong>58°52'57.8"N 5°40'16.4"E</strong></a></p>
+                <p>Verifiser possisjon når du er på stedet.</p>
+                
+                <button id="verify-varaberg-btn" class="download-button" onclick="verifyVarabergLocation()">
+                    VERIFISER POSISJON (VARABERG)
+                </button>
+                
+                <div id="location-feedback-varaberg" style="margin-top: 15px; color: #ff9900; font-weight: bold;"></div>
+            `,
+            
+            'varaberg complete': `
+                <h4>GPS TEST // VARABERG</h4>
+                <h5>SYSTEM: POSISJON VERIFISERT</h5>
+                <p>GPS-lås bekreftet. Avstand til mål er innenfor toleransegrensen.</p>
+                <p>Denne testen er fullført. Systemet fungerer som forventet.</p>
+                <p>— Command Out.</p>
             `
         };
 
@@ -741,18 +764,98 @@ Hold lav profil.
             return d;
         }
 
+
+        // --- NY GPS-FUNKSJON FOR VARABERG ---
+
+        // Definerer koordinatene for "Varaberg"
+        // 58°52'57.8"N 5°40'16.4"E
+        const VARABERG_LAT = 58.882722;
+        const VARABERG_LON = 5.671222;
+        // MAX_DISTANCE_METERS er allerede definert (150) og gjenbrukes
+
+        /**
+         * Kjøres når agenten trykker "VERIFISER POSISJON (VARABERG)"
+         */
+        function verifyVarabergLocation() {
+            // Må bruke unike ID-er for feedback og knapp
+            const feedback = document.getElementById('location-feedback-varaberg'); 
+            const btn = document.getElementById('verify-varaberg-btn');
+            
+            if (!navigator.geolocation) {
+                feedback.innerHTML = '<p class="warning">FEIL: GEOLOKASJON STØTTES IKKE.</p>';
+                return;
+            }
+
+            feedback.innerHTML = 'Søker etter GPS-signal (VARABERG)...';
+            btn.disabled = true;
+            btn.innerHTML = 'LOKALISERER...';
+
+            const options = {
+                enableHighAccuracy: true,
+                timeout: 10000,
+                maximumAge: 0
+            };
+
+            // Må lage nye suksess- og feil-handlers for å unngå konflikt
+            navigator.geolocation.getCurrentPosition(varabergLocationSuccess, varabergLocationError, options);
+        }
+
+        /**
+         * Kjøres HVIS vi får en gyldig posisjon (Varaberg)
+         */
+        function varabergLocationSuccess(pos) {
+            const feedback = document.getElementById('location-feedback-varaberg');
+            const btn = document.getElementById('verify-varaberg-btn');
+            
+            const userLat = pos.coords.latitude;
+            const userLon = pos.coords.longitude;
+
+            // Beregn avstanden
+            const distance = calculateDistance(VARABERG_LAT, VARABERG_LON, userLat, userLon);
+
+            if (distance <= MAX_DISTANCE_METERS) {
+                // SUKSESS!
+                feedback.innerHTML = `POSISJON VERIFISERT (Avstand: ${Math.round(distance)}m). Laster...`;
+                
+                // Hent 'varaberg complete' meldingen
+                const messageHtml = briefings['varaberg complete']; 
+                
+                messageDisplay.innerHTML = `<div class="loader">POSISJON GODKJENT...</div>`;
+                
+                setTimeout(() => {
+                    messageDisplay.innerHTML = messageHtml;
+                    window.scrollTo(0, 0);
+                }, 1500);
+
+            } else {
+                // FEIL: For langt unna
+                feedback.innerHTML = `<p class="warning">VERIFISERING NEKTET. (Avstand: ${Math.round(distance)}m). PRØV IGJEN NÅR DU ER NÆRMERE.</p>`;
+                btn.disabled = false;
+                btn.innerHTML = 'VERIFISER POSISJON (VARABERG)';
+            }
+        }
+
+        /**
+         * Kjøres HVIS det oppstår en feil (Varaberg)
+         */
+        function varabergLocationError(err) {
+            const feedback = document.getElementById('location-feedback-varaberg');
+            const btn = document.getElementById('verify-varaberg-btn');
+            
+            let errorMsg = 'UKJENT GPS-FEIL.';
+            if (err.code === err.PERMISSION_DENIED) {
+                errorMsg = "ADGANG NEKTET. Systemet krever GPS-tilgang.";
+            } else if (err.code === err.POSITION_UNAVAILABLE) {
+                errorMsg = "SIGNAL TAPT. Posisjonsdata er ikke tilgjengelig.";
+            } else if (err.code === err.TIMEOUT) {
+                errorMsg = "TIDSAVBRUDD. Kunne ikke hente posisjon.";
+            }
+            
+            feedback.innerHTML = `<p class="warning">${errorMsg}</p>`;
+            btn.disabled = false;
+            btn.innerHTML = 'VERIFISER POSISJON (VARABERG)';
+        }
+
     </script>
     
     <!-- CSS for Riste-animasjon (valgfritt) -->
-    <style>
-        @keyframes shake {
-            0% { transform: translateX(0); }
-            25% { transform: translateX(-5px); }
-            50% { transform: translateX(5px); }
-            75% { transform: translateX(-5px); }
-            100% { transform: translateX(0); }
-        }
-    </style>
-
-</body>
-</html>
