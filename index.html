@@ -19,7 +19,7 @@
             padding: 0;
             height: 100%;
             font-family: 'Consolas', 'Courier New', monospace; /* Agent/Terminal-font */
-            background-color: #0a0a0a; /* Svart bakunn */
+            background-color: #0a0a0a; /* Svart bakgrunn */
             color: #d4d4d4; /* Lys grå tekst */
             font-size: 15px; /* Tilbake til 15px */
             line-height: 1.6;
@@ -44,16 +44,53 @@
         #header {
             background-color: #1a1a1a;
             border-bottom: 2px solid #ff9900; /* Aksentfarge (oransje/amber) */
-            padding: 12px 20px;
-            text-align: center;
+            padding: 10px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         #header h1 {
             margin: 0;
             color: #ff9900;
-            font-size: 1.1rem;
+            font-size: 1.0rem;
             letter-spacing: 2px;
             text-transform: uppercase;
+        }
+
+        /* Ikon-container i header */
+        .header-icons {
+            display: none; /* SKJULT SOM STANDARD - Vises kun etter login */
+            gap: 15px;
+        }
+
+        .icon-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #d4d4d4;
+            padding: 5px;
+            transition: color 0.2s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 0.7rem;
+            font-family: 'Consolas', monospace;
+        }
+        
+        .icon-btn svg {
+            width: 24px;
+            height: 24px;
+            margin-bottom: 2px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .icon-btn:hover {
+            color: #ff9900;
         }
 
         /* --- MELDINGSVISNING --- */
@@ -181,21 +218,19 @@
             width: 100%;
             max-width: 700px;
             margin: 0 auto;
-            display: flex;
-            flex-wrap: wrap; 
+            display: flex; /* Flexbox for å legge input og knapp på linje */
         }
 
         #code-input {
-            flex-grow: 1; 
+            flex-grow: 1; /* Tar all ledig plass */
             background: #222;
             border: 1px solid #444;
             color: #d4d4d4;
             padding: 14px;
             font-family: 'Consolas', 'Courier New', monospace;
             font-size: 1rem;
-            border-radius: 4px 0 0 4px;
-            min-width: 150px; 
-            flex-basis: 300px; 
+            border-radius: 4px 0 0 4px; /* Avrundet venstre side */
+            min-width: 0; /* Hindrer overflow */
         }
         #code-input:focus {
             outline: none;
@@ -207,38 +242,19 @@
             background-color: #ff9900;
             border: none;
             color: #111;
-            padding: 14px 18px;
+            padding: 14px 20px;
             font-family: 'Consolas', 'Courier New', monospace;
             font-weight: bold;
             text-transform: uppercase;
             cursor: pointer;
-            border-radius: 0 4px 4px 0;
+            border-radius: 0 4px 4px 0; /* Avrundet høyre side */
             font-size: 1rem;
-            flex-grow: 1; 
-            flex-basis: 50px; 
+            white-space: nowrap; /* Hindrer tekst i å bryte */
+        }
+        #submit-btn:hover {
+            background-color: #ffc266;
         }
 
-        /* STYLING FOR ARKIV-KNAPP */
-        #menu-btn {
-            background-color: #444;
-            border: none;
-            color: #d4d4d4;
-            padding: 14px 18px;
-            font-family: 'Consolas', 'Courier New', monospace;
-            font-weight: bold;
-            text-transform: uppercase;
-            cursor: pointer;
-            font-size: 1rem;
-            border-radius: 0; 
-            border-left: 1px solid #0a0a0a;
-            border-right: 1px solid #0a0a0a;
-            transition: background-color 0.2s;
-            flex-grow: 1; 
-            flex-basis: 50px; 
-        }
-        #menu-btn:hover {
-            background-color: #666;
-        }
 
         /* --- STYLING FOR KODENAVN-INNLOGGING --- */
         #login-form-container {
@@ -281,7 +297,7 @@
         }
 
 
-        /* --- STYLING FOR MASTER PORTAL --- */
+        /* --- STYLING FOR MASTER PORTAL / ADMIN DASHBOARD --- */
         .master-list {
             border-top: 1px solid #444;
             margin-top: 20px;
@@ -308,6 +324,136 @@
             font-size: 0.9rem;
             color: #888;
         }
+        
+        /* Admin Menu Buttons */
+        .admin-menu-btn {
+            display: block;
+            width: 100%;
+            padding: 20px;
+            margin-bottom: 15px;
+            background-color: #1a1a1a;
+            border: 1px solid #ff9900;
+            color: #ff9900;
+            text-align: left;
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 1.1rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .admin-menu-btn:hover {
+            background-color: #ff9900;
+            color: #111;
+        }
+        
+        /* Ny CSS for Agent Dashboard */
+        #agent-dashboard .agent-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px dotted #333;
+        }
+        #agent-dashboard .agent-info {
+            flex-grow: 1;
+            cursor: pointer;
+        }
+        #agent-dashboard .agent-info:hover {
+            color: #ffc266;
+        }
+        #agent-dashboard .agent-status {
+            font-size: 0.8em;
+            color: #aaa;
+            max-width: 180px;
+            text-align: right;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+        .status-icon {
+            font-weight: bold;
+            margin-right: 5px;
+        }
+        .status-ready { color: #55ff55; } /* Grønn */
+        .status-stuck { color: #ff9900; } /* Gul/Oransje */
+        .status-login { color: #ff5555; } /* Rød */
+        .agent-id {
+            font-size: 0.75rem;
+            color: #555;
+            display: block;
+        }
+
+        /* Ny CSS for PUSH-knappen i Admin Detail */
+        .push-button {
+            background-color: #ff5555; /* Rød for advarsel/override */
+            margin-top: 5px;
+            padding: 8px 12px;
+            font-size: 0.8rem;
+            width: auto;
+            display: inline-block;
+            border-radius: 4px;
+            color: #111;
+            cursor: pointer;
+            border: none;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        .push-button:hover {
+            background-color: #ff8888;
+        }
+        
+        /* CSS for Meldinger */
+        #msg-recipient {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            background: #222;
+            border: 1px solid #444;
+            color: #d4d4d4;
+            font-family: 'Consolas', 'Courier New', monospace;
+        }
+        #msg-text {
+            width: 100%;
+            height: 100px;
+            padding: 10px;
+            background: #222;
+            border: 1px solid #444;
+            color: #d4d4d4;
+            font-family: 'Consolas', 'Courier New', monospace;
+            resize: none;
+            margin-bottom: 10px;
+        }
+        
+        /* Quick message buttons */
+        .quick-msg-btn {
+            background-color: #333;
+            color: #aaa;
+            border: 1px solid #444;
+            padding: 5px 10px;
+            margin: 0 5px 5px 0;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-family: 'Consolas', monospace;
+        }
+        .quick-msg-btn:hover {
+            background-color: #ff9900;
+            color: #111;
+        }
+        
+        /* Innboks liste-stil */
+        .inbox-item {
+            border-bottom: 1px solid #333;
+            padding: 15px 0;
+        }
+        .inbox-time {
+            font-size: 0.8em;
+            color: #888;
+            margin-bottom: 5px;
+        }
+        .inbox-msg {
+            color: #ffc266;
+        }
 
 
         /* Område for feilmeldinger */
@@ -321,25 +467,6 @@
         @media (max-width: 420px) {
             #input-form {
                 padding: 10px;
-            }
-
-            #code-input {
-                flex-basis: 100%; /* Input tar full bredde */
-                border-radius: 4px; /* Fulle avrundede hjørner */
-                margin-bottom: 10px; /* Mellomrom */
-            }
-            
-            #menu-btn {
-                flex-basis: 48%; /* Arkiv-knapp tar halve bredden */
-                flex-grow: 1;
-                border-radius: 4px 0 0 4px; /* Avrundede hjørner til venstre */
-                border-right: 1px solid #0a0a0a; /* Skille */
-            }
-
-            #submit-btn {
-                flex-basis: 48%; /* Dekrypter-knapp tar halve bredden */
-                flex-grow: 1;
-                border-radius: 0 4px 4px 0; /* Avrundede hjørner til høyre */
             }
         }
         /* --- SLUTT PÅ ADAPTIV CSS --- */
@@ -402,9 +529,26 @@
 
     <div id="portal">
         
-        <!-- 1. HEADER -->
+        <!-- 1. HEADER (Oppdatert med ikoner - SKJULT SOM STANDARD) -->
         <header id="header">
-            <h1>ECHELON 5 // KOMMANDOPORTAL</h1>
+            <h1>ECHELON 5</h1>
+            <div class="header-icons" id="header-nav">
+                <button id="header-archive-btn" class="icon-btn" title="Arkiv">
+                    <!-- Mappe-ikon (SVG) -->
+                    <svg viewBox="0 0 24 24">
+                        <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+                    </svg>
+                    ARKIV
+                </button>
+                <button id="header-inbox-btn" class="icon-btn" title="Innboks">
+                    <!-- Konvolutt-ikon (SVG) -->
+                    <svg viewBox="0 0 24 24">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                        <polyline points="22,6 12,13 2,6"></polyline>
+                    </svg>
+                    INNBOKS
+                </button>
+            </div>
         </header>
 
         <!-- 2. MELDINGSBOKS (Her vises alt innhold) -->
@@ -420,11 +564,9 @@
         <!-- 3. TILBAKEMELDING (For "Adgang Nektet") -->
         <div id="feedback"></div>
 
-        <!-- 4. INNTASTINGSFELT (Klistret til bunnen) -->
+        <!-- 4. INNTASTINGSFELT (Klistret til bunnen, kun input og dekrypter) -->
         <form id="input-form">
-            <input type="text" id="code-input" placeholder="Skriv autorisasjonskode..." autocomplete="off">
-            <!-- ARKIV-KNAPP -->
-            <button type="button" id="menu-btn">Arkiv</button>
+            <input type="text" id="code-input" placeholder="Skriv kode..." autocomplete="off">
             <button type="submit" id="submit-btn">DEKRYPTER</button>
         </form>
 
@@ -448,8 +590,8 @@
         // --- 1. IMPORTER FIREBASE ---
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        // NY IMPORT: onSnapshot for live-meldinger
-        import { getFirestore, setDoc, getDoc, doc, setLogLevel, onSnapshot, updateDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        // NY IMPORT: deleteDoc for admin sletting
+        import { getFirestore, setDoc, getDoc, doc, setLogLevel, onSnapshot, updateDoc, getDocs, collection, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         // --- 2. VENT TIL HELE SIDEN ER LASTET ---
         document.addEventListener('DOMContentLoaded', () => {
@@ -471,6 +613,7 @@
             // Globale Firebase-variabler
             let db, auth, userId, isAuthReady = false;
             let inboxListenerUnsubscribe = null; // For å stoppe lytteren
+            let allAgentData = {}; // NY: Global cache for alle agenter i adminvisning
 
             // Liste over gyldige kodenavn
             const validCodenames = ['raven', 'falcon', 'viper', 'cobra', 'shadow'];
@@ -480,7 +623,12 @@
             const codeInput = document.getElementById('code-input');
             const feedbackDisplay = document.getElementById('feedback');
             const inputForm = document.getElementById('input-form');
-            const menuBtn = document.getElementById('menu-btn');
+            
+            // NYE KNAPPER I HEADER
+            const headerNav = document.getElementById('header-nav');
+            const headerArchiveBtn = document.getElementById('header-archive-btn');
+            const headerInboxBtn = document.getElementById('header-inbox-btn');
+            
             const submitBtn = document.getElementById('submit-btn');
 
             // Hent modal-elementer
@@ -492,7 +640,7 @@
             // Globale variabler for app-tilstand
             let currentCodename = null;
             let currentUserLastCode = null;
-            let currentView = 'loading'; // 'loading', 'login', 'mission', 'archive', 'master', 'master-detail'
+            let currentView = 'loading'; // 'loading', 'login', 'mission', 'archive', 'master', 'master-detail', 'inbox'
             const appId = 'echelon-data'; // Erstatter __app_id med en hardkodet verdi
 
             // Globale variabler for skrivemaskin-effekt
@@ -504,45 +652,42 @@
             let nodeIndex = 0;
             const TYPE_SPEED = 15; // ms per bokstav
 
-            // --- 4. LYD-MODUL ---
+            // --- 4. LYD-MODUL (uendret) ---
             let synth, errorSynth, typeSynth, notificationSynth;
             let soundsReady = false;
 
             function initSound() {
-                // Starter lyden kun etter brukerinteraksjon (første klikk)
                 if (Tone.context.state !== 'running') {
                     Tone.start();
                 }
                 
-                // Definerer de ulike lydene
                 synth = new Tone.Synth({
                     oscillator: { type: 'sine' },
                     envelope: { attack: 0.005, decay: 0.1, sustain: 0.3, release: 0.1 }
                 }).toDestination();
-                synth.volume.value = -18; // Redusert volum
+                synth.volume.value = -18;
 
                 errorSynth = new Tone.Synth({
                     oscillator: { type: 'sawtooth' },
                     envelope: { attack: 0.01, decay: 0.2, sustain: 0, release: 0.1 }
                 }).toDestination();
-                errorSynth.volume.value = -15; // Redusert volum
+                errorSynth.volume.value = -15;
 
                 typeSynth = new Tone.NoiseSynth({
-                    noise: { type: 'pink' }, // Bytter til 'pink' for en dypere, mykere lyd
+                    noise: { type: 'pink' },
                     envelope: { attack: 0.001, decay: 0.01, sustain: 0 }
                 }).toDestination();
-                typeSynth.volume.value = -40; // VELDIG redusert volum (fra -30)
+                typeSynth.volume.value = -40;
                 
                 notificationSynth = new Tone.Synth({
                     oscillator: { type: 'triangle' },
                     envelope: { attack: 0.01, decay: 0.1, sustain: 0.1, release: 0.2 }
                 }).toDestination();
-                notificationSynth.volume.value = -16; // Redusert volum
+                notificationSynth.volume.value = -16;
 
                 soundsReady = true;
             }
 
-            // Globalt "første klikk"-flagg for å starte lyden
             let isFirstClick = true;
             document.body.addEventListener('click', () => {
                 if (isFirstClick) {
@@ -555,7 +700,7 @@
             function playClick() {
                 if (!soundsReady) return;
                 try {
-                    synth.triggerAttackRelease("C4", "8n"); // Dypere tone
+                    synth.triggerAttackRelease("C4", "8n");
                 } catch (e) { console.warn("Tone.js feil (klikk):", e.message); }
             }
 
@@ -563,8 +708,8 @@
                 if (!soundsReady) return;
                 try {
                     const now = Tone.now();
-                    synth.triggerAttackRelease("G4", "8n", now); // Dypere tone
-                    synth.triggerAttackRelease("C5", "8n", now + 0.1); // Dypere tone
+                    synth.triggerAttackRelease("G4", "8n", now);
+                    synth.triggerAttackRelease("C5", "8n", now + 0.1);
                 } catch (e) { console.warn("Tone.js feil (suksess):", e.message); }
             }
 
@@ -586,8 +731,8 @@
                  if (!soundsReady) return;
                 try {
                     const now = Tone.now();
-                    notificationSynth.triggerAttackRelease("A4", "8n", now); // Dypere tone
-                    notificationSynth.triggerAttackRelease("F4", "8n", now + 0.1); // Dypere tone
+                    notificationSynth.triggerAttackRelease("A4", "8n", now);
+                    notificationSynth.triggerAttackRelease("F4", "8n", now + 0.1);
                 } catch (e) { console.warn("Tone.js feil (varsel):", e.message); }
             }
             // --- SLUTT PÅ LYD-MODUL ---
@@ -595,9 +740,6 @@
 
             // --- 5. SKRIVEMASKIN & INNBOKS-MODUL ---
 
-            /**
-             * Stopper en pågående skriveanimasjon
-             */
             function stopTyping() {
                 if (currentTypingTimer) {
                     clearTimeout(currentTypingTimer);
@@ -606,53 +748,42 @@
                 currentTypingTimer = null;
             }
 
-            /**
-             * Hopper over skriveanimasjonen og viser all tekst
-             */
             window.skipTyping = function() {
                 if (!isTyping) return;
-                
                 stopTyping();
-                
-                // Gjenopprett all originaltekst umiddelbart
                 for (let i = 0; i < currentTextNodes.length; i++) {
                     currentTextNodes[i].nodeValue = currentTextStrings[i];
                 }
-                
                 currentTextNodes = [];
                 currentTextStrings = [];
             }
 
-            /**
-             * Starter skrivemaskin-effekten for ny HTML-innhold
-             */
-            function typeText(htmlContent) {
-                skipTyping(); // Stopp og fullfør enhver pågående skriving
-                
+            // Ny funksjon for umiddelbar visning (uten animasjon) for Admin
+            function renderInstant(htmlContent) {
+                stopTyping();
                 messageDisplay.innerHTML = htmlContent;
                 currentTextNodes = [];
                 currentTextStrings = [];
-                
-                // Finn alle tekst-noder
+                isTyping = false;
+                window.scrollTo(0, 0);
+            }
+
+            function typeText(htmlContent) {
+                skipTyping();
+                messageDisplay.innerHTML = htmlContent;
+                currentTextNodes = [];
+                currentTextStrings = [];
                 findTextNodes(messageDisplay);
-                
-                // Lagre originalteksten og tøm nodene
                 for (let i = 0; i < currentTextNodes.length; i++) {
                     currentTextStrings[i] = currentTextNodes[i].nodeValue;
                     currentTextNodes[i].nodeValue = '';
                 }
-
                 isTyping = true;
                 nodeIndex = 0;
                 charIndex = 0;
-                
-                // Start animasjonen
                 typeChar();
             }
 
-            /**
-             * Rekursiv funksjon for å finne alle tekst-noder
-             */
             function findTextNodes(element) {
                 if (element.childNodes.length > 0) {
                     for (let i = 0; i < element.childNodes.length; i++) {
@@ -663,38 +794,25 @@
                 }
             }
 
-            /**
-             * Skriver ut én og én bokstav (hoved-loopen for skrivemaskinen)
-             */
             function typeChar() {
                 if (!isTyping) return;
-
                 if (nodeIndex < currentTextNodes.length) {
                     const currentNode = currentTextNodes[nodeIndex];
                     const currentString = currentTextStrings[nodeIndex];
-
                     if (charIndex < currentString.length) {
                         currentNode.nodeValue += currentString[charIndex];
                         charIndex++;
-                        playType(); // Spill av lyd for hver bokstav
+                        playType();
                     } else {
-                        // Gå til neste node
                         nodeIndex++;
                         charIndex = 0;
                     }
-                    
-                    // KjøR neste bokstav
                     currentTypingTimer = setTimeout(typeChar, TYPE_SPEED);
-                    
                 } else {
-                    // Ferdig med å skrive
                     stopTyping();
                 }
             }
 
-            /**
-             * Viser en live admin-melding
-             */
             function showInboxMessage(message) {
                 playNotification();
                 inboxMessageContent.textContent = message;
@@ -702,28 +820,82 @@
                 inboxModal.style.display = 'block';
             }
 
-            /**
-             * Lukker live admin-meldingen
-             */
             function closeInboxMessage() {
                 playClick();
                 inboxOverlay.style.display = 'none';
                 inboxModal.style.display = 'none';
-                
-                // Tømmer meldingen fra databasen så den ikke vises igjen
                 if (isAuthReady && userId) {
                     const docRef = doc(db, appId, userId, "progress", "main");
                     updateDoc(docRef, { inbox: "" })
                         .catch(e => console.warn("Kunne ikke tømme innboks:", e));
                 }
             }
+            
+            /**
+             * Lagrer en melding lokalt for historikk
+             */
+            function saveMessageToHistory(message) {
+                // Hent eksisterende meldinger
+                let messages = JSON.parse(localStorage.getItem('echelonMessages') || '[]');
+                
+                // Sjekk om meldingen allerede er siste melding (for å unngå duplikater ved refresh)
+                if (messages.length > 0 && messages[0].text === message) {
+                    return; 
+                }
+                
+                // Legg til ny melding først
+                messages.unshift({
+                    text: message,
+                    timestamp: new Date().toISOString()
+                });
+                
+                // Begrens til 50 meldinger
+                if (messages.length > 50) messages = messages.slice(0, 50);
+                
+                localStorage.setItem('echelonMessages', JSON.stringify(messages));
+            }
+            
+            /**
+             * Hjelpefunksjon for å vise/skjule ikoner i header
+             */
+            function setNavVisibility(visible) {
+                if (headerNav) {
+                    headerNav.style.display = visible ? 'flex' : 'none';
+                }
+            }
+            
+            /**
+             * NYTT: Robust funksjon for å be om varslingstillatelse
+             */
+            window.requestNotificationPermission = function() {
+                if (!("Notification" in window)) {
+                    alert("Denne nettleseren støtter ikke systemvarsler.");
+                    return;
+                }
+
+                Notification.requestPermission().then((permission) => {
+                    if (permission === "granted") {
+                        // Send et testvarsel umiddelbart for å bekrefte
+                        new Notification("Systemtest", { 
+                            body: "Varsler er aktivert for Echelon 5.", 
+                            icon: "https://cdn-icons-png.flaticon.com/512/3062/3062634.png"
+                        });
+                        
+                        // Oppdater UI i innboksen hvis vi er der
+                        if(currentView === 'inbox') showInboxView(); 
+                        
+                    } else if (permission === "denied") {
+                        alert("Du har blokkert varsler. Du må gå inn i nettleserens innstillinger for å aktivere dem igjen.");
+                    }
+                });
+            }
+            
             // --- SLUTT PÅ SKRIVEMASKIN & INNBOKS-MODUL ---
 
 
-            // --- DATABASE MED KODEORD OG MELDINGER ---
+            // --- DATABASE MED KODEORD OG MELDINGER (uendret) ---
             const briefings = {
                 
-                // NY: Initiell velkomstmelding
                 '_initial_': (codename) => {
                     const team = (codename === 'raven' || codename === 'falcon') ? 'CELL O (AIRBORNE)' : 'CELL S (GROUND INTEL)';
                     return `
@@ -736,8 +908,25 @@
                         <p>— Command Out.</p>
                     `;
                 },
+                
+                // NY: 258 - The Kill Switch Reveal
+                '258': `
+                    <h4>PROJECT SILENT NORTH — DECLASSIFIED</h4>
+                    <p>Korrekt. Summen er verifisert. Tilgang til historisk arkiv gitt.</p>
+                    
+                    <h5>BAKGRUNN FOR OPERASJONEN:</h5>
+                    <p>GNM-modulen dere jakter på er ikke en vanlig jammer. Den er kjernen i "Project Silent North", et topphemmelig NATO-initiativ fra 1982, utviklet for å møte en sovjetisk invasjon i Skagerrak.</p>
+                    
+                    <p>Teknologien blokkerer ikke GPS-signaler – den <strong>flytter</strong> dem. Målet var å lure fiendtlige flåter til å tro at de var på trygg kurs, mens de i virkeligheten ble ledet rett mot norske skjær og danske sandbanker.</p>
+                    
+                    <p>Prosjektet ble skrinlagt i 1989 fordi risikoen for sivil sjøfart var for stor. Modulen skulle destrueres i en bunker i Trøndelag, men forsvant under transport.</p>
+                    
+                    <p>Nå er den aktiv igjen. Dette er ikke sabotasje – det er et våpen som kan omskrive kartet i sanntid.</p>
+                    
+                    <p>Fortsett mot målet. Denne teknologien må sikres for enhver pris.</p>
+                    <p>— Command Out.</p>
+                `,
 
-                // --- FASE 1: OSLO (Nå en funksjon) ---
                 'team oslo': (codename) => {
                     if (codename === 'raven') {
                         return `
@@ -751,10 +940,9 @@
                                 <li>Transportmiddel: <strong>Tog</strong></li>
                                 <li>Avreisedato: <strong>27. november</strong></li>
                                 <li>Avgang: <strong>Oslo S kl. 09:25</strong></li>
-                                <li>Destinasjon: <strong>Fortrolig</strong></li>
                             </ul>
                             <p>Ved ankomst skal du og Agent <strong>FALCON</strong> ta dere til følgende observasjonspunkt:<br>
-                            <a href="https://www.google.com/maps/place/58%C2%B008'40.6%22N+7%C2%B°59'20.2%22E" target="_blank" class="location-link"><strong>58°08'40.6"N 7°59'20.2"E</strong></a></p>
+                            <a href="https://www.google.com/maps/search/?api=1&query=58.144611,7.988944" target="_blank" class="location-link"><strong>58°08'40.6"N 7°59'20.2"E</strong></a></p>
                             
                             <h5>Oppdrag:</h5>
                             <p>Et kjøretøy (<strong>SD73382</strong>) vil ankomme, bemannet av Ground Intel (Agenter <strong>SHADOW</strong>, <strong>VIPER</strong>, <strong>COBRA</strong>).</p>
@@ -774,10 +962,9 @@
                                 <li>Transportmiddel: <strong>Tog</strong></li>
                                 <li>Avreisedato: <strong>27. november</strong></li>
                                 <li>Avgang: <strong>Oslo S kl. 09:25</strong></li>
-                                <li>Destinasjon: <strong>Fortrolig</strong></li>
                             </ul>
                             <p>Ved ankomst skal du og Agent <strong>RAVEN</strong> ta dere til følgende observasjonspunkt:<br>
-                            <a href="https://www.google.com/maps/place/58%C2%B008'40.6%22N+7%C2%B°59'20.2%22E" target="_blank" class="location-link"><strong>58°08'40.6"N 7°59'20.2"E</strong></a></p>
+                            <a href="https://www.google.com/maps/search/?api=1&query=58.144611,7.988944" target="_blank" class="location-link"><strong>58°08'40.6"N 7°59'20.2"E</strong></a></p>
                             
                             <h5>Oppdrag:</h5>
                             <p>Et kjøretøy (<strong>SD73382</strong>) vil ankomme, bemannet av Ground Intel (Agenter <strong>SHADOW</strong>, <strong>VIPER</strong>, <strong>COBRA</strong>).</p>
@@ -786,11 +973,9 @@
                             <a href="#" class="download-button" onclick="downloadPakkliste()">Last ned Pakkliste (Echelon 3)</a>
                         `;
                     }
-                    // Fallback for agenter som ikke skal ha denne
                     return `<p class="warning">SYSTEMFEIL: KODENAVN IKKE SYNKRONISERT MED DIREKTIV.</p>`;
                 },
 
-                // --- FASE 1: STAVANGER (Nå en funksjon) ---
                 'team stavanger': (codename) => {
                     if (codename === 'shadow') {
                         return `
@@ -804,10 +989,9 @@
                                 <li>Transportmiddel: <strong>Bil (SD73382)</strong></li>
                                 <li>Avreisedato: <strong>27. november</strong></li>
                                 <li>Avgang: <strong>Stavanger kl. 11:30</strong></li>
-                                <li>Destinasjon: <strong>Fortrolig</strong></li>
                             </ul>
                             <p>Ved ankomst skal dere posisjonere dere ved følgende koordinater:<br>
-                            <a href="https://www.google.com/maps/place/58%C2%B008'40.6%22N+7%C2%B°59'20.2%22E" target="_blank" class="location-link"><strong>58°08'40.6"N 7°59'20.2"E</strong></a></p>
+                            <a href="https://www.google.com/maps/search/?api=1&query=58.144611,7.988944" target="_blank" class="location-link"><strong>58°08'40.6"N 7°59'20.2"E</strong></a></p>
 
                             <h5>Oppdrag:</h5>
                             <p>Posisjoner kjøretøyet. Airborne Division (Agent <strong>RAVEN</strong> og <strong>FALCON</strong>) vil overvåke ankomsten deres fra avstand.</p>
@@ -827,10 +1011,9 @@
                                 <li>Transportmiddel: <strong>Bil (SD73382)</strong></li>
                                 <li>Avreisedato: <strong>27. november</strong></li>
                                 <li>Avgang: <strong>Stavanger kl. 11:30</strong></li>
-                                <li>Destinasjon: <strong>Fortrolig</strong></li>
                             </ul>
                             <p>Ved ankomst skal dere posisjonere dere ved følgende koordinater:<br>
-                            <a href="https://www.google.com/maps/place/58%C2%B008'40.6%22N+7%C2%B°59'20.2%22E" target="_blank" class="location-link"><strong>58°08'40.6"N 7°59'20.2"E</strong></a></p>
+                            <a href="https://www.google.com/maps/search/?api=1&query=58.144611,7.988944" target="_blank" class="location-link"><strong>58°08'40.6"N 7°59'20.2"E</strong></a></p>
 
                             <h5>Oppdrag:</h5>
                             <p>Airborne Division (<strong>RAVEN</strong> og <strong>FALCON</strong>) vil ha overvåkning. En av dem vil ta kontakt på bakkenivå når dere er i posisjon.</p>
@@ -850,10 +1033,9 @@
                                 <li>Transportmiddel: <strong>Bil (SD73382)</strong></li>
                                 <li>Avreisedato: <strong>27. november</strong></li>
                                 <li>Avgang: <strong>Stavanger kl. 11:30</strong></li>
-                                <li>Destinasjon: <strong>Fortrolig</strong></li>
                             </ul>
                             <p>Ved ankomst skal dere posisjonere dere ved følgende koordinater:<br>
-                            <a href="https://www.google.com/maps/place/58%C2%B008'40.6%22N+7%C2%B°59'20.2%22E" target="_blank" class="location-link"><strong>58°08'40.6"N 7°59'20.2"E</strong></a></p>
+                            <a href="https://www.google.com/maps/search/?api=1&query=58.144611,7.988944" target="_blank" class="location-link"><strong>58°08'40.6"N 7°59'20.2"E</strong></a></p>
 
                             <h5>Oppdrag:</h5>
                             <p>Airborne Division (<strong>RAVEN</strong> og <strong>FALCON</strong>) vil ha overvåkning. En av dem vil ta kontakt på bakkenivå når dere er i posisjon.</p>
@@ -862,7 +1044,6 @@
                             <a href="#" class="download-button" onclick="downloadPakkliste()">Last ned Pakkliste (Echelon 3)</a>
                         `;
                     }
-                    // Fallback for agenter som ikke skal ha denne
                     return `<p class="warning">SYSTEMFEIL: KODENAVN IKKE SYNKRONISERT MED DIREKTIV.</p>`;
                 },
 
@@ -906,7 +1087,7 @@
                     <p>Kryptert kommunikasjon gjenopprettet. Neste waypoint er aktivert.</p>
                     
                     <h5>Safehouse koordinater:</h5>
-                    <p><a href="https://www.google.com/maps/place/57%C2%B003'48.6%22N+9%C2%B°54'47.6%22E" target="_blank" class="location-link"><strong>57°03'48.6"N 9°54'47.6"E</strong></a></p>
+                    <p><a href="https://www.google.com/maps/search/?api=1&query=57.063500,9.913222" target="_blank" class="location-link"><strong>57°03'48.6"N 9°54'47.6"E</strong></a></p>
                     <p><strong>Lokasjon:</strong> Nørresundby</p>
                     <p>Gå direkte til disse koordinatene. Hold lav profil. Når lokasjonen er sikret, må du verifisere din posisjon for å motta neste direktiv.</p>
                     
@@ -927,7 +1108,7 @@
                     <p>Etter den vellykkede overføringen fra fergen er situasjonen endret. Våre analyser viser at GNM-modulen har vært aktiv i nettverkssporene vi overvåker.</p>
                     <p>For å sikre at minst ett lag kan rykke inn dersom situasjonen eskalerer, skal dere gjennomføre akutt pilotopplæring i et kontrollert miljø.</p>
                     
-                    <p><strong>Lokasjon:</strong> <a href="https://www.google.com/maps/place/57%C2%B005'13.0%22N+9%C2%B°52'18.1%22E" target="_blank" class="location-link"><strong>57°05'13.0"N 9°52'18.1"E</strong></a><br>
+                    <p><strong>Lokasjon:</strong> <a href="https://www.google.com/maps/search/?api=1&query=57.086944,9.871694" target="_blank" class="location-link"><strong>57°05'13.0"N 9°52'18.1"E</strong></a><br>
                         <strong>Tid:</strong> 10:00 i morgen</p>
                     
                     <p>Dere vil gjennomføre et fullt <strong>pilottreningsprogram</strong> basert på F-16-plattformen. Forbered dere på høyde, hastighet og presisjon.</p>
@@ -940,11 +1121,11 @@
                     <h4>CLASSIFIED MESSAGE — POST FLIGHT OPS DIRECTIVE</h4>
                     <h5>Clearance Level: ECHELON 5</h5>
                     <p>Flight-sekvens fullført. Data bekrefter operativ beredskap hos alle enheter.</p>
-                    <p>Nye instruksjoner er sendt fra kommandonivå.</p>
+                    <p>Nye instruksjoner er sent fra kommandonivå.</p>
                     <p>Dere skal trekke tilbake til et sikkert sivilt kontaktpunkt for debrief og midlertidig avventing.</p>
                     
                     <h5>Lokasjon (Dekknavn):</h5>
-                    <p><a href="https://www.google.com/maps/place/Slotsgade+33,+9000+Aalborg,+Denmark" target="_blank" class="location-link"><strong>ISIDOR HENIUS</strong></a><br>
+                    <p><a href="https://www.google.com/maps/search/?api=1&query=Slotsgade+33,+9000+Aalborg" target="_blank" class="location-link"><strong>ISIDOR HENIUS</strong></a><br>
                     <span style="color: #888;">Slotsgade 33, 9000 Aalborg, Denmark</span></p>
                     
                     <p><strong>Oppdrag:</strong> Møt på stedet. Når dere er innenfor rekkevidde, verifiser posisjonen for å motta neste ordre.</p>
@@ -982,7 +1163,7 @@
                     <p><strong>AMMO GROUND</strong></p>
                     <p>Dere skal forflytte dere fra nåværende base og være fullt operative ved morgengry.</p>
                     
-                    <p><strong>Oppmøtested:</strong> <a href="https://www.google.com/maps/place/Magasinvej+7,+9870+Sindal,+Denmark" target="_blank" class="location-link">Magasinvej 7, 9870 Sindal, Denmark</a><br>
+                    <p><strong>Oppmøtested:</strong> <a href="https://www.google.com/maps/search/?api=1&query=Magasinvej+7,+9870+Sindal" target="_blank" class="location-link">Magasinvej 7, 9870 Sindal, Denmark</a><br>
                         <strong>Tid:</strong> 09:00 i morgen</p>
                     
                     <h5>Instruks:</h5>
@@ -1013,7 +1194,7 @@
                     
                     <h5>Direktiv:</h5>
                     <p>Gå i dekning umiddelbart. Dere skal forflytte dere til trygg sone for midlertidig evakuering.</p>
-                    <p><strong>Lokasjon:</strong> <a href="https://www.google.com/maps/place/Skydebanevej+17,+9800+Hj%C3%B8rring" target="_blank" class="location-link">Skydebanevej 17, 9800 Hjørring</a><br>
+                    <p><strong>Lokasjon:</strong> <a href="https://www.google.com/maps/search/?api=1&query=Skydebanevej+17,+9800+Hjørring" target="_blank" class="location-link">Skydebanevej 17, 9800 Hjørring</a><br>
                     <strong>Dekknavn:</strong> Base Echo</p>
                     <p>Hold lav profil under forflytning. Ved ankomst: sikre lokasjonen og verifiser posisjon for endelig debrief.</p>
 
@@ -1079,12 +1260,13 @@
                 { id: 'team stavanger', title: 'FASE 1: STAVANGER', team: 'stavanger', adminNote: 'Agent SHADOW, VIPER og COBRA starter her. De mottar reiserute og første kontakt-oppdrag.' },
                 { id: 'aurora borealis', title: 'FASE 2: SAMMENSLÅING', team: 'felles', adminNote: 'Felles kodeord for begge lag. Låser opp ferje-info. SHADOW utpekes som leder ombord.' },
                 { id: 'jylland', title: 'FASE 2: FERGE (KODE 1)', team: 'felles', adminNote: 'Kodeord gitt av SHADOW på fergen. Låser opp NORSE-6-protokoll-puslespillet.' },
-                { id: 'lcvccn', title: 'FASE 2: FERGE (KODE 2) - GPS 1', team: 'felles', adminNote: 'Løsningen på puslespillet. Låser opp Safehouse-koordinatene og første GPS-sjekk.' },
+                { id: 'lcvccn', title: 'FASE 2: FERGE (KODE 2) - GPS 1', team: 'felles', adminNote: 'Løsningen på puslespillet. Låser opp Safehouse-koordinatene og første GPS-sjekk.', overrideCode: 'safehouse check-in' },
+                { id: '258', title: 'BONUS: PROJECT SILENT NORTH', team: 'felles', adminNote: 'Ekstra historie om GNM-modulen, låses opp av "Kill Switch" gåten (summen av tallene).' },
                 { id: 'safehouse check-in', title: 'FASE 3: SAFEHOUSE', team: 'felles', adminNote: 'Låses opp av GPS ved Safehouse. Gir info om Flight Ops.' },
-                { id: 'fuelcheck', title: 'FASE 4: ETTER FLIGHT OPS - GPS 2', team: 'felles', adminNote: 'Kodeord mottatt etter Flight Ops. Låser opp "Isidor Henius"-møtepunkt og andre GPS-sjekk.' },
+                { id: 'fuelcheck', title: 'FASE 4: ETTER FLIGHT OPS - GPS 2', team: 'felles', adminNote: 'Kodeord mottatt etter Flight Ops. Låser opp "Isidor Henius"-møtepunkt og andre GPS-sjekk.', overrideCode: 'table 19' },
                 { id: 'table 19', title: 'FASE 4: ISIDOR HENIUS', team: 'felles', adminNote: 'Låses opp av GPS ved Isidor Henius. Gir info om kveldssamling (Restaurant Flammen).' },
                 { id: 'specter one', title: 'FASE 5: PÅ FLAMMEN', team: 'felles', adminNote: 'Kodeord gitt av SHADOW på Flammen. Låser opp "AMMO GROUND"-oppdraget og pakkeliste for neste dag.' },
-                { id: 'nordstar', title: 'FASE 6: ETTER AMMO GROUND - GPS 3', team: 'felles', adminNote: 'Kodeord gitt etter AMMO GROUND. Låser opp Base Echo (Hjørring) og siste GPS-sjekk.' },
+                { id: 'nordstar', title: 'FASE 6: ETTER AMMO GROUND - GPS 3', team: 'felles', adminNote: 'Kodeord gitt etter AMMO GROUND. Låser opp Base Echo (Hjørring) og siste GPS-sjekk.', overrideCode: 'echofall' },
                 { id: 'echofall', title: 'FASE 7: BASE ECHO', team: 'felles', adminNote: 'Låses opp av GPS ved Base Echo. Gir info om endelig debrief (Bones).' },
                 { id: 'shadowfall', title: 'FASE 8: AVSLUTNING', team: 'felles', adminNote: 'Kodeord gitt av SHADOW på Bones. Avslutter hele operasjonen og gir info om hjemreise.' }
             ];
@@ -1149,11 +1331,22 @@
                     inboxListenerUnsubscribe(); // Stopp forrige lytter
                 }
                 
-                const docRef = doc(db, appId, uid, "progress", "main");
+                // Må bruke collection-referanse for admin, men her bruker vi doc for agentens personlige innboks
+                const docRef = doc(db, appId, uid, "progress", "main"); 
                 inboxListenerUnsubscribe = onSnapshot(docRef, (docSnap) => {
                     if (docSnap.exists()) {
                         const data = docSnap.data();
                         if (data.inbox && data.inbox.trim() !== "") {
+                            // NYTT: Send System Notification hvis tillatt
+                            if (Notification.permission === "granted") {
+                                new Notification("ECHELON 5", { 
+                                    body: "Ny kryptert melding mottatt.", 
+                                    icon: "https://cdn-icons-png.flaticon.com/512/3062/3062634.png" // Enkelt hengelås-ikon
+                                });
+                            }
+                            
+                            // Lagre i lokal historikk FØR visning
+                            saveMessageToHistory(data.inbox);
                             showInboxMessage(data.inbox);
                         }
                     }
@@ -1175,42 +1368,35 @@
                 inputForm.style.display = 'none'; // Skjul input-feltet
             }
 
-            /**
-             * Laster agentens nåværende kodenavn fra lokal lagring
-             */
+            // ... (Kode for getLocalCodename, setLocalCodename, loadProgress er uendret) ...
+            
             function getLocalCodename() {
                 return localStorage.getItem('echelonAgentCodename');
             }
 
-            /**
-             * Lagrer agentens kodenavn i lokal lagring
-             */
             function setLocalCodename(codename) {
                 localStorage.setItem('echelonAgentCodename', codename);
                 currentCodename = codename;
             }
 
-            /**
-             * Laster fremdriften (siste kode) fra Firestore
-             */
             async function loadProgress() {
                 if (!isAuthReady || !userId) {
                     console.warn("Lese-avbrudd: Auth er ikke klar.");
                     return;
                 }
                 
-                // 1. Sjekk om vi har et lokalt kodenavn
                 currentCodename = getLocalCodename();
                 
                 if (!currentCodename || !validCodenames.includes(currentCodename)) {
-                    // 2. Ikke noe gyldig kodenavn? Vis innloggingsskjerm.
                     console.log("Ingen gyldig kodenavn funnet lokalt. Viser innlogging.");
                     showCodenameLogin();
                     return;
                 }
 
-                // 3. Vi har et kodenavn. Prøv å hente siste fremdrift fra DB.
                 try {
+                    // NYTT: Registrer agentens tilstedeværelse umiddelbart ved innlogging
+                    registerAgentPresence(userId, currentCodename);
+
                     const docRef = doc(db, appId, userId, "progress", "main");
                     const docSnap = await getDoc(docRef);
 
@@ -1218,25 +1404,22 @@
                         const data = docSnap.data();
                         currentUserLastCode = data.lastCode;
                         
-                        // Sjekk om kodenavnet i DB matcher det lokale
                         if (data.codename !== currentCodename) {
                             console.warn("Kodenavn-mismatch! DB:", data.codename, "Lokal:", currentCodename, ". Oppdaterer DB.");
-                            // Det lokale kodenavnet har forrang. Oppdater DB.
-                            await saveProgress(currentUserLastCode, false); // Lagrer uten å vise melding
+                            await saveProgress(currentUserLastCode, false);
                         }
                         
                         console.log("Fremdrift lastet:", currentUserLastCode);
-                        showUnlockedMessage(currentUserLastCode, true); // Viser melding uten "laster"
+                        showUnlockedMessage(currentUserLastCode, true);
+                        // VIS IKONER ETTER SUKSESS
+                        setNavVisibility(true);
                     } else {
-                        // 4. Ingen fremdrift i DB? Vis FØRSTE MELDING.
                         console.log("Ingen fremdrift i DB. Viser standard første melding.");
-                        
-                        // FIKS: Sett startkoden til _initial_
                         const initialCode = '_initial_';
-                        await saveProgress(initialCode, false); // Lagre den første koden, ikke vis den
-                        
-                        // Vis den initielle velkomstmeldingen
+                        await saveProgress(initialCode, false);
                         showUnlockedMessage(initialCode, true);
+                        // VIS IKONER ETTER SUKSESS
+                        setNavVisibility(true);
                     }
                 } catch (error) {
                     console.error("Feil ved lasting av fremdrift:", error);
@@ -1244,16 +1427,32 @@
                 }
             }
             
-            /**
-             * Lagrer fremdriften (siste kode) til Firestore
-             */
-            async function saveProgress(code, showMessage = true) {
+            // Hjelpefunksjon for å registrere at agenten finnes i "roten" (slik at admin finner dem)
+            async function registerAgentPresence(uid, cname) {
+                try {
+                    // Vi skriver til hoveddokumentet for brukeren, slik at fetchAllAgents finner det
+                    // Dette er "Navneskiltet" i hovedgangen
+                    const parentDocRef = doc(db, appId, uid);
+                    await setDoc(parentDocRef, {
+                        codename: cname,
+                        lastSeen: new Date(),
+                        active: true
+                    }, { merge: true });
+                    console.log("Agent registrert i hovedregisteret:", cname);
+                } catch (e) {
+                    console.warn("Kunne ikke registrere agent-tilstedeværelse:", e);
+                }
+            }
+            
+            // Lagrer fremdriften (window.saveProgress er uendret)
+            window.saveProgress = async function(code, showMessage = true) {
                 if (!isAuthReady || !userId || !currentCodename) {
                     console.warn("Lagre-avbrudd: Auth/kodenavn er ikke klar.");
                     return;
                 }
                 
                 try {
+                    // 1. Lagre detaljert fremdrift i undermappen
                     const docRef = doc(db, appId, userId, "progress", "main");
                     await setDoc(docRef, { 
                         lastCode: code,
@@ -1261,7 +1460,10 @@
                         lastUpdated: new Date()
                     }, { merge: true });
                     
-                    currentUserLastCode = code; // Oppdater global tilstand
+                    // 2. Oppdater også "navneskiltet" i hovedmappen (for admin-listen)
+                    await registerAgentPresence(userId, currentCodename);
+                    
+                    currentUserLastCode = code;
                     console.log("Fremdrift lagret:", code, "for", currentCodename);
                     
                     if (showMessage) {
@@ -1269,15 +1471,83 @@
                     }
                 } catch (error) {
                     console.error("Feil ved lagring av fremdrift:", error);
-                    // Ikke vis feil til bruker, bare logg
+                }
+            }
+            
+            /**
+             * NY FUNKSJON: Slett en spesifikk agent fra serveren
+             */
+            window.deleteSingleAgent = async function(agentId) {
+                if(!confirm("Er du sikker på at du vil slette denne agenten permanent?")) return;
+                
+                playClick();
+                // Vis loader i detail-view (vi må manuelt oppdatere her siden vi er i detail view)
+                const detailContainer = document.querySelector('#message-display'); 
+                // Dette er litt hacky, men fungerer for single-page app
+                detailContainer.innerHTML = '<h4>SLETTER AGENT...</h4><div class="loader">VENNLIGST VENT...</div>';
+
+                try {
+                    // Slett hoved-agent-dokumentet
+                    await deleteDoc(doc(db, appId, agentId));
+                    // Slett fremdrifts-dokumentet
+                    await deleteDoc(doc(db, appId, agentId, "progress", "main"));
+                    
+                    playSuccess();
+                    // Gå tilbake til dashboard etter suksess
+                    alert("Agent slettet.");
+                    showAgentStatusDashboard();
+                    
+                } catch (error) {
+                    console.error("Sletting av agent feilet:", error);
+                    playError();
+                    alert("Feil under sletting: " + error.message);
+                    showAgentStatusDashboard(); // Gå tilbake uansett
                 }
             }
 
+
+            // NY FUNKSJON: PUSH AGENT TIL NESTE STEG
             /**
-             * Viser kodenavn-innloggingsskjermen
+             * Tvinger en spesifikk agent (via userId) til å motta et nytt direktiv (code)
+             * @param {string} targetUserId - Bruker-ID til agenten som skal oppdateres.
+             * @param {string} nextCode - Koden til det neste direktivet som skal låses opp.
              */
+            window.pushAgentToCode = async function(targetUserId, nextCode) {
+                if (!isAuthReady) {
+                    alert("Admin-tilgang ikke autorisert.");
+                    return;
+                }
+                
+                playSuccess();
+                
+                // 1. Skriver den nye koden til agentens fremdrift i databasen
+                try {
+                    const docRef = doc(db, appId, targetUserId, "progress", "main");
+                    await updateDoc(docRef, { 
+                        lastCode: nextCode,
+                        lastUpdated: new Date(),
+                        // Sender en liten beskjed til agentens innboks
+                        inbox: `// INNKOMMENDE TRANSMISJON //\nFRA: ECHELON KOMMANDØR\n\nSYSTEM OVERRIDE: Command har manuelt godkjent fortsettelse. Direktiver for kode ${nextCode.toUpperCase()} er nå tilgjengelig.` 
+                    });
+                    console.log(`Agent ${targetUserId} (${allAgentData[targetUserId].codename}) PUSHET til kode: ${nextCode}`);
+                    
+                    // 2. Oppdaterer lokalt admin-dashboard (trekker inn ny data)
+                    showAgentStatusDashboard(); 
+                } catch (error) {
+                    playError();
+                    alert(`FEIL: Kunne ikke pushe agent ${allAgentData[targetUserId].codename}. Sjekk konsoll for detaljer.`);
+                    console.error("PUSH-feil:", error);
+                }
+            }
+
+
+            // ... (Resten av funksjonene er uendret eller smått justert for å støtte dashboard) ...
+
             function showCodenameLogin() {
                 currentView = 'login';
+                // SKJUL IKONER VED LOGIN
+                setNavVisibility(false);
+                
                 const loginHtml = `
                     <h4>AGENT-AUTENTISERING</h4>
                     <p>Systemet krever identifisering.</p>
@@ -1288,10 +1558,9 @@
                         <div id="login-feedback"></div>
                     </div>
                 `;
-                typeText(loginHtml); // Bruk skrivemaskin
+                typeText(loginHtml);
                 inputForm.style.display = 'none';
 
-                // Input-feltet må hentes *etter* at HTML er satt
                 const codenameInput = document.getElementById('codename-input');
                 codenameInput.onkeyup = (e) => {
                     if (e.key === 'Enter') {
@@ -1300,21 +1569,14 @@
                 };
             }
 
-            /**
-             * Kjøres når brukeren trykker "DEKRYPTER"
-             */
             function submitCode() {
                 playClick();
-                
-                // Hent og normaliser koden (små bokstaver, ingen mellomrom)
                 let code = codeInput.value.toLowerCase().trim();
                 
-                // Spesialtilfelle for "safehouse check-in"
                 if (code === "safehouse check-in" || code === "safehouse checkin") {
                     code = 'safehouse check-in';
                 }
                 
-                // Tøm feilmeldinger
                 feedbackDisplay.innerHTML = '';
 
                 // --- MASTER PORTAL KODE ---
@@ -1324,39 +1586,25 @@
                     return;
                 }
                 
-                // Prøv å finne koden i vår "database"
                 const messageHtml = briefings[code];
 
                 if (messageHtml) {
-                    // KODE FUNNET!
                     playSuccess();
-                    
-                    // 1. Lagre fremdriften (og vis meldingen)
                     saveProgress(code, true);
 
                 } else {
-                    // KODE IKKE FUNNET
                     playError();
-                    
-                    // Gi en feilmelding
                     feedbackDisplay.innerHTML = '<p class="warning">ADGANG NEKTET. KODE IKKE GJENKJENT.</p>';
-                    
-                    // Rist på input-feltet for effekt (valgfritt)
                     const form = inputForm;
                     form.style.animation = 'shake 0.3s';
                     setTimeout(() => { form.style.animation = ''; }, 300);
                 }
                 
-                codeInput.value = ''; // Tøm inputfeltet
+                codeInput.value = '';
             }
 
-            /**
-             * Viser en låst opp melding (med lasting-effekt)
-             */
             window.showUnlockedMessage = function(code, skipLoader = false) {
-                
                 const showContent = () => {
-                    // Hent riktig HTML. Håndter funksjoner (som team oslo)
                     const messageContent = (typeof briefings[code] === 'function')
                         ? briefings[code](currentCodename)
                         : briefings[code];
@@ -1367,32 +1615,26 @@
                         return;
                     }
 
-                    typeText(messageContent); // Bruk skrivemaskin
-                    inputForm.style.display = 'flex'; // Sørg for at input er synlig
+                    typeText(messageContent);
+                    inputForm.style.display = 'flex';
                     currentView = 'mission';
-                    window.scrollTo(0, 0); // Scroll til toppen
+                    window.scrollTo(0, 0);
                 };
 
                 if (skipLoader) {
                     showContent();
                 } else {
-                    // 1. Vis en "laste"-melding for effekt
                     const loaderHtml = `
                         <div class="loader">
                             DEKRYPTERER SIGNAL...<br>
                             VERIFISERER AUTORISASJON...<br>
                             ETABLERER SIKKER KOBLING...
                         </div>`;
-                    typeText(loaderHtml); // Bruk skrivemaskin for lasteren også
-                    
-                    // 2. Vent 1.5 sekunder, og vis så den ekte meldingen
+                    typeText(loaderHtml);
                     setTimeout(showContent, 1500);
                 }
             }
 
-            /**
-             * Genererer og laster ned pakklisten som en .txt-fil
-             */
             window.downloadPakkliste = function() {
                 playClick();
                 const pakklisteText = `PERSONLIG UTSTYR — STANDARD LOADOUT
@@ -1450,64 +1692,42 @@ Hold lav profil.
 — Command Logistics Division / Operation Northern Strike
 `;
                 
-                // Lag en 'blob' (en fil i minnet)
                 const blob = new Blob([pakklisteText], { type: 'text/plain;charset=utf-8' });
-                
-                // Lag en falsk nedlastingslenke
                 const link = document.createElement('a');
                 link.href = URL.createObjectURL(blob);
                 link.download = 'pakkliste.txt';
-                
-                // Klikk på lenken
                 document.body.appendChild(link);
                 link.click();
-                
-                // Rydd opp
                 document.body.removeChild(link);
                 URL.revokeObjectURL(link.href);
             }
 
 
-            // --- 7. GPS VERIFISERINGSFUNKSJONER ---
+            // --- 7. GPS VERIFISERINGSFUNKSJONER (uendret) ---
 
-            // Definerer koordinatene for "Safehouse"
-            // 57°03'48.6"N 9°54'47.6"E
             const SAFEHOUSE_LAT = 57.0635;
             const SAFEHOUSE_LON = 9.913222;
-            
-            // Definerer koordinatene for "Isidor Henius"
-            // Slotsgade 33, 9000 Aalborg
             const ISIDOR_LAT = 57.05061;
             const ISIDOR_LON = 9.91976;
-
-            // Definerer koordinatene for "Base Echo"
-            // Skydebanevej 17, 9800 Hjørring
             const ECHO_LAT = 57.45788;
             const ECHO_LON = 9.95764;
+            const MAX_DISTANCE_METERS = 150;
 
-            const MAX_DISTANCE_METERS = 150; // Agenten må være innenfor 150 meter
-
-            // -- GPS 1: Safehouse ---
             window.verifySafehouseLocation = function() {
                 playClick();
                 verifyLocation(SAFEHOUSE_LAT, SAFEHOUSE_LON, 'safehouse check-in');
             }
 
-            // -- GPS 2: Isidor Henius ---
             window.verifyIsidorLocation = function() {
                 playClick();
                 verifyLocation(ISIDOR_LAT, ISIDOR_LON, 'table 19');
             }
             
-            // -- GPS 3: Base Echo ---
             window.verifyBaseEchoLocation = function() {
                 playClick();
                 verifyLocation(ECHO_LAT, ECHO_LON, 'echofall');
             }
 
-            /**
-             * Generisk funksjon for å verifisere posisjon
-             */
             function verifyLocation(targetLat, targetLon, successCode) {
                 const feedback = document.getElementById('location-feedback');
                 const btn = document.getElementById('verify-location-btn');
@@ -1528,7 +1748,6 @@ Hold lav profil.
                     maximumAge: 0
                 };
 
-                // Start GPS-forespørselen
                 navigator.geolocation.getCurrentPosition(
                     (pos) => locationSuccess(pos, targetLat, targetLon, successCode),
                     locationError,
@@ -1536,28 +1755,17 @@ Hold lav profil.
                 );
             }
 
-            /**
-             * Kjøres HVIS vi får en gyldig posisjon
-             */
             function locationSuccess(pos, targetLat, targetLon, successCode) {
                 const feedback = document.getElementById('location-feedback');
-                
                 const userLat = pos.coords.latitude;
                 const userLon = pos.coords.longitude;
-
-                // Beregn avstanden fra agenten til målet
                 const distance = calculateDistance(targetLat, targetLon, userLat, userLon);
 
                 if (distance <= MAX_DISTANCE_METERS) {
-                    // SUKSESS! Agenten er på rett sted.
                     playSuccess();
                     feedback.innerHTML = `POSISJON VERIFISERT (Avstand: ${Math.round(distance)}m). Laster neste direktiv...`;
-                    
-                    // Lagre det nye, ulåste oppdraget (og vis det)
                     saveProgress(successCode, true);
-
                 } else {
-                    // FEIL: Agenten er for langt unna
                     playError();
                     feedback.innerHTML = `<p class="warning">VERIFISERING NEKTET. POSISJON LOKALISERT, MEN DU ER IKKE VED MÅLET. (Avstand: ${Math.round(distance)}m). PRØV IGJEN NÅR DU ER NÆRMERE.</p>`;
                     const btn = document.getElementById('verify-location-btn');
@@ -1566,9 +1774,6 @@ Hold lav profil.
                 }
             }
 
-            /**
-             * Kjøres HVIS det oppstår en feil (f.eks. agenten nekter GPS-tilgang)
-             */
             function locationError(err) {
                 playError();
                 const feedback = document.getElementById('location-feedback');
@@ -1576,18 +1781,10 @@ Hold lav profil.
                 
                 let errorMsg = '';
                 switch(err.code) {
-                    case err.PERMISSION_DENIED:
-                        errorMsg = "ADGANG NEKTET. Systemet krever GPS-tilgang for å verifisere posisjon.";
-                        break;
-                    case err.POSITION_UNAVAILABLE:
-                        errorMsg = "SIGNAL TAPT. Posisjonsdata er ikke tilgjengelig. Prøv å gå utendørs.";
-                        break;
-                    case err.TIMEOUT:
-                        errorMsg = "TIDSAVBRUDD. Kunne ikke hente posisjon. Sjekk GPS-signal og prøv igjen.";
-                        break;
-                    default:
-                        errorMsg = "UKJENT GPS-FEIL. Kunne ikke verifisere posisjon.";
-                        break;
+                    case err.PERMISSION_DENIED: errorMsg = "ADGANG NEKTET. Systemet krever GPS-tilgang for å verifisere posisjon."; break;
+                    case err.POSITION_UNAVAILABLE: errorMsg = "SIGNAL TAPT. Posisjonsdata er ikke tilgjengelig. Prøv å gå utendørs."; break;
+                    case err.TIMEOUT: errorMsg = "TIDSAVBRUDD. Kunne ikke hente posisjon. Sjekk GPS-signal og prøv igjen."; break;
+                    default: errorMsg = "UKJENT GPS-FEIL. Kunne ikke verifisere posisjon."; break;
                 }
                 feedback.innerHTML = `<p class="warning">${errorMsg}</p>`;
                 if (btn) {
@@ -1596,13 +1793,9 @@ Hold lav profil.
                 }
             }
 
-            /**
-             * Hjelpefunksjon for å beregne avstand mellom to GPS-punkter (Haversine-formelen)
-             * Returnerer avstanden i meter.
-             */
             function calculateDistance(lat1, lon1, lat2, lon2) {
-                const R = 6371e3; // Jordens radius i meter
-                const φ1 = lat1 * Math.PI / 180; // φ, λ i radianer
+                const R = 6371e3;
+                const φ1 = lat1 * Math.PI / 180;
                 const φ2 = lat2 * Math.PI / 180;
                 const Δφ = (lat2 - lat1) * Math.PI / 180;
                 const Δλ = (lon2 - lon1) * Math.PI / 180;
@@ -1612,7 +1805,7 @@ Hold lav profil.
                           Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
                 const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
-                const d = R * c; // avstand i meter
+                const d = R * c;
                 return d;
             }
 
@@ -1620,37 +1813,405 @@ Hold lav profil.
             // --- 8. MASTER PORTAL & ARKIV FUNKSJONER ---
             
             /**
-             * Viser Master Admin-portalen
+             * Henter alle aktive agenter fra Firestore.
+             */
+            async function fetchAllAgents() {
+                if (!isAuthReady) return [];
+                
+                try {
+                    // Vi antar at alle fremdrift-dokumenter ligger i root-samlingen under Agent's UID
+                    const agentsRef = collection(db, appId);
+                    const querySnapshot = await getDocs(agentsRef);
+                    
+                    const agents = {};
+                    querySnapshot.forEach(doc => {
+                        // Sjekk om det er en brukerfremdrift, og ikke metadata
+                        if (doc.id.length > 20) { 
+                            const data = doc.data();
+                            
+                            // Sjekker om vi fant et "navneskilt" i hovedmappen
+                            if (data.codename) {
+                                // Prøver også å hente siste kode fra undermappen hvis den finnes
+                                // Dette gjøres i neste steg
+                                agents[doc.id] = {
+                                    id: doc.id,
+                                    codename: data.codename,
+                                    lastSeen: data.lastSeen
+                                };
+                            }
+                        }
+                    });
+
+                    // Nå må vi hente "main" dokumentet fra sub-samlingen for hver agent for å få STATUS
+                    const agentsWithProgress = {};
+                    for (const agentId of Object.keys(agents)) {
+                        const progressRef = doc(db, appId, agentId, "progress", "main");
+                        const progressSnap = await getDoc(progressRef);
+                        
+                        let lastCode = '_initial_';
+                        let lastUpdated = null;
+
+                        if (progressSnap.exists()) {
+                            const progressData = progressSnap.data();
+                            lastCode = progressData.lastCode || '_initial_';
+                            lastUpdated = progressData.lastUpdated ? progressData.lastUpdated.toDate() : null;
+                        }
+                        
+                        agentsWithProgress[agentId] = {
+                            id: agentId,
+                            codename: agents[agentId].codename || 'UKJENT',
+                            lastCode: lastCode,
+                            lastUpdated: lastUpdated || (agents[agentId].lastSeen ? agents[agentId].lastSeen.toDate() : null)
+                        };
+                    }
+                    
+                    allAgentData = agentsWithProgress; // Cache resultatet
+                    return agentsWithProgress;
+                } catch (e) {
+                    console.error("Feil ved henting av agenter for Admin Dashboard:", e);
+                    return {};
+                }
+            }
+
+
+            /**
+             * Viser Master Admin-portalen (HOVEDMENY)
              */
             window.showMasterPortal = function() {
                 playClick();
                 currentView = 'master';
-                let listHtml = '<h4>ADMINISTRATORPORTAL</h4><div class="master-list">';
-                
+                const menuHtml = `
+                    <h4>ADMINISTRATORPORTAL</h4>
+                    <p>Velg modul:</p>
+                    <button class="admin-menu-btn" onclick="showAgentStatusDashboard()">1. AGENT STATUS DASHBOARD</button>
+                    <button class="admin-menu-btn" onclick="showMissionOverview()">2. OPPDRAGSOVERSIKT</button>
+                    <button class="admin-menu-btn" onclick="showSystemReset()">3. SYSTEM TILBAKESTILLING</button>
+                    <button class="admin-menu-btn" onclick="showMessagingInterface()">4. MELDINGER</button>
+                    <button class="admin-menu-btn" style="border-color: #444; color: #888;" onclick="exitAdminPortal()">TILBAKE TIL EGET OPPDRAG</button>
+                `;
+                renderInstant(menuHtml); // Bruker renderInstant i stedet for typeText
+            }
+            
+            /**
+             * Gå ut av admin-modus og tilbake til spiller-modus
+             */
+            window.exitAdminPortal = function() {
+                playClick();
+                showUnlockedMessage(currentUserLastCode, true);
+            }
+
+            // --- MODUL 1: AGENT STATUS DASHBOARD ---
+            window.showAgentStatusDashboard = async function() {
+                playClick();
+                currentView = 'master'; // Fortsatt admin
+                renderInstant('<h4>AGENT STATUS DASHBOARD</h4><div class="loader">HENTER AGENTSTATUS...</div>');
+
+                const agents = await fetchAllAgents();
+                let dashboardHtml = '<a href="#" onclick="showMasterPortal(); return false;">&laquo; Tilbake til Hovedmeny</a><br><br>';
+                dashboardHtml += '<h5>AKTIVE AGENTER</h5><div id="agent-dashboard">';
+
+                if (Object.keys(agents).length === 0) {
+                    dashboardHtml += '<p class="warning">Ingen aktive agenter funnet i databasen.</p>';
+                } else {
+                    Object.keys(agents).forEach(id => {
+                        const agent = agents[id];
+                        const code = agent.lastCode;
+                        const team = (agent.codename === 'raven' || agent.codename === 'falcon') ? 'Oslo (Airborne)' : 'Stavanger (Ground)';
+                        
+                        const statusTitle = masterViewData.find(m => m.id === code)?.title || `UKJENT KODE: ${code}`;
+                        const statusIconClass = code === 'shadowfall' ? 'status-ready' : (code === '_initial_' ? 'status-login' : 'status-stuck');
+                        const statusIcon = code === 'shadowfall' ? '✅' : (code === '_initial_' ? '⚠️' : '➡️');
+
+                        // Finn neste mulige steg for PUSH-funksjonen
+                        const currentIndex = masterViewData.findIndex(m => m.id === code);
+                        const nextMission = masterViewData[currentIndex + 1];
+                        
+                        let pushButtonHtml = '';
+                        if (nextMission && nextMission.id !== 'shadowfall') {
+                            pushButtonHtml = `<button class="push-button" onclick="pushAgentToCode('${id}', '${nextMission.id}'); return false;">PUSH til ${nextMission.title}</button>`;
+                        } else if (code !== 'shadowfall') {
+                            pushButtonHtml = `<button class="push-button" onclick="pushAgentToCode('${id}', 'shadowfall'); return false;">AVSLUTT OPPRAG</button>`;
+                        }
+
+                        dashboardHtml += `
+                            <div class="agent-item">
+                                <div class="agent-info" onclick="showAdminAgentDetail('${id}'); return false;">
+                                    <strong>${agent.codename.toUpperCase()}</strong> (${team})
+                                    <span class="agent-id">${id.substring(0, 8)}...</span>
+                                </div>
+                                <div class="agent-status">
+                                    <span class="status-icon ${statusIconClass}">${statusIcon}</span>
+                                    ${statusTitle}
+                                    ${pushButtonHtml}
+                                </div>
+                            </div>
+                        `;
+                    });
+                }
+                dashboardHtml += '</div>';
+                renderInstant(dashboardHtml);
+            }
+
+            // --- MODUL 2: OPPDRAGSOVERSIKT ---
+            window.showMissionOverview = function() {
+                playClick();
+                currentView = 'master';
+                let overviewHtml = '<a href="#" onclick="showMasterPortal(); return false;">&laquo; Tilbake til Hovedmeny</a><br><br>';
+                overviewHtml += '<h5>OPPDRAGSOVERSIKT</h5><div class="master-list">';
                 masterViewData.forEach((item, index) => {
-                    listHtml += `
+                    overviewHtml += `
                         <a href="#" class="master-link" onclick="showMasterDetailView('${item.id}'); return false;">
                             <span>#${index}</span>
                             <strong>${item.title}</strong>
                         </a>
                     `;
                 });
-                
-                listHtml += '</div>';
-                
-                // Tilbakestillings-seksjon
-                listHtml += `
-                    <h5 style="margin-top: 30px;">System-tilbakestilling</h5>
-                    <p>En full tilbakestilling er en 2-stegs prosess for å slette data fra serveren og din lokale nettleser.</p>
-                    <ol>
-                        <li><strong>Server:</strong> Gå til Firebase-konsollen -> Firestore Database -> '${appId}' samlingen. Slett denne samlingen manuelt for å fjerne alle agenters fremdrift.</li>
-                        <li><strong>Lokal:</strong> Trykk på knappen under for å slette kodenavnet som er lagret i *din* nettleser.</li>
-                    </ol>
-                    <button class="download-button" style="background-color: #ff5555;" onclick="resetLocalAgent();">Tilbakestill Lokal Agent</button>
-                `;
-                
-                typeText(listHtml);
+                overviewHtml += '</div>';
+                renderInstant(overviewHtml);
             }
+
+            // --- MODUL 3: SYSTEM TILBAKESTILLING ---
+            window.showSystemReset = function() {
+                playClick();
+                currentView = 'master';
+                let resetHtml = '<a href="#" onclick="showMasterPortal(); return false;">&laquo; Tilbake til Hovedmeny</a><br><br>';
+                resetHtml += `
+                    <h5 style="margin-top: 30px;">SYSTEM-TILBAKESTILLING</h5>
+                    <p>Velg handling:</p>
+                    
+                    <button class="download-button" style="background-color: #ff5555; margin-bottom: 20px;" onclick="resetAllServerData();">SLETT ALLE AGENT-DATA (SERVER)</button>
+                    
+                    <button class="download-button" style="background-color: #444; border: 1px solid #666;" onclick="resetLocalAgent();">Tilbakestill Lokal Agent</button>
+                    
+                    <p style="margin-top: 20px; color: #888; font-size: 0.8rem;">
+                        <strong>SERVER-SLETTING:</strong> Fjerner all fremdrift for ALLE agenter permanent fra databasen. Brukes før ny spillstart.<br>
+                        <strong>LOKAL TILBAKESTILLING:</strong> Fjerner kun din egen innlogging på denne enheten.
+                    </p>
+                `;
+                renderInstant(resetHtml);
+            }
+            
+            /**
+             * NY FUNKSJON: Slett all agentdata fra serveren
+             */
+            window.resetAllServerData = async function() {
+                if (!confirm("ADVARSEL: Dette vil slette fremdriften til ALLE agenter fra databasen. Handlingen kan ikke angres. Er du sikker?")) {
+                    return;
+                }
+                
+                playClick();
+                renderInstant('<h4>SYSTEM-TILBAKESTILLING</h4><div class="loader">SLETTER DATA...</div>');
+                
+                try {
+                    const agents = await fetchAllAgents();
+                    const agentIds = Object.keys(agents);
+                    
+                    if (agentIds.length === 0) {
+                        renderInstant('<h4>SYSTEM-TILBAKESTILLING</h4><p>Ingen data funnet å slette.</p><button class="download-button" onclick="showSystemReset()">Tilbake</button>');
+                        return;
+                    }
+
+                    // Slett operations
+                    const deletePromises = agentIds.map(async (agentId) => {
+                        // Slett hoved-agent-dokumentet
+                        await deleteDoc(doc(db, appId, agentId));
+                        // Slett fremdrifts-dokumentet
+                        await deleteDoc(doc(db, appId, agentId, "progress", "main"));
+                    });
+                    
+                    await Promise.all(deletePromises);
+                    
+                    playSuccess();
+                    renderInstant(`
+                        <h4>SYSTEM-TILBAKESTILLING</h4>
+                        <p style="color: #55ff55;">SUKSESS: Data for ${agentIds.length} agenter er slettet fra serveren.</p>
+                        <button class="download-button" onclick="showSystemReset()">Tilbake til Meny</button>
+                    `);
+                    
+                } catch (error) {
+                    console.error("Sletting feilet:", error);
+                    playError();
+                    renderInstant(`
+                        <h4>SYSTEM-TILBAKESTILLING</h4>
+                        <p class="warning">FEIL UNDER SLETTING: ${error.message}</p>
+                        <button class="download-button" onclick="showSystemReset()">Prøv igjen</button>
+                    `);
+                }
+            }
+
+            // --- MODUL 4: MELDINGER (NY) ---
+            window.showMessagingInterface = async function() {
+                playClick();
+                currentView = 'master';
+                renderInstant('<h4>SEND MELDING</h4><div class="loader">HENTER MOTTAKERE...</div>');
+                
+                const agents = await fetchAllAgents();
+                let optionsHtml = '<option value="all">ALLE AGENTER (Kringkasting)</option>';
+                
+                Object.keys(agents).forEach(id => {
+                    const agent = agents[id];
+                    optionsHtml += `<option value="${id}">${agent.codename.toUpperCase()} (ID: ${id.substring(0,5)}...)</option>`;
+                });
+                
+                // HURTIGVALG: KOGNITIVE TESTER (FASE 4)
+                let quickMsgHtml = `
+                    <p style="font-size:0.8rem; color:#888; margin-top:20px;">HURTIGVALG: VED LANDING (kl 19:45 - KOGNITIV SJEKK)</p>
+                    <div style="display:flex; flex-wrap:wrap; gap:5px;">
+                        <button class="quick-msg-btn" onclick="setQuickMsg('viper', 'Det har kommet inn en kryptert melding fra Echelon kommandøren. For å lese meldingen må du løse følgende kode:\\n\\n4 – 6 – 9 – 14 – 21 – 32 – 45 – ?\\n\\nSummer svarene deres og skriv svaret inn i Echelonportalen for å lese meldingen.')">VIPER (Primtall)</button>
+                        <button class="quick-msg-btn" onclick="setQuickMsg('cobra', 'Det har kommet inn en kryptert melding fra Echelon kommandøren. For å lese meldingen må du løse følgende kode:\\n\\n2 – 5 – 10 – 17 – 26 – 37 – 50 – ?\\n\\nSummer svarene deres og skriv svaret inn i Echelonportalen for å lese meldingen.')">COBRA (Oddetall)</button>
+                        <button class="quick-msg-btn" onclick="setQuickMsg('raven', 'Det har kommet inn en kryptert melding fra Echelon kommandøren. For å lese meldingen må du løse følgende kode:\\n\\n10 – 11 – 13 – 17 – 25 – 32 – ?\\n\\nSummer svarene deres og skriv svaret inn i Echelonportalen for å lese meldingen.')">RAVEN (Tverrsum)</button>
+                        <button class="quick-msg-btn" onclick="setQuickMsg('falcon', 'Det har kommet inn en kryptert melding fra Echelon kommandøren. For å lese meldingen må du løse følgende kode:\\n\\n3 – 4 – 8 – 17 – 33 – 58 – ?\\n\\nSummer svarene deres og skriv svaret inn i Echelonportalen for å lese meldingen.')">FALCON (Kvadrat)</button>
+                    </div>
+                    
+                    <p style="font-size:0.8rem; color:#888; margin-top:10px;">OPPFØLGING (NÅR DE HAR SVART):</p>
+                    <div style="display:flex; flex-wrap:wrap; gap:5px;">
+                        <button class="quick-msg-btn" style="width:100%; text-align:center;" onclick="setQuickMsg('all', 'MELDING TIL ALLE ENHETER:\\nDere har mottatt individuelle fragmenter.\\nSummen av deres svar utgjør &quot;Fail-Safe&quot;-koden for morgendagens operasjon.\\nKalkuler og bekreft summen til SHADOW.\\n(Summen er koden for neste steg).')">SEND TIL ALLE: "Summen av svarene..."</button>
+                    </div>
+                `;
+
+                let messagingHtml = `
+                    <a href="#" onclick="showMasterPortal(); return false;">&laquo; Tilbake til Hovedmeny</a><br><br>
+                    <h5>KOMMUNIKASJONSSENTRAL</h5>
+                    <p>Send kryptert melding direkte til agentenes terminaler.</p>
+                    
+                    <label for="msg-recipient" style="display:block; margin-bottom:5px; color:#ff9900;">MOTTAKER:</label>
+                    <select id="msg-recipient">${optionsHtml}</select>
+                    
+                    <label for="msg-text" style="display:block; margin-bottom:5px; color:#ff9900;">MELDING:</label>
+                    <textarea id="msg-text" placeholder="Skriv melding her..."></textarea>
+                    
+                    <button class="download-button" onclick="sendAdminMessage()">SEND MELDING</button>
+                    <div id="msg-feedback" style="margin-top:10px; text-align:center;"></div>
+                    
+                    ${quickMsgHtml}
+                `;
+                renderInstant(messagingHtml);
+            }
+            
+            // Hjelpefunksjon for hurtigvalg av meldinger
+            window.setQuickMsg = async function(targetCodename, messageText) {
+                // Hvis target er 'all', trenger vi ikke søke
+                if (targetCodename === 'all') {
+                    document.getElementById('msg-recipient').value = 'all';
+                    document.getElementById('msg-text').value = messageText;
+                    return;
+                }
+
+                // Finn riktig mottaker-ID basert på kodenavn
+                const agents = await fetchAllAgents(); // Vi trenger ferske data
+                let targetId = null;
+                
+                Object.keys(agents).forEach(id => {
+                    if (agents[id].codename.toLowerCase() === targetCodename.toLowerCase()) {
+                        targetId = id;
+                    }
+                });
+                
+                const recipientSelect = document.getElementById('msg-recipient');
+                const textField = document.getElementById('msg-text');
+                
+                if (targetId) {
+                    recipientSelect.value = targetId;
+                    textField.value = messageText;
+                } else {
+                    alert(`Fant ikke agent med kodenavn ${targetCodename}. Er de logget inn?`);
+                }
+            }
+
+            window.sendAdminMessage = async function() {
+                const recipient = document.getElementById('msg-recipient').value;
+                const message = document.getElementById('msg-text').value;
+                const feedback = document.getElementById('msg-feedback');
+                
+                if (!message.trim()) {
+                    feedback.innerHTML = '<span class="warning">Melding kan ikke være tom.</span>';
+                    playError();
+                    return;
+                }
+                
+                feedback.innerHTML = 'Sender...';
+                playClick();
+                
+                // Formatert melding med avsender
+                const signedMessage = `// INNKOMMENDE TRANSMISJON //\nFRA: ECHELON KOMMANDØR\n\n${message}`;
+
+                try {
+                    if (recipient === 'all') {
+                        // Send til alle
+                        const agents = await fetchAllAgents();
+                        const promises = Object.keys(agents).map(agentId => {
+                            const docRef = doc(db, appId, agentId, "progress", "main");
+                            return updateDoc(docRef, { 
+                                inbox: signedMessage 
+                            });
+                        });
+                        await Promise.all(promises);
+                        feedback.innerHTML = '<span style="color:#55ff55;">MELDING SENDT TIL ALLE ENHETER.</span>';
+                    } else {
+                        // Send til enkeltagent
+                        const docRef = doc(db, appId, recipient, "progress", "main");
+                        await updateDoc(docRef, { 
+                            inbox: signedMessage 
+                        });
+                        feedback.innerHTML = '<span style="color:#55ff55;">MELDING SENDT.</span>';
+                    }
+                    playSuccess();
+                    document.getElementById('msg-text').value = '';
+                } catch (error) {
+                    console.error("Meldingsfeil:", error);
+                    feedback.innerHTML = '<span class="warning">FEIL VED SENDING. Sjekk konsoll.</span>';
+                    playError();
+                }
+            }
+            
+            /**
+             * NY FUNKSJON: Detaljvisning for en enkelt agent i Admin Dashboard
+             */
+            window.showAdminAgentDetail = function(agentId) {
+                playClick();
+                const agent = allAgentData[agentId];
+                if (!agent) {
+                    renderInstant(`<h4>FEIL</h4><p class="warning">Kunne ikke finne detaljer for Agent ${agentId}</p>`);
+                    return;
+                }
+                
+                const lastCodeTitle = masterViewData.find(m => m.id === agent.lastCode)?.title || 'Ukjent kode';
+                const team = (agent.codename === 'raven' || agent.codename === 'falcon') ? 'Oslo (Airborne)' : 'Stavanger (Ground)';
+                
+                const detailHtml = `
+                    <a href="#" onclick="showAgentStatusDashboard(); return false;">&laquo; Tilbake til Dashboard</a>
+                    <h4 style="margin-top: 15px;">AGENT RAPPORT: ${agent.codename.toUpperCase()}</h4>
+                    <p><strong>Team/Rolle:</strong> ${team}</p>
+                    <p><strong>Siste Aktiverte Kode:</strong> <strong>${agent.lastCode}</strong> (${lastCodeTitle})</p>
+                    <p><strong>Sist Oppdatert:</strong> ${agent.lastUpdated ? agent.lastUpdated.toLocaleString() : 'N/A'}</p>
+                    <p class="agent-id"><strong>UserID:</strong> ${agentId}</p>
+                    
+                    <h5 style="margin-top: 30px;">TVING FREMDRIFT (PUSH)</h5>
+                    <p>Velg neste oppdrag for å tvinge agenten fremover. Agenten får en varselmelding.</p>
+                    <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+                    ${masterViewData.map(mission => {
+                        // Kan ikke pushe til 'initial' eller hvis allerede fullført
+                        const isDisabled = mission.id === '_initial_' || masterViewData.findIndex(m => m.id === mission.id) <= masterViewData.findIndex(m => m.id === agent.lastCode);
+                        
+                        return `<button 
+                            class="push-button" 
+                            style="background-color: ${isDisabled ? '#444' : '#ff5555'}; cursor: ${isDisabled ? 'not-allowed' : 'pointer'};"
+                            onclick="${isDisabled ? 'return false;' : `pushAgentToCode('${agentId}', '${mission.id}'); return false;`}"
+                            ${isDisabled ? 'disabled' : ''}
+                        >
+                            ${mission.title}
+                        </button>`;
+                    }).join('')}
+                    </div>
+                    
+                    <h5 style="margin-top: 30px; border-top: 1px solid #444; padding-top: 20px;">SIKKERHETSPROTOKOLL</h5>
+                    <button class="download-button" style="background-color: #ff0000; color: #fff; border: 2px solid #fff;" onclick="deleteSingleAgent('${agentId}');">SLETT DENNE AGENTEN (RESET)</button>
+                    
+                    <p style="margin-top: 20px;"><small>Merk: Du kan også sende personlige meldinger via hovedmenyen.</small></p>
+                `;
+                renderInstant(detailHtml);
+            }
+
 
             /**
              * Viser detaljsiden for ett oppdrag i Master-portalen
@@ -1662,33 +2223,57 @@ Hold lav profil.
                 const messageHtml = (typeof briefings[code] === 'function')
                     ? briefings[code]('SHADOW') // Viser bare "SHADOW" som eksempel for admin
                     : briefings[code];
+                    
+                // Finner alle agenter som har fullført dette oppdraget
+                const agentsCompleted = Object.values(allAgentData).filter(agent => agent.lastCode === code);
 
-                const detailHtml = `
-                    <a href="#" onclick="showMasterPortal(); return false;">&laquo; Tilbake til Master-listen</a>
+                let detailHtml = `
+                    <a href="#" onclick="showMissionOverview(); return false;">&laquo; Tilbake til Oversikt</a>
                     <h4 style="margin-top: 15px;">ADMIN: ${mission.title}</h4>
                     <p><strong>KODEORD:</strong> ${mission.id}</p>
                     <p><strong>ADMIN-NOTAT:</strong> <em>${mission.adminNote}</em></p>
                     
+                    <h5 style="margin-top: 30px;">AGENTSTATUS FOR DETTE STEGET</h5>
+                    <p>Følgende ${agentsCompleted.length} agenter er for øyeblikket på dette steget:</p>
+                    <ul style="list-style: none; margin-left: 0; padding-left: 0;">
+                    ${agentsCompleted.map(agent => 
+                        `<li style="font-weight: bold; color: #ffc266;">- ${agent.codename.toUpperCase()}</li>`
+                    ).join('') || '<li>Ingen agenter på dette steget.</li>'}
+                    </ul>
+
+                `;
+
+                // --- GPS OVERRIDE KNAPP ---
+                if (mission.overrideCode) {
+                    detailHtml += `
+                        <div style="border: 2px dashed #ff5555; padding: 15px; margin: 20px 0; background: rgba(255, 85, 85, 0.1);">
+                            <h5 style="margin-top:0; color: #ff5555;">⚠️ NO-FAIL OVERRIDE (For din økt)</h5>
+                            <p style="font-size: 0.9em;">Dette steget krever GPS. Hvis GPS feiler for agentene, trykk her for å tvinge godkjenning for <strong>DIN LOKALE AGENT</strong> og låse opp neste steg ("${mission.overrideCode}").</p>
+                            <button class="download-button" style="background-color: #ff5555; margin-top: 10px;" 
+                                onclick="saveProgress('${mission.overrideCode}', true);">
+                                🚨 TVING GPS-GODKJENNING (Kun for din agent)
+                            </button>
+                        </div>
+                    `;
+                }
+
+                detailHtml += `
                     <hr style="border-color: #444; margin: 20px 0;">
-                    
                     <h4>EKSEMPEL PÅ MELDING (for 'SHADOW'):</h4>
                     <div>${messageHtml}</div>
                 `;
-                typeText(detailHtml);
+                
+                renderInstant(detailHtml);
             }
             
-            /**
-             * Viser agentens personlige arkiv over fullførte oppdrag
-             */
+            // ... (Resten av arkiv- og hjelpefunksjonene er uendret) ...
+
             window.showCompletedMissionsMenu = function() {
                 playClick();
                 currentView = 'archive';
                 
-                // Bestem agentens team
                 const agentTeam = (currentCodename === 'raven' || currentCodename === 'falcon') ? 'oslo' : 'stavanger';
-                
                 let listHtml = '<h4>OPPDRAGSARKIV</h4><div class="master-list">';
-                
                 const lastCodeIndex = masterViewData.findIndex(m => m.id === currentUserLastCode);
                 
                 if (lastCodeIndex === -1) {
@@ -1696,14 +2281,9 @@ Hold lav profil.
                 } else {
                     for (let i = 0; i <= lastCodeIndex; i++) {
                         const mission = masterViewData[i];
-                        
-                        // FIKS: Ikke vis '_initial_' i arkivet
                         if (mission.id === '_initial_') {
                             continue;
                         }
-
-                        // Team-filtrering
-                        // Vis kun hvis oppdraget er 'felles' ELLER teamet matcher agentens team
                         if (mission.team === 'felles' || mission.team === agentTeam) {
                             listHtml += `
                                 <a href="#" class="master-link" onclick="showArchiveDetailView('${mission.id}'); return false;">
@@ -1716,18 +2296,57 @@ Hold lav profil.
                 }
                 
                 listHtml += '</div>';
-                listHtml += '<button class="download-button" onclick="showUnlockedMessage(currentUserLastCode, true);">Tilbake til Siste Oppdrag</button>';
+                // Use currentUserLastCode directly in the template literal
+                listHtml += `<button class="download-button" onclick="showUnlockedMessage('${currentUserLastCode}', true);">Tilbake til Siste Oppdrag</button>`;
                 typeText(listHtml);
             }
+            
+            // --- NY FUNKSJON: VIS INNBOKS ---
+            window.showInboxView = function() {
+                playClick();
+                currentView = 'inbox';
+                
+                const messages = JSON.parse(localStorage.getItem('echelonMessages') || '[]');
+                
+                let inboxHtml = '<h4>MELDINGSINNBOKS</h4><div class="master-list">';
+                
+                // MANUELL VARSLINGSKNAPP
+                if (Notification.permission !== "granted") {
+                    inboxHtml += `
+                        <div style="background:#333; padding:10px; margin-bottom:15px; border-left:3px solid #ff9900;">
+                            <p style="margin:0; font-size:0.9em; color:#ff9900;">SYSTEMVARSEL: Varslinger er ikke aktivert.</p>
+                            <button class="download-button" style="margin-top:5px; padding:5px; font-size:0.8em;" onclick="window.requestNotificationPermission();">AKTIVER VARSLER PÅ DENNE ENHETEN</button>
+                        </div>
+                    `;
+                }
+                
+                if (messages.length === 0) {
+                    inboxHtml += '<p style="text-align:center; color:#888; margin-top:20px;">Ingen meldinger mottatt.</p>';
+                } else {
+                    messages.forEach(msg => {
+                        const date = new Date(msg.timestamp);
+                        const timeString = date.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+                        inboxHtml += `
+                            <div class="inbox-item">
+                                <div class="inbox-time">MOTTATT: ${timeString}</div>
+                                <div class="inbox-msg">${msg.text}</div>
+                            </div>
+                        `;
+                    });
+                }
+                
+                inboxHtml += '</div>';
+                // Use currentUserLastCode directly in the template literal
+                inboxHtml += `<button class="download-button" onclick="showUnlockedMessage('${currentUserLastCode}', true);">Tilbake til Oppdrag</button>`;
+                
+                typeText(inboxHtml);
+            }
 
-            /**
-             * Viser detaljsiden for ett oppdrag i Arkivet
-             */
             window.showArchiveDetailView = function(code) {
                 playClick();
                 currentView = 'archive-detail';
                 const messageHtml = (typeof briefings[code] === 'function')
-                    ? briefings[code](currentCodename) // Viser den persontilpassede meldingen
+                    ? briefings[code](currentCodename)
                     : briefings[code];
 
                 const detailHtml = `
@@ -1737,19 +2356,14 @@ Hold lav profil.
                 typeText(detailHtml);
             }
 
-            /**
-             * Tilbakestiller den lokale agent-økten (for admin)
-             */
             window.resetLocalAgent = function() {
-                playError(); // Bruker feil-lyd for en "farlig" handling
+                playError();
                 localStorage.removeItem('echelonAgentCodename');
-                // Ikke bruk alert/reload, bare vis kodenavn-innlogging
+                // SKJUL IKONER VED RESET
+                setNavVisibility(false);
                 showCodenameLogin();
             }
 
-            /**
-             * Håndterer kodenavn-innlogging
-             */
             window.handleCodenameLogin = function() {
                 playClick();
                 const codenameInput = document.getElementById('codename-input');
@@ -1757,38 +2371,88 @@ Hold lav profil.
                 const input = codenameInput.value.toLowerCase().trim();
                 
                 if (validCodenames.includes(input)) {
+                    // NYTT: BE OM VARSLINGSTILLATELSE
+                    window.requestNotificationPermission();
+                    
                     playSuccess();
                     setLocalCodename(input);
-                    loadProgress(); // Last fremdriften på nytt
+                    loadProgress();
+                    // VIS IKONER ETTER SUKSESS
+                    setNavVisibility(true);
                 } else {
                     playError();
                     loginFeedback.innerHTML = '<p class="warning">KODENAVN IKKE GJENKJENT.</p>';
                     codenameInput.value = '';
                 }
             };
+            
+            /**
+             * Hjelpefunksjon for å vise/skjule ikoner i header
+             */
+            function setNavVisibility(visible) {
+                if (headerNav) {
+                    headerNav.style.display = visible ? 'flex' : 'none';
+                }
+            }
+            
+            /**
+             * NYTT: Robust funksjon for å be om varslingstillatelse
+             */
+            window.requestNotificationPermission = function() {
+                if (!("Notification" in window)) {
+                    alert("Denne nettleseren støtter ikke systemvarsler.");
+                    return;
+                }
+
+                Notification.requestPermission().then((permission) => {
+                    if (permission === "granted") {
+                        // Send et testvarsel umiddelbart for å bekrefte
+                        new Notification("Systemtest", { 
+                            body: "Varsler er aktivert for Echelon 5.", 
+                            icon: "https://cdn-icons-png.flaticon.com/512/3062/3062634.png"
+                        });
+                        
+                        // Oppdater UI i innboksen hvis vi er der
+                        if(currentView === 'inbox') showInboxView(); 
+                        
+                    } else if (permission === "denied") {
+                        alert("Du har blokkert varsler. Du må gå inn i nettleserens innstillinger for å aktivere dem igjen.");
+                    }
+                });
+            }
+            
+            // --- SLUTT PÅ SKRIVEMASKIN & INNBOKS-MODUL ---
+
 
             
             // --- 9. START APPLIKASJONEN ---
             
-            // Sett opp event listeners for knapper
             inputForm.onsubmit = (e) => {
                 e.preventDefault();
                 submitCode();
             };
             
-            menuBtn.onclick = () => {
+            // HEADER-IKON EVENT LISTENERS
+            headerArchiveBtn.onclick = () => {
                 playClick();
-                // Bytt mellom arkiv og siste oppdrag
                 if (currentView === 'archive' || currentView === 'archive-detail') {
-                    showUnlockedMessage(currentUserLastCode, true); // Hopp over laster
+                    showUnlockedMessage(currentUserLastCode, true); // Tilbake hvis man allerede er der
                 } else {
                     showCompletedMissionsMenu();
+                }
+            };
+            
+            headerInboxBtn.onclick = () => {
+                playClick();
+                if (currentView === 'inbox') {
+                    showUnlockedMessage(currentUserLastCode, true); // Tilbake hvis man allerede er der
+                } else {
+                    showInboxView();
                 }
             };
 
             inboxCloseBtn.onclick = closeInboxMessage;
 
-            // Start Firebase-tilkoblingen
             initFirebase();
             
         }); // Slutt på DOMContentLoaded
