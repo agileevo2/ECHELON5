@@ -865,14 +865,25 @@
             }
             
             /**
-             * NYTT: Robust funksjon for å be om varslingstillatelse
+             * NYTT: Robust funksjon for å be om varslingstillatelse med smartere logikk
              */
             window.requestNotificationPermission = function() {
                 if (!("Notification" in window)) {
-                    alert("Denne nettleseren støtter ikke systemvarsler.");
+                    alert("Denne nettleseren støtter ikke systemvarsler. Vennligst bytt nettleser hvis mulig.");
                     return;
                 }
 
+                // SJEKK FOR IOS (iPhone/iPad)
+                const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+                // Enkel sjekk om appen kjører i "standalone" modus (lagt til på hjemskjerm)
+                const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
+
+                if (isIOS && !isStandalone) {
+                    alert("⚠️ VIKTIG MELDING TIL IPHONE-BRUKERE ⚠️\n\nFor å kunne motta hemmelige varsler MÅ du legge denne appen til på din Hjem-skjerm først.\n\n1. Trykk på Del-knappen (firkant med pil opp).\n2. Velg 'Legg til på Hjem-skjerm'.\n3. Åpne den nye appen fra hjemskjermen og logg inn der.\n\nDette er påkrevd av Apple for at varsler skal virke.");
+                    return;
+                }
+
+                // Hvis ikke iPhone, eller hvis den er installert som PWA, be om tillatelse:
                 Notification.requestPermission().then((permission) => {
                     if (permission === "granted") {
                         // Send et testvarsel umiddelbart for å bekrefte
@@ -881,11 +892,13 @@
                             icon: "https://cdn-icons-png.flaticon.com/512/3062/3062634.png"
                         });
                         
+                        alert("Varsler er nå AKTIVERT. Du vil motta meldinger selv når skjermen er av (hvis du tillater det i telefonens innstillinger).");
+                        
                         // Oppdater UI i innboksen hvis vi er der
                         if(currentView === 'inbox') showInboxView(); 
                         
                     } else if (permission === "denied") {
-                        alert("Du har blokkert varsler. Du må gå inn i nettleserens innstillinger for å aktivere dem igjen.");
+                        alert("Du har blokkert varsler for denne nettsiden. Du må gå inn i nettleserens innstillinger (eller Android-innstillinger) og fjerne blokkeringen for å kunne motta ordre.");
                     }
                 });
             }
